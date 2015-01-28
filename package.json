@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/kchapelier/jsstg2015",
   "dependencies": {
+    "localforage": "^1.2.1",
     "migl-gameloop": "^1.0.0",
-    "migl-input": "^1.0.1",
-    "three": "^0.69.0"
+    "migl-input": "^1.1.0",
+    "numeral": "^1.5.3",
+    "pixi.js": "^2.2.3",
+    "three": "^0.69.0",
+    "victor": "^0.2.6"
   },
   "devDependencies": {
     "gulp": "^3.8.10",

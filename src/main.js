@@ -1,18 +1,21 @@
 "use strict";
 
 var THREE = require('three'),
-    GameLoop = require('migl-gameloop');
+    GameLoop = require('migl-gameloop'),
+    input = require('./game/input'),
+    TestGeometry = require('./3d/geometries/test'),
+    Victor = require('victor');
 
 var loop = new GameLoop();
 
 var renderer,
     camera,
     scene,
-    mesh;
+    group;
 
 function init () {
     var container = document.getElementById('game');
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ antialias : true });
     renderer.setSize(800, 600);
     container.appendChild(renderer.domElement);
 
@@ -20,18 +23,22 @@ function init () {
     camera.position.z = 400;
 
     scene = new THREE.Scene();
+    group = new THREE.Group();
 
-    var geometry = new THREE.BoxGeometry(200, 200, 200);
+    var geometry = new THREE.BoxGeometry(200, 200, 200),
+        material = new THREE.MeshNormalMaterial({ color: 0x00FFFF }),
+        mesh = new THREE.Mesh(geometry, material);
 
-    var material = new THREE.MeshBasicMaterial({});
+    group.add(mesh);
 
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+    scene.add(group);
 }
 
 loop.update = function (dt) {
-    mesh.rotation.x += 0.005;
-    mesh.rotation.y += 0.01;
+    input.update(dt);
+
+    group.rotation.y += (input.currentInput.LEFT - input.currentInput.RIGHT) * dt / 100;
+    group.rotation.x += (input.currentInput.UP - input.currentInput.DOWN) * dt / 100;
 };
 
 loop.render = function (dt) {
@@ -39,7 +46,6 @@ loop.render = function (dt) {
 };
 
 module.exports = function () {
-    console.log('ok');
     init();
     loop.start();
 };
