@@ -23,8 +23,10 @@
     "localforage": "^1.2.1",
     "migl-gameloop": "^1.0.0",
     "migl-input": "^1.1.0",
+    "noisejs": "^2.1.0",
     "numeral": "^1.5.3",
     "pixi.js": "^2.2.3",
+    "seedrandom": "^2.3.11",
     "three": "^0.69.0",
     "victor": "^0.2.6"
   },

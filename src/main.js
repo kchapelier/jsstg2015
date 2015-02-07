@@ -3,7 +3,6 @@
 var THREE = require('three'),
     GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
-    TestGeometry = require('./3d/geometries/test'),
     Victor = require('victor');
 
 var loop = new GameLoop();

@@ -1,13 +1,14 @@
 "use strict";
 
-var PatternMetaData = function () {
+var PatternMetaData = function (rng) {
     this.speed = 0;
     this.generosity = 0;
+    this.rng = rng || Math.random;
 };
 
 PatternMetaData.prototype.randomize = function (speedTendency, generosityTendency) {
-    var speed = Math.random() * (speedTendency || 1),
-        generosity = Math.random() * (generosityTendency || 1),
+    var speed = this.rng() * (speedTendency || 1),
+        generosity = this.rng() * (generosityTendency || 1),
         sum = speed + generosity,
         ratio = 1 / sum;
 
