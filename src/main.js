@@ -17,7 +17,6 @@ var loadTextures = function loadTextures () {
 loadTextures();
 
 var init = function init () {
-
     var loop = new GameLoop();
 
     renderer.infectDom('game');
