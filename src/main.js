@@ -1,50 +1,64 @@
 "use strict";
 
-var THREE = require('three'),
-    GameLoop = require('migl-gameloop'),
+var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
-    Victor = require('victor');
+    renderer = require('./game/renderer'),
+    Victor = require('victor'),
+    objectCollection = require('./game/objectCollection'),
+    textureCollection = require('./game/textureCollection');
 
-var loop = new GameLoop();
-
-var renderer,
-    camera,
-    scene,
-    group;
-
-function init () {
-    var container = document.getElementById('game');
-    renderer = new THREE.WebGLRenderer({ antialias : true });
-    renderer.setSize(800, 600);
-    container.appendChild(renderer.domElement);
-
-    camera = new THREE.PerspectiveCamera(70, 800 / 600, 1, 1000);
-    camera.position.z = 400;
-
-    scene = new THREE.Scene();
-    group = new THREE.Group();
-
-    var geometry = new THREE.BoxGeometry(200, 200, 200),
-        material = new THREE.MeshNormalMaterial({ color: 0x00FFFF }),
-        mesh = new THREE.Mesh(geometry, material);
-
-    group.add(mesh);
-
-    scene.add(group);
-}
-
-loop.update = function (dt) {
-    input.update(dt);
-
-    group.rotation.y += (input.currentInput.LEFT - input.currentInput.RIGHT) * dt / 100;
-    group.rotation.x += (input.currentInput.UP - input.currentInput.DOWN) * dt / 100;
+var loadTextures = function loadTextures () {
+    textureCollection.load('player-sprite', 'entities/placeholder.png');
+    textureCollection.load('enemy-sprite', 'entities/placeholder.png');
+    textureCollection.load('hitbox', 'entities/hitbox.png');
+    textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
 
-loop.render = function (dt) {
-    renderer.render(scene, camera);
+loadTextures();
+
+var init = function init () {
+
+    var loop = new GameLoop();
+
+    renderer.infectDom('game');
+
+    var playerFactory = require('./game/entities/player'),
+        player = playerFactory();
+
+    var playerShotArray = objectCollection.getArray('playerShot');
+
+    objectCollection.add('player', player);
+
+    loop.update = function (dt) {
+        input.update(dt);
+        player.update(dt);
+
+        playerShotArray.forEach(function (shot) {
+            shot.update(dt);
+        });
+    };
+
+    loop.postUpdate = function (dt) {
+        player.postUpdate(dt);
+
+        playerShotArray.forEach(function playerShotArrayPostUpdate (shot) {
+            shot.postUpdate(dt);
+        });
+    };
+
+    loop.render = function (dt) {
+        player.render(dt);
+
+        playerShotArray.forEach(function (shot) {
+            shot.render(dt);
+        });
+
+        renderer.render(dt);
+    };
+
+    loop.start();
 };
 
 module.exports = function () {
     init();
-    loop.start();
 };
