@@ -5,7 +5,8 @@ var GameLoop = require('migl-gameloop'),
     renderer = require('./game/renderer'),
     Victor = require('victor'),
     objectCollection = require('./game/objectCollection'),
-    textureCollection = require('./game/textureCollection');
+    textureCollection = require('./game/textureCollection'),
+    level = require('./game/levels/level');
 
 var loadTextures = function loadTextures () {
     textureCollection.load('player-sprite', 'entities/placeholder.png');
@@ -13,6 +14,11 @@ var loadTextures = function loadTextures () {
     textureCollection.load('hitbox', 'entities/hitbox.png');
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
+
+level.createFromString('alpha centauri');
+level.createFromString('earth');
+level.createFromString('sun');
+level.createFromString('venus');
 
 loadTextures();
 

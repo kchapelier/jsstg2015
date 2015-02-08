@@ -1,14 +1,16 @@
+"use strict";
+
 var seedRandom = require('seedrandom'),
     Noise = require('noisejs').Noise;
 
-var castToIntArbitrarily = function castToIntArbitrarily (str, max) {
+var castToIntArbitrarily = function castToIntArbitrarily (string, max) {
     var result = 0,
         i = 0;
 
     max = max || 1000000;
 
-    for (; i < str.length; i++) {
-        result += (str.charCodeAt(i) % 91) * Math.pow(91, i);
+    for (; i < string.length; i++) {
+        result += (string.charCodeAt(i) % 91) * Math.pow(91, i);
     }
 
     return result % max;
@@ -16,14 +18,16 @@ var castToIntArbitrarily = function castToIntArbitrarily (str, max) {
 
 var createRandomNumberGenerator = function createRandomNumberGenerator (string) {
     var seed = castToIntArbitrarily(string),
-        rng = seedRandom(seed, { entropy: false }),
+        rng = seedRandom(seed, {
+            entropy: false
+        }),
         noise = new Noise(0.9 || seed);
 
     return {
-        seedSource : string,
+        seedSource: string,
         seed: seed,
         random: rng,
-        randomBounded : function (min, max) {
+        randomBounded: function (min, max) {
             return min + rng() * (max - min);
         },
         perlin2: function (x, y) {
@@ -42,7 +46,7 @@ var createRandomNumberGenerator = function createRandomNumberGenerator (string) 
 };
 
 module.exports = {
-    createFromString : function (string) {
+    createFromString: function (string) {
         return createRandomNumberGenerator(string);
     }
 };
