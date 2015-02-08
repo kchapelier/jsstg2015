@@ -15,10 +15,10 @@ var loadTextures = function loadTextures () {
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
 
-level.createFromString('alpha centauri');
-level.createFromString('earth');
-level.createFromString('sun');
-level.createFromString('venus');
+console.log(level.createFromString('alpha centauri' + Math.random() * 1000000));
+console.log(level.createFromString('earth' + Math.random() * 1000000));
+console.log(level.createFromString('sun' + Math.random() * 1000000));
+console.log(level.createFromString('venus' + Math.random() * 1000000));
 
 loadTextures();
 

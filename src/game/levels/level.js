@@ -1,14 +1,19 @@
 "use strict";
 
 var rng = require('./../../lib/rng'),
-    layout = require('./layout');
+    layout = require('./layout'),
+    name = require('./name');
 
 module.exports = {
     createFromString: function (string) {
-        console.log('---- ' + string);
+        var levelRng = rng.createFromString(string),
+            levelName = name.get(levelRng),
+            levelLayout = layout.get(levelRng);
 
-        var levelRng = rng.createFromString(string);
-
-        console.log(layout.get(levelRng));
+        return {
+            rng: levelRng,
+            name: levelName,
+            layout: levelLayout
+        };
     }
 };
