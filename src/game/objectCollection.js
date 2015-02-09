@@ -16,6 +16,14 @@ collection.on('remove.playerShot', function (element) {
     renderer.removeElement(element.sprite);
 });
 
+collection.on('add.meteor', function (element) {
+    renderer.addElement(element.sprite);
+});
+
+collection.on('remove.meteor', function (element) {
+    renderer.removeElement(element.sprite);
+});
+
 collection.on('add.enemy', function (element) {
     renderer.addElement(element.sprite);
 });

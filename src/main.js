@@ -15,14 +15,20 @@ var loadTextures = function loadTextures () {
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
 
-console.log(level.createFromString('alpha centauri' + Math.random() * 1000000));
-console.log(level.createFromString('earth' + Math.random() * 1000000));
-console.log(level.createFromString('sun' + Math.random() * 1000000));
-console.log(level.createFromString('venus' + Math.random() * 1000000));
+
+
+/*
+console.log(level.createFromString('alpha centauri').colors);
+console.log(level.createFromString('earth').colors);
+console.log(level.createFromString('sun').colors);
+console.log(level.createFromString('venus').colors);
+*/
 
 loadTextures();
 
 var init = function init () {
+    var meteorPool = require('./game/pools/meteorPool');
+
     var loop = new GameLoop();
 
     renderer.infectDom('game');
@@ -30,9 +36,25 @@ var init = function init () {
     var playerFactory = require('./game/entities/player'),
         player = playerFactory();
 
-    var playerShotArray = objectCollection.getArray('playerShot');
+    var playerShotArray = objectCollection.getArray('playerShot'),
+        meteorArray = objectCollection.getArray('meteor');
 
     objectCollection.add('player', player);
+
+    for (var i = 0; i < 10; i++) {
+        var size = 1 + Math.random() * 2;
+
+        objectCollection.add('meteor', meteorPool.get({
+            x: 50 + Math.random() * 700,
+            y: Math.random() * 200,
+            speed: (200 + Math.random() * 150) / size,
+            size: size,
+            directionIntent: {
+                x: Math.random() * 0.2 - 0.1,
+                y: 1
+            }
+        }));
+    }
 
     loop.update = function (dt) {
         input.update(dt);
@@ -40,6 +62,10 @@ var init = function init () {
 
         playerShotArray.forEach(function (shot) {
             shot.update(dt);
+        });
+
+        meteorArray.forEach(function (meteor) {
+            meteor.update(dt);
         });
     };
 
@@ -49,6 +75,10 @@ var init = function init () {
         playerShotArray.forEach(function playerShotArrayPostUpdate (shot) {
             shot.postUpdate(dt);
         });
+
+        meteorArray.forEach(function (meteor) {
+            meteor.postUpdate(dt);
+        });
     };
 
     loop.render = function (dt) {
@@ -56,6 +86,10 @@ var init = function init () {
 
         playerShotArray.forEach(function (shot) {
             shot.render(dt);
+        });
+
+        meteorArray.forEach(function (meteor) {
+            meteor.render(dt);
         });
 
         renderer.render(dt);

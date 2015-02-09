@@ -7,7 +7,7 @@ var PIXI = require('pixi.js'),
     baseHeight = 600; //window.innerHeight;
 
 var renderer = new PIXI.WebGLRenderer(baseWidth, baseHeight),
-    stage = new PIXI.Stage(0xFFFFFF);
+    stage = new PIXI.Stage(0x555555);
 
 module.exports = {
     screenWidth: baseWidth,
