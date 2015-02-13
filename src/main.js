@@ -39,7 +39,7 @@ var init = function init () {
                 objectCollection.add('meteor', meteorPool.get({
                     x: -100 + Math.random() * 1000,
                     y: -200 + Math.random() * 100,
-                    speed: (200 + Math.random() * 150) * this.speed / size,
+                    speed: (200 + Math.random() * 150) * this.speed / Math.sqrt(size),
                     size: size,
                     colors: this.level.colors,
                     directionIntent: {

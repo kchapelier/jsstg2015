@@ -21,8 +21,8 @@ var emitterDescription = {
         "end": "#ff6600"
     },
     "speed": {
-        "start": 50,
-        "end": 350
+        "start": 40,
+        "end": 280
     },
     "acceleration": {
         "x": 0,
