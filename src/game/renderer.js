@@ -7,7 +7,14 @@ var PIXI = require('pixi.js'),
     baseHeight = 600; //window.innerHeight;
 
 var renderer = new PIXI.WebGLRenderer(baseWidth, baseHeight),
-    stage = new PIXI.Stage(0x555555);
+    stage = new PIXI.Stage(0x000000),
+    backgroundLayer = new PIXI.DisplayObjectContainer(),
+    middleLayer = new PIXI.DisplayObjectContainer(),
+    foregroundLayer = new PIXI.DisplayObjectContainer();
+
+stage.addChild(backgroundLayer);
+stage.addChild(middleLayer);
+stage.addChild(foregroundLayer);
 
 module.exports = {
     screenWidth: baseWidth,
@@ -20,10 +27,22 @@ module.exports = {
         domElement.appendChild(renderer.view);
     },
     addElement: function (element) {
-        stage.addChild(element);
+        middleLayer.addChild(element);
     },
     removeElement: function (element) {
-        stage.removeChild(element);
+        middleLayer.removeChild(element);
+    },
+    addElementToForeground: function (element) {
+        foregroundLayer.addChild(element);
+    },
+    removeElementFromForeground: function (element) {
+        foregroundLayer.removeChild(element);
+    },
+    addElementToBackground: function (element) {
+        backgroundLayer.addChild(element);
+    },
+    removeElementFromBackground: function (element) {
+        backgroundLayer.removeChild(element);
     },
     render: function () {
         renderer.render(stage);

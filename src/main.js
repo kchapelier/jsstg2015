@@ -9,25 +9,49 @@ var GameLoop = require('migl-gameloop'),
     level = require('./game/levels/level');
 
 var loadTextures = function loadTextures () {
+    textureCollection.load('particle', 'particles/particle.png');
+    textureCollection.load('particle2', 'particles/particle2.png');
     textureCollection.load('player-sprite', 'entities/placeholder.png');
     textureCollection.load('enemy-sprite', 'entities/placeholder.png');
     textureCollection.load('hitbox', 'entities/hitbox.png');
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
 
-
-
-/*
-console.log(level.createFromString('alpha centauri').colors);
-console.log(level.createFromString('earth').colors);
-console.log(level.createFromString('sun').colors);
-console.log(level.createFromString('venus').colors);
-*/
-
 loadTextures();
+
+var l = level.createFromString('test' + (Math.random() * 200000));
 
 var init = function init () {
     var meteorPool = require('./game/pools/meteorPool');
+
+    var meteorStage = {
+        initialize: function (level) {
+            this.level = level;
+            this.generosity = this.level.rng.randomBounded(0.5, 1.5);
+            this.speed = this.level.rng.randomBounded(0.5, 1.5);
+            this.duration = this.level.rng.randomBounded(0.5, 1.5);
+            this.deviation = this.level.rng.randomBounded(-0.5, 0.5);
+        },
+        update: function (dt) {
+            if (Math.random() < 0.005 * dt * this.generosity) {
+                var size = 1 + Math.pow(Math.random(), 2) * 4;
+
+                objectCollection.add('meteor', meteorPool.get({
+                    x: -100 + Math.random() * 1000,
+                    y: -200 + Math.random() * 100,
+                    speed: (200 + Math.random() * 150) * this.speed / size,
+                    size: size,
+                    colors: this.level.colors,
+                    directionIntent: {
+                        x: Math.random() * this.deviation,
+                        y: 1
+                    }
+                }));
+            }
+        }
+    };
+
+    meteorStage.initialize(l);
 
     var loop = new GameLoop();
 
@@ -41,24 +65,13 @@ var init = function init () {
 
     objectCollection.add('player', player);
 
-    for (var i = 0; i < 10; i++) {
-        var size = 1 + Math.random() * 2;
 
-        objectCollection.add('meteor', meteorPool.get({
-            x: 50 + Math.random() * 700,
-            y: Math.random() * 200,
-            speed: (200 + Math.random() * 150) / size,
-            size: size,
-            directionIntent: {
-                x: Math.random() * 0.2 - 0.1,
-                y: 1
-            }
-        }));
-    }
 
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
+
+        meteorStage.update(dt);
 
         playerShotArray.forEach(function (shot) {
             shot.update(dt);

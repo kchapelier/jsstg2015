@@ -10,7 +10,7 @@ var texture = textureCollection.get('player-sprite'),
 var createEmitter = function createEmitter (source) {
     var emitter = new PixiParticle.Emitter(
         source,
-        [textureCollection.get('player-sprite')],
+        [texture],
         {
             "alpha": {
                 "start": 0,
@@ -59,7 +59,7 @@ var createEmitter = function createEmitter (source) {
     );
 
     // Start emitting
-    emitter.emit = true;
+    emitter.emit = false;
 
     return emitter;
 };
@@ -68,15 +68,16 @@ var createEmitter = function createEmitter (source) {
 module.exports = {
     initialize: function (element) {
         element.sprite = new PIXI.Sprite(texture);
+        element.sprite.anchor = new PIXI.Point(0.5, 0.5);
         element.hitbox = new PIXI.Sprite(textureHitbox);
+        element.hitbox.anchor = new PIXI.Point(0.5, 0.5);
         element.emitter = createEmitter(element.sprite);
-        console.log(element);
     },
     render: function (element, dt) {
         element.sprite.x = Math.round(element.x);
         element.sprite.y = Math.round(element.y);
-        element.hitbox.x = Math.round(element.x + 12);
-        element.hitbox.y = Math.round(element.y + 12);
+        element.hitbox.x = Math.round(element.x);
+        element.hitbox.y = Math.round(element.y);
 
         element.emitter.update(dt / 1000);
 

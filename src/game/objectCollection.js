@@ -17,11 +17,13 @@ collection.on('remove.playerShot', function (element) {
 });
 
 collection.on('add.meteor', function (element) {
-    renderer.addElement(element.sprite);
+    renderer.addElementToForeground(element.emitterContainer);
+    renderer.addElementToForeground(element.sprite);
 });
 
 collection.on('remove.meteor', function (element) {
-    renderer.removeElement(element.sprite);
+    renderer.removeElementFromForeground(element.emitterContainer);
+    renderer.removeElementFromForeground(element.sprite);
 });
 
 collection.on('add.enemy', function (element) {
