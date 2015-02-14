@@ -28,12 +28,39 @@ var init = function init () {
     renderer.infectDom('game');
 
     var playerFactory = require('./game/entities/player'),
-        player = playerFactory();
-
-    var playerShotArray = objectCollection.getArray('playerShot'),
-        meteorArray = objectCollection.getArray('meteor');
+        player = playerFactory({
+            x : 400,
+            y : 500
+        });
 
     objectCollection.add('player', player);
+
+    var playerShotArray = objectCollection.getArray('playerShot'),
+        enemyShotArray = objectCollection.getArray('enemyShot'),
+        meteorArray = objectCollection.getArray('meteor'),
+        enemyArray = objectCollection.getArray('enemy');
+
+
+
+    var BigEnemiesFields = require('./game/levels/fields/bigEnemiesField');
+
+    var bigMonsterPool = require('./game/pools/bigEnemyPool');
+    var bigMonsterField = new BigEnemiesFields(l);
+
+    for (var i = 0; i < bigMonsterField.enemies.length; i += 1) {
+        var pos = bigMonsterField.enemies[i];
+
+        objectCollection.add('enemy', bigMonsterPool.get({
+            x: pos.x,
+            y: pos.y,
+            speed: 0,
+            directionIntent: {
+                x: 0,
+                y: 0
+            },
+            sequence: require('./game/patterns/sequences/testSequence')()
+        }));
+    }
 
     loop.update = function (dt) {
         input.update(dt);
@@ -41,6 +68,14 @@ var init = function init () {
 
         playerShotArray.forEach(function (shot) {
             shot.update(dt);
+        });
+
+        enemyShotArray.forEach(function (shot) {
+            shot.update(dt);
+        });
+
+        enemyArray.forEach(function (enemy) {
+            enemy.update(dt);
         });
 
         meteorArray.forEach(function (meteor) {
@@ -55,6 +90,14 @@ var init = function init () {
             shot.postUpdate(dt);
         });
 
+        enemyShotArray.forEach(function (shot) {
+            shot.postUpdate(dt);
+        });
+
+        enemyArray.forEach(function (enemy) {
+            enemy.postUpdate(dt);
+        });
+
         meteorArray.forEach(function (meteor) {
             meteor.postUpdate(dt);
         });
@@ -65,6 +108,14 @@ var init = function init () {
 
         playerShotArray.forEach(function (shot) {
             shot.render(dt);
+        });
+
+        enemyShotArray.forEach(function (shot) {
+            shot.render(dt);
+        });
+
+        enemyArray.forEach(function (enemy) {
+            enemy.render(dt);
         });
 
         meteorArray.forEach(function (meteor) {
