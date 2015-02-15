@@ -10,7 +10,8 @@ var generateMetaData = function generateMetaData (rng, speedTendency, generosity
     // normalizing and apply difficult factor
     return {
         speed: speed * ratio * difficultyFactor,
-        generosity: generosity * ratio * difficultyFactor
+        generosity: generosity * ratio * difficultyFactor,
+        difficulty: difficultyFactor
     };
 };
 

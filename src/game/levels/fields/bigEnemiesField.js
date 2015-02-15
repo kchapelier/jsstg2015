@@ -35,6 +35,8 @@ BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
         x: screenWidth - x,
         y: y
     });
+
+    //TODO chose randomly whether the two enemies should have the same pattern
 };
 
 BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
@@ -56,6 +58,9 @@ BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
         x: screenWidth - x,
         y: y
     });
+
+    //TODO lower the difficulty of the two edge monsters
+    //TODO have the two edges monsters use a different pattern than the middle one
 };
 
 BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
@@ -83,6 +88,7 @@ BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
     });
 
     //TODO reduce pattern difficulty proportionnally to x
+    //TODO reduce the speed of the patterns
 };
 
 BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
@@ -98,6 +104,8 @@ BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
         x: screenWidth - x,
         y: y
     });
+
+    //TODO have the two enemies have the same patterns
 };
 
 module.exports = BigEnemiesField;
