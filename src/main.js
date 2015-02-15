@@ -47,7 +47,7 @@ var init = function init () {
     var bigMonsterPool = require('./game/pools/bigEnemyPool');
     var bigMonsterField = new BigEnemiesFields(l);
 
-    var patternMetaData = l.generatePatternMetaData(0);
+    var patternMetaData = l.generatePatternMetaData(2);
 
     for (var i = 0; i < bigMonsterField.enemies.length; i += 1) {
         var pos = bigMonsterField.enemies[i];

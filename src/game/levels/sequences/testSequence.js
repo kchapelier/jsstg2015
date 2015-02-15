@@ -3,13 +3,12 @@
 var Sequence = require('../../patterns/sequence');
 
 module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty) {
-    var number = Math.ceil(10 + generosity * 5) * 2 + 1,
+    var homing = rng() > 0.75,
+        rotation = rng() * 10,
+        number = Math.ceil((homing ? 1.5 * difficulty : 1) * 10 + generosity * 5) * 2 + 1,
         repeatition = Math.ceil(20 + generosity * difficulty),
-        bulletSpeed = 120 * Math.pow(speed, 0.75),
-        waitTime = 200 * 100 / bulletSpeed / difficulty;
-
-    var mustRotate = rng() > 0.5,
-        rotation = rng() * 10;
+        bulletSpeed = 120 * Math.pow(speed, 0.5),
+        waitTime = 200 * 100 / bulletSpeed / Math.sqrt(difficulty);
 
     var def = [];
 
@@ -17,10 +16,10 @@ module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty
     def.push(['setBulletSprite', 'player-bullet']);
     def.push(['setBulletSpeed', bulletSpeed]);
 
-    if (mustRotate) {
-        def.push(['rotate', rotation]);
-    } else {
+    if (homing) {
         def.push(['setAngle', 0, true]);
+    } else {
+        def.push(['rotate', rotation]);
     }
 
     def.push(['burst', number, Math.PI * 2, 0, false]);

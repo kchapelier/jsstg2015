@@ -14,7 +14,7 @@ module.exports = {
         }
 
         element.sprite = new PIXI.Sprite(bulletTexture ? bulletTexture : defaultTexture);
-
+        element.sprite.blendMode = PIXI.blendModes.ADD;
         element.sprite.anchor = new PIXI.Point(0.5, 0.5);
     },
     render: function (element) {
