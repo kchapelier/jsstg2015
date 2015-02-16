@@ -47,7 +47,7 @@ var init = function init () {
     var bigMonsterPool = require('./game/pools/bigEnemyPool');
     var bigMonsterField = new BigEnemiesFields(l);
 
-    var patternMetaData = l.generatePatternMetaData(2);
+    var patternMetaData = l.generatePatternMetaData(5);
 
     for (var i = 0; i < bigMonsterField.enemies.length; i += 1) {
         var pos = bigMonsterField.enemies[i];
@@ -60,7 +60,7 @@ var init = function init () {
                 x: 0,
                 y: 0
             },
-            sequence: require('./game/levels/sequences/testSequence')(l.rng.random, patternMetaData.speed, patternMetaData.generosity, patternMetaData.difficulty)
+            sequence: require('./game/levels/sequences/pulseSequence')(l.rng.random, patternMetaData.speed, patternMetaData.generosity, patternMetaData.difficulty)
         }));
     }
 

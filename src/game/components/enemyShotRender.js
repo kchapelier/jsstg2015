@@ -14,10 +14,11 @@ module.exports = {
         }
 
         element.sprite = new PIXI.Sprite(bulletTexture ? bulletTexture : defaultTexture);
-        element.sprite.blendMode = PIXI.blendModes.ADD;
+        //element.sprite.blendMode = PIXI.blendModes.ADD;
         element.sprite.anchor = new PIXI.Point(0.5, 0.5);
     },
-    render: function (element) {
+    render: function (element, dt) {
+        //element.sprite.scale.x = element.sprite.scale.y = element.sprite.scale.x + dt / 3000;
         element.sprite.x = element.x;
         element.sprite.y = element.y;
     },
