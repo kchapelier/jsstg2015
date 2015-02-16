@@ -13,6 +13,10 @@ Sequence.prototype.timeCursor = null;
 Sequence.prototype.currentOperation = null;
 Sequence.prototype.currentRepeatition = null;
 
+Sequence.prototype.clone = function () {
+    return new Sequence(this.operations, this.repeatition);
+};
+
 Sequence.prototype.update = function (pattern, dt) {
     if (this.isComplete()) {
         return false;
