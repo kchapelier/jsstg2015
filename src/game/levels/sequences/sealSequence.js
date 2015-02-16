@@ -1,7 +1,5 @@
 "use strict";
 
-var Sequence = require('../../patterns/sequence');
-
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
 
 
@@ -18,7 +16,7 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
 
     def.push(['setBulletSpeed', 50, 0]);
 
-    for(var k = 0; k < 5; k++) {
+    for (var k = 0; k < 5; k++) {
         def.push(['wait', 500]);
         def.push(['setAngle', 0, true]);
         def.push(['setBulletSprite', 'particle2']);
@@ -37,5 +35,5 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         def.push(['wait', 1500]);
     }
 
-    return new Sequence(def, 20);
+    return def;
 };

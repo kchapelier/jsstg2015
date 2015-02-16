@@ -60,7 +60,7 @@ var init = function init () {
                 x: 0,
                 y: 0
             },
-            sequence: require('./game/levels/sequences/pulseSequence')(l.rng.random, patternMetaData.speed, patternMetaData.generosity, patternMetaData.difficulty)
+            sequence: pos.sequence
         }));
     }
 

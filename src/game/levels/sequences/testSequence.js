@@ -1,10 +1,8 @@
 "use strict";
 
-var Sequence = require('../../patterns/sequence');
-
 module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty) {
-    var homing = rng() > 0.75,
-        rotation = rng() * 10,
+    var homing = rng.random() > 0.75,
+        rotation = rng.random() * 10,
         number = Math.ceil((homing ? 1.5 * difficulty : 1) * 10 + generosity * 5) * 2 + 1,
         repeatition = Math.ceil(20 + generosity * difficulty),
         bulletSpeed = 120 * Math.pow(speed, 0.5),
@@ -24,7 +22,7 @@ module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty
 
     def.push(['burst', number, Math.PI * 2, 0, false]);
 
-    return new Sequence(def, repeatition);
+    return def;
 
     /*
     Original template

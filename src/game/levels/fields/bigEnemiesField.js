@@ -1,5 +1,7 @@
 "use strict";
 
+var sequenceGenerator = require('./../sequences/generator');
+
 var screenWidth = 800,
     screenHeight = 600,
     widthDiv10 = screenWidth / 10,
@@ -11,7 +13,7 @@ var BigEnemiesField = function (level) {
 
     var choice = this.level.rng.random();
 
-    if (choice > 0.60) {
+    if (true || choice > 0.60) {
         this.initializeTwoMonstersOnTop();
     } else if (choice > 0.25) {
         this.initializeThreeMonstersOnTop();
@@ -22,18 +24,27 @@ var BigEnemiesField = function (level) {
     }
 };
 
+BigEnemiesField.prototype.generateSequence = function (preferences) {
+    return sequenceGenerator.generateSequence(this.level.rng, this.level.generatePatternMetaData(1), preferences);
+};
+
 BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
     var x = this.level.rng.randomBounded(widthDiv10, widthDiv10 * 4) | 0,
-        y = this.level.rng.randomBounded(heightDiv10, heightDiv10 * 4) | 0;
+        y = this.level.rng.randomBounded(heightDiv10, heightDiv10 * 4) | 0,
+        sequence = this.generateSequence({
+            test: 1
+        });
 
     this.enemies.push({
         x: x,
-        y: y
+        y: y,
+        sequence: sequence
     });
 
     this.enemies.push({
         x: screenWidth - x,
-        y: y
+        y: y,
+        sequence: sequence.clone()
     });
 
     //TODO chose randomly whether the two enemies should have the same pattern

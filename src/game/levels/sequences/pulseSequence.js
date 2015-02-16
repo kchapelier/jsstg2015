@@ -1,12 +1,8 @@
 "use strict";
 
-var Sequence = require('../../patterns/sequence');
-
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
-
-
-    var homing = rng() > 0.6,
-        rotation = rng() * 10,
+    var homing = rng.random() > 0.6,
+        rotation = rng.random() * 10,
         number = Math.ceil(10 + 20 * generosity) * 2 + 1,
         bulletSpeed = 180 * speed,
         waitTime = Math.min(1600, 800 * (1 + generosity / 10) / Math.sqrt(speed));
@@ -37,5 +33,5 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         def.push(['burst', number, Math.PI * 2, 0, false]);
     }
 
-    return new Sequence(def, 20);
+    return def;
 };
