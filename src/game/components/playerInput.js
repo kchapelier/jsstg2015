@@ -4,11 +4,8 @@ var input = require('../input');
 
 module.exports = {
     focused: false,
-    normalSpeed: 290,
-    focusedSpeed: 170,
-    lastShot: 0,
-    shotFrequency: 66,
-    shooting: false,
+    normalSpeed: 280,
+    focusedSpeed: 150,
     update: function (element, dt) {
         var directionIntent = element.directionIntent;
 
@@ -32,20 +29,9 @@ module.exports = {
             directionIntent.normalize();
         }
 
-        element.focused = !!input.currentInput.FOCUS;
+        element.focused = input.currentInput.FOCUS;
+        element.speed = element.focused ? element.focusedSpeed : element.normalSpeed;
 
-        if (element.focused) {
-            element.speed = element.focusedSpeed;
-        } else {
-            element.speed = element.normalSpeed;
-        }
-
-        if (element.lastShot > 0) {
-            element.shooting = false;
-            element.lastShot -= dt;
-        } else if (input.currentInput.SHOOT) {
-            element.shooting = true;
-            element.lastShot = element.shotFrequency;
-        }
+        element.shooting = input.currentInput.SHOOT;
     }
 };

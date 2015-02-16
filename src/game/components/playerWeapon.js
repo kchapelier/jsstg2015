@@ -4,8 +4,20 @@ var collection = require('../objectCollection'),
     shotPool = require('../pools/playerShotPool');
 
 module.exports = {
+    lastShot: 0,
+    shotFrequency: 66,
+    shooting: false,
     update: function (element, dt) {
-        if (!!element.shooting) {
+        var shootNow = false;
+
+        if (element.lastShot > 0) {
+            element.lastShot -= dt;
+        } else if (element.shooting) {
+            shootNow = true;
+            element.lastShot = element.shotFrequency;
+        }
+
+        if (shootNow) {
             collection.add('playerShot', shotPool.get({
                 x: element.x + 10,
                 y: element.y - 20,
