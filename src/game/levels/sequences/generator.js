@@ -5,7 +5,8 @@ var Sequence = require('../../patterns/sequence');
 var collection = {
     seal: require('./sealSequence'),
     pulse: require('./pulseSequence'),
-    test: require('./testSequence')
+    test: require('./testSequence'),
+    perlin: require('./perlinSequence')
 };
 
 var getSumPreferences = function (preferences) {

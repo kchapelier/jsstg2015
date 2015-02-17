@@ -32,7 +32,7 @@ BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
     var x = this.level.rng.randomBounded(widthDiv10, widthDiv10 * 4) | 0,
         y = this.level.rng.randomBounded(heightDiv10, heightDiv10 * 4) | 0,
         sequence = this.generateSequence({
-            test: 1
+            perlin: 1
         });
 
     this.enemies.push({
