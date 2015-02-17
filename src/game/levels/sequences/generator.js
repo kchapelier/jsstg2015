@@ -43,15 +43,47 @@ var getRandomFromPreferences = function (levelRng, preferences) {
     return key;
 };
 
+var getSequenceDuration = function (definition) {
+    return definition.reduce(function (duration, line) {
+        if (line[0] === 'wait') {
+            duration += line[1];
+        }
+
+        return duration;
+    }, 0);
+};
+
 var createDefinition = function (patternKey, levelRng, patternMetaData) {
     return collection[patternKey](levelRng, patternMetaData.speed, patternMetaData.generosity, patternMetaData.difficulty);
 };
 
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
 module.exports = {
     generateSequence: function (levelRng, patternMetaData, preferences) {
-        var patternKey = getRandomFromPreferences(levelRng, preferences),
+        var minimumDuration = 60000 * patternMetaData.difficulty,
+            currentDuration = 0,
+            pauseBetween = 2000,
+            wholeDefinition = [],
+            patternKey,
+            definition;
+
+        while (currentDuration < minimumDuration) {
+            if (wholeDefinition.length) {
+                wholeDefinition.push(['wait', pauseBetween]);
+                currentDuration += pauseBetween;
+            }
+
+            patternKey = getRandomFromPreferences(levelRng, preferences);
             definition = createDefinition(patternKey, levelRng, patternMetaData);
 
-        return new Sequence(definition, 2);
+            currentDuration += getSequenceDuration(definition);
+            wholeDefinition = wholeDefinition.concat(definition);
+        }
+
+        return new Sequence(wholeDefinition, 1);
     }
 };

@@ -16,24 +16,22 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
 
     def.push(['setBulletSpeed', 50, 0]);
 
-    for (var k = 0; k < 5; k++) {
-        def.push(['wait', 500]);
-        def.push(['setAngle', 0, true]);
-        def.push(['setBulletSprite', 'particle2']);
-        def.push(['burst', 100, Math.PI * 2, 0, false]);
-        def.push(['setBulletSprite', 'player-bullet']);
-        def.push(['wait', 200]);
+    def.push(['wait', 500]);
+    def.push(['setAngle', 0, true]);
+    def.push(['setBulletSprite', 'particle2']);
+    def.push(['burst', 100, Math.PI * 2, 0, false]);
+    def.push(['setBulletSprite', 'player-bullet']);
+    def.push(['wait', 200]);
 
-        for (var i = 0; i < 50; i++) {
-            def.push(['wait', 140]);
-            def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * 2, false]);
-            def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * -2, false]);
-            def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * 2, false]);
-            def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * -2, false]);
-        }
-
-        def.push(['wait', 1500]);
+    for (var i = 0; i < 50; i++) {
+        def.push(['wait', 140]);
+        def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * 2, false]);
+        def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * -2, false]);
+        def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * 2, false]);
+        def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * -2, false]);
     }
+
+    def.push(['wait', 1500]);
 
     return def;
 };

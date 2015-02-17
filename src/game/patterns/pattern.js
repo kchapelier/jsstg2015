@@ -24,7 +24,7 @@ var Pattern = function (source, destination) {
     this.aimDirection = new Victor(0, 1);
     this.playerDirection = new Victor(1, 0);
 
-    this.bulletSprite = 'default-bullet';
+    this.bulletSprite = 'player-bullet';
     this.bulletSpeed = 200;
     this.bulletSpeedRandomIncrement = 0;
 };
