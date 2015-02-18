@@ -16,10 +16,6 @@ var BigEnemiesField = function (level) {
 
     var choice = this.level.rng.random();
 
-    this.initializeFourMonstersInCorners();
-
-    /*
-
     if (choice > 0.60) {
         this.initializeTwoMonstersOnTop();
     } else if (choice > 0.25) {
@@ -29,7 +25,6 @@ var BigEnemiesField = function (level) {
     } else {
         this.initializeFourMonstersInCorners();
     }
-    */
 };
 
 BigEnemiesField.prototype.generateSequence = function (preferences, difficulty) {

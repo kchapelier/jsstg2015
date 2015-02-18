@@ -42,15 +42,15 @@ var init = function init () {
 
 
 
-    var BigEnemiesFields = require('./game/levels/fields/bigEnemiesField');
+    var BossField = require('./game/levels/fields/bossField');
 
     var bigMonsterPool = require('./game/pools/bigEnemyPool');
-    var bigMonsterField = new BigEnemiesFields(l);
+    var field = new BossField(l);
 
     var patternMetaData = l.generatePatternMetaData(5);
 
-    for (var i = 0; i < bigMonsterField.enemies.length; i += 1) {
-        var pos = bigMonsterField.enemies[i];
+    for (var i = 0; i < field.enemies.length; i += 1) {
+        var pos = field.enemies[i];
 
         objectCollection.add('enemy', bigMonsterPool.get({
             x: pos.x,
