@@ -1,5 +1,8 @@
 "use strict";
 
+// TODO move out (+ enemy constraint)
+// TODO boss field
+
 var sequenceGenerator = require('./../sequences/generator');
 
 var screenWidth = 800,
@@ -13,7 +16,11 @@ var BigEnemiesField = function (level) {
 
     var choice = this.level.rng.random();
 
-    if (true || choice > 0.60) {
+    this.initializeFourMonstersInCorners();
+
+    /*
+
+    if (choice > 0.60) {
         this.initializeTwoMonstersOnTop();
     } else if (choice > 0.25) {
         this.initializeThreeMonstersOnTop();
@@ -22,21 +29,80 @@ var BigEnemiesField = function (level) {
     } else {
         this.initializeFourMonstersInCorners();
     }
+    */
 };
 
-BigEnemiesField.prototype.generateSequence = function (preferences) {
-    return sequenceGenerator.generateSequence(this.level.rng, this.level.generatePatternMetaData(1), preferences);
+BigEnemiesField.prototype.generateSequence = function (preferences, difficulty) {
+    return sequenceGenerator.generateSequence(this.level.rng, this.level.generatePatternMetaData(difficulty), preferences);
 };
 
 BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
+    var difficulty = 1;
+
     var x = this.level.rng.randomBounded(widthDiv10, widthDiv10 * 4) | 0,
         y = this.level.rng.randomBounded(heightDiv10, heightDiv10 * 4) | 0,
         sequence = this.generateSequence({
-            perlin: 1,
-            test: 1,
-            seal: 1,
-            pulse: 1
-        });
+            square: 1
+        }, difficulty);
+
+    this.enemies.push({
+        x: x,
+        y: y,
+        sequence: sequence
+    });
+
+    this.enemies.push({
+        x: screenWidth - x,
+        y: y,
+        sequence: sequence.clone()
+    });
+};
+
+BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
+    var difficulty = 1;
+
+    var edgeDifficuly = difficulty * 0.90;
+
+    var x = this.level.rng.randomBounded(widthDiv10 * 2, widthDiv10 * 4) | 0,
+        y = this.level.rng.randomBounded(heightDiv10 * 2, heightDiv10 * 3) | 0,
+        y3 = y + (this.level.rng.randomBounded(heightDiv10, heightDiv10 * 1.5) | 0) * (this.level.rng.random() > 0.5 ? -1 : 1),
+        sequence = this.generateSequence({
+            square: 1
+        }, edgeDifficuly),
+        sequence3 = this.generateSequence({
+            square: 1
+        }, difficulty);
+
+    this.enemies.push({
+        x: screenWidth / 2,
+        y: y3,
+        sequence: sequence3
+    });
+
+    this.enemies.push({
+        x: x,
+        y: y,
+        sequence: sequence
+    });
+
+    this.enemies.push({
+        x: screenWidth - x,
+        y: y,
+        sequence: sequence.clone()
+    });
+};
+
+BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
+    var difficulty = 1;
+
+    // reduce pattern difficulty proportionnally to x
+
+    var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 2) | 0,
+        y = (x * screenHeight / screenWidth) | 0,
+        sequenceDifficulty = difficulty * (0.90 - x / screenWidth),
+        sequence = this.generateSequence({
+            square: 1
+        }, sequenceDifficulty);
 
     this.enemies.push({
         x: x,
@@ -50,76 +116,39 @@ BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
         sequence: sequence.clone()
     });
 
-    //TODO chose randomly whether the two enemies should have the same pattern
-};
-
-BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
-    var x = this.level.rng.randomBounded(widthDiv10 * 2, widthDiv10 * 4) | 0,
-        y = this.level.rng.randomBounded(heightDiv10 * 2, heightDiv10 * 3) | 0,
-        y3 = y + (this.level.rng.randomBounded(heightDiv10, heightDiv10 * 1.5) | 0) * (this.level.rng.random() > 0.5 ? -1 : 1);
-
-    this.enemies.push({
-        x: screenWidth / 2,
-        y: y3
-    });
-
     this.enemies.push({
         x: x,
-        y: y
+        y: screenHeight - y,
+        sequence: sequence.clone()
     });
 
     this.enemies.push({
         x: screenWidth - x,
-        y: y
+        y: screenHeight - y,
+        sequence: sequence.clone()
     });
-
-    //TODO lower the difficulty of the two edge monsters
-    //TODO have the two edges monsters use a different pattern than the middle one
-};
-
-BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
-    var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 2) | 0,
-        y = (x * screenHeight / screenWidth) | 0;
-
-    this.enemies.push({
-        x: x,
-        y: y
-    });
-
-    this.enemies.push({
-        x: screenWidth - x,
-        y: y
-    });
-
-    this.enemies.push({
-        x: x,
-        y: screenHeight - y
-    });
-
-    this.enemies.push({
-        x: screenWidth - x,
-        y: screenHeight - y
-    });
-
-    //TODO reduce pattern difficulty proportionnally to x
-    //TODO reduce the speed of the patterns
 };
 
 BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
-    var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 1.5),
-        y = this.level.rng.randomBounded(heightDiv10 * 4, heightDiv10 * 5);
+    var difficulty = 1;
+
+    var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 1.5) | 0,
+        y = this.level.rng.randomBounded(heightDiv10 * 4, heightDiv10 * 5) | 0,
+        sequence = this.generateSequence({
+            square: 1
+        }, difficulty);
 
     this.enemies.push({
         x: x,
-        y: y
+        y: y,
+        sequence: sequence
     });
 
     this.enemies.push({
         x: screenWidth - x,
-        y: y
+        y: y,
+        sequence: sequence.clone()
     });
-
-    //TODO have the two enemies have the same patterns
 };
 
 module.exports = BigEnemiesField;

@@ -6,7 +6,8 @@ var collection = {
     seal: require('./sealSequence'),
     pulse: require('./pulseSequence'),
     test: require('./testSequence'),
-    perlin: require('./perlinSequence')
+    perlin: require('./perlinSequence'),
+    square: require('./squareSequence')
 };
 
 var getSumPreferences = function (preferences) {
@@ -55,11 +56,6 @@ var getSequenceDuration = function (definition) {
 
 var createDefinition = function (patternKey, levelRng, patternMetaData) {
     return collection[patternKey](levelRng, patternMetaData.speed, patternMetaData.generosity, patternMetaData.difficulty);
-};
-
-function shuffle(o){ //v1.0
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
 };
 
 module.exports = {

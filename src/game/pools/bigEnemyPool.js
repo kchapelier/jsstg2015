@@ -11,7 +11,7 @@ module.exports = pool({
         element.y = options.y;
         element.speed = options.speed;
         element.directionIntent = options.directionIntent;
-        element.sequence = options.sequence;
+        element.sequence = options.sequence || null;
     },
     initialNumber: 5
 });
