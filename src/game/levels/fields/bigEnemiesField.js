@@ -4,6 +4,9 @@
 
 var sequenceGenerator = require('./../sequences/generator');
 
+var bigMonsterPool = require('./../../pools/bigEnemyPool'),
+    objectCollection = require('./../../objectCollection');
+
 var screenWidth = 800,
     screenHeight = 600,
     widthDiv10 = screenWidth / 10,
@@ -143,6 +146,27 @@ BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
         y: y,
         sequence: sequence.clone()
     });
+};
+
+BigEnemiesField.prototype.update = function (dt) {
+    if (!this.spawned) {
+        for (var i = 0; i < this.enemies.length; i += 1) {
+            var pos = this.enemies[i];
+
+            objectCollection.add('enemy', bigMonsterPool.get({
+                x: pos.x,
+                y: pos.y,
+                speed: 0,
+                directionIntent: {
+                    x: 0,
+                    y: 0
+                },
+                sequence: pos.sequence
+            }));
+        }
+
+        this.spawned = true;
+    }
 };
 
 module.exports = BigEnemiesField;

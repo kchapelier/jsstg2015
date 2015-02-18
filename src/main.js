@@ -4,8 +4,7 @@ var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
     renderer = require('./game/renderer'),
     objectCollection = require('./game/objectCollection'),
-    textureCollection = require('./game/textureCollection'),
-    level = require('./game/levels/level');
+    textureCollection = require('./game/textureCollection');
 
 var loadTextures = function loadTextures () {
     textureCollection.load('particle', 'particles/particle.png');
@@ -18,10 +17,7 @@ var loadTextures = function loadTextures () {
 
 loadTextures();
 
-var l = level.createFromString('test' + (Math.random() * 200000));
-
 var init = function init () {
-
     var loop = new GameLoop();
 
     renderer.infectDom('game');
@@ -39,36 +35,15 @@ var init = function init () {
         meteorArray = objectCollection.getArray('meteor'),
         enemyArray = objectCollection.getArray('enemy');
 
-
-    /*
-    var BossField = require('./game/levels/fields/meteorField');
-
-    var bigMonsterPool = require('./game/pools/bigEnemyPool');
-    var field = new BossField(l);
-
-    var patternMetaData = l.generatePatternMetaData(5);
-    */
-
-    /*
-    for (var i = 0; i < field.enemies.length; i += 1) {
-        var pos = field.enemies[i];
-
-        objectCollection.add('enemy', bigMonsterPool.get({
-            x: pos.x,
-            y: pos.y,
-            speed: 0,
-            directionIntent: {
-                x: 0,
-                y: 0
-            },
-            sequence: pos.sequence
-        }));
-    }
-    */
+    var level = require('./game/levels/level');
+    var l = level.createFromString('test' + (Math.random() * 200000));
+    var field = l.fields[3];
 
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
+
+        field.update(dt);
 
         playerShotArray.forEach(function (shot) {
             shot.update(dt);
