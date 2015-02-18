@@ -29,8 +29,8 @@ var init = function init () {
 
     var playerFactory = require('./game/entities/player'),
         player = playerFactory({
-            x : 400,
-            y : 500
+            x: 400,
+            y: 500
         });
 
     objectCollection.add('player', player);
@@ -41,14 +41,16 @@ var init = function init () {
         enemyArray = objectCollection.getArray('enemy');
 
 
-
-    var BossField = require('./game/levels/fields/bossField');
+    /*
+    var BossField = require('./game/levels/fields/meteorField');
 
     var bigMonsterPool = require('./game/pools/bigEnemyPool');
     var field = new BossField(l);
 
     var patternMetaData = l.generatePatternMetaData(5);
+    */
 
+    /*
     for (var i = 0; i < field.enemies.length; i += 1) {
         var pos = field.enemies[i];
 
@@ -63,6 +65,7 @@ var init = function init () {
             sequence: pos.sequence
         }));
     }
+    */
 
     loop.update = function (dt) {
         input.update(dt);

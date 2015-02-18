@@ -1,7 +1,6 @@
 "use strict";
 
 // TODO move out (+ enemy constraint)
-// TODO boss field
 
 var sequenceGenerator = require('./../sequences/generator');
 
