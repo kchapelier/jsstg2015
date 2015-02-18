@@ -1,3 +1,5 @@
+"use strict";
+
 var wmc = require('./../../lib/wmc-level-names');
 
 module.exports = {

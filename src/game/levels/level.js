@@ -35,18 +35,14 @@ Level.prototype.initializeFields = function () {
     for (var i = 0; i < this.layout.length; i++) {
         var type = this.layout[i];
 
-        switch (type) {
-            case 'm':
-                this.fields.push(new MeteorField(this));
-                break;
-            case 'E':
-                this.fields.push(new BigEnemiesField(this));
-                break;
-            case 'B':
-                this.fields.push(new BossField(this));
-                break;
-            default:
-                throw new Error('Field type not implemented yet : "' + type + '"');
+        if (type === 'm') {
+            this.fields.push(new MeteorField(this));
+        } else if (type === 'E') {
+            this.fields.push(new BigEnemiesField(this));
+        } else if (type === 'B') {
+            this.fields.push(new BossField(this));
+        } else {
+            throw new Error('Field type not implemented yet : "' + type + '"');
         }
     }
 };

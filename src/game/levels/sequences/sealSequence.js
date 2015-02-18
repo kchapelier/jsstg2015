@@ -1,8 +1,6 @@
 "use strict";
 
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
-
-
     /*
     var homing = rng() > 0.75,
         rotation = rng() * 10,

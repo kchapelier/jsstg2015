@@ -3,7 +3,6 @@
 var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
     renderer = require('./game/renderer'),
-    Victor = require('victor'),
     objectCollection = require('./game/objectCollection'),
     textureCollection = require('./game/textureCollection'),
     level = require('./game/levels/level');

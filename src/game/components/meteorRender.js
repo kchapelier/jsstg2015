@@ -68,7 +68,7 @@ var createEmitter = function createEmitter (source) {
 
 
 module.exports = {
-    size : 1,
+    size: 1,
     initialize: function (element) {
         element.sprite = new PIXI.Sprite(particleTexture);
         element.sprite.alpha = 0.90;

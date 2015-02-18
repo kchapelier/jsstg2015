@@ -1,5 +1,4 @@
-var renderer = require('../renderer'),
-    Victor = require('victor');
+"use strict";
 
 module.exports = {
     update: function (element, dt) {
