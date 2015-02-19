@@ -30,8 +30,8 @@ BossField.prototype.initializeBossOnTop = function () {
     var x = (screenWidth / 2) | 0,
         y = (screenHeight / 8) | 0,
         sequence = this.generateSequence({
-            square: 1,
-            test: 1
+            layeredSpiral: 1,
+            spiral: 1
         }, difficulty);
 
     this.enemies.push({
@@ -50,16 +50,7 @@ BossField.prototype.update = function (dt) {
         for (var i = 0; i < this.enemies.length; i += 1) {
             var pos = this.enemies[i];
 
-            objectCollection.add('enemy', bigMonsterPool.get({
-                x: pos.x,
-                y: pos.y,
-                speed: 0,
-                directionIntent: {
-                    x: 0,
-                    y: 0
-                },
-                sequence: pos.sequence
-            }));
+            objectCollection.add('enemy', bigMonsterPool.get(pos));
         }
 
         this.spawned = true;

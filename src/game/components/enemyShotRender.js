@@ -3,7 +3,7 @@
 var PIXI = require('pixi.js'),
     textureCollection = require('./../textureCollection');
 
-var defaultTexture = textureCollection.get('player-bullet');
+var defaultTexture = textureCollection.get('particle');
 
 module.exports = {
     initialize: function (element) {

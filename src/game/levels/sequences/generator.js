@@ -7,7 +7,15 @@ var collection = {
     pulse: require('./pulseSequence'),
     test: require('./testSequence'),
     perlin: require('./perlinSequence'),
-    square: require('./squareSequence')
+    square: require('./squareSequence'),
+    serpentineFlower: require('./serpentineFlowerSequence'),
+    crown: require('./crownSequence'),
+    crown2: require('./crown2Sequence'),
+    sprayer: require('./sprayerSequence'),
+    flower: require('./flowerSequence'),
+    constant: require('./constantSequence'),
+    layeredSpiral: require('./layeredSpiralSequence'),
+    spiral: require('./spiralSequence')
 };
 
 var getSumPreferences = function (preferences) {

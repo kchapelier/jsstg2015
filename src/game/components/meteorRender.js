@@ -41,9 +41,9 @@ var emitterDescription = {
         "max": 0.65
     },
     "blendMode": "screen",
-    "frequency": 0.006,
+    "frequency": 0.0065,
     "emitterLifetime": -1,
-    "maxParticles": 40,
+    "maxParticles": 38,
     "pos": {
         "x": 0,
         "y": 0
