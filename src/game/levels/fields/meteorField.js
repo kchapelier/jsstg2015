@@ -11,6 +11,9 @@ var MeteorField = function (level) {
     this.deviation = this.level.rng.randomBounded(-0.5, 0.5);
 };
 
+MeteorField.prototype.reset = function () {
+};
+
 MeteorField.prototype.update = function (dt) {
     if (this.level.rng.random() < 0.005 * dt * this.generosity) {
         var size = 1 + Math.random() * 4;

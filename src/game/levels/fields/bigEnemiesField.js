@@ -27,7 +27,13 @@ var BigEnemiesField = function (level) {
     } else {
         this.initializeFourMonstersInCorners();
     }
+
+    this.reset();
 };
+
+BigEnemiesField.prototype.level = null;
+BigEnemiesField.prototype.enemies = null;
+BigEnemiesField.prototype.spawned = null;
 
 BigEnemiesField.prototype.generateSequence = function (preferences, difficulty) {
     return sequenceGenerator.generateSequence(this.level.rng, this.level.generatePatternMetaData(difficulty), preferences);
@@ -146,6 +152,10 @@ BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
         y: y,
         sequence: sequence.clone()
     });
+};
+
+BigEnemiesField.prototype.reset = function () {
+    this.spawned = false;
 };
 
 BigEnemiesField.prototype.update = function (dt) {

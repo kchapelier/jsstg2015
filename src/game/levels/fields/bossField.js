@@ -13,7 +13,12 @@ var BossField = function (level) {
     this.enemies = [];
 
     this.initializeBossOnTop();
+    this.reset();
 };
+
+BossField.prototype.level = null;
+BossField.prototype.enemies = null;
+BossField.prototype.spawned = null;
 
 BossField.prototype.generateSequence = function (preferences, difficulty) {
     return sequenceGenerator.generateSequence(this.level.rng, this.level.generatePatternMetaData(difficulty + 3), preferences);
@@ -34,6 +39,10 @@ BossField.prototype.initializeBossOnTop = function () {
         y: y,
         sequence: sequence
     });
+};
+
+BossField.prototype.reset = function () {
+    this.spawned = false;
 };
 
 BossField.prototype.update = function (dt) {

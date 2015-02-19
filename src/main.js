@@ -37,7 +37,7 @@ var init = function init () {
 
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[3];
+    var field = l.fields[2];
 
     loop.update = function (dt) {
         input.update(dt);
