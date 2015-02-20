@@ -37,69 +37,47 @@ var init = function init () {
 
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[0];
+    var field = l.fields[2];
 
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
-
         field.update(dt);
 
-        playerShotArray.forEach(function (shot) {
-            shot.update(dt);
-        });
+        var updateElement = function updateElement (element) {
+            element.update(dt);
+        };
 
-        enemyShotArray.forEach(function (shot) {
-            shot.update(dt);
-        });
-
-        enemyArray.forEach(function (enemy) {
-            enemy.update(dt);
-        });
-
-        meteorArray.forEach(function (meteor) {
-            meteor.update(dt);
-        });
+        playerShotArray.forEach(updateElement);
+        enemyShotArray.forEach(updateElement);
+        enemyArray.forEach(updateElement);
+        meteorArray.forEach(updateElement);
     };
 
     loop.postUpdate = function (dt) {
         player.postUpdate(dt);
 
-        playerShotArray.forEach(function playerShotArrayPostUpdate (shot) {
-            shot.postUpdate(dt);
-        });
+        var postUpdateElement = function postUpdateElement (element) {
+            element.postUpdate(dt);
+        };
 
-        enemyShotArray.forEach(function (shot) {
-            shot.postUpdate(dt);
-        });
-
-        enemyArray.forEach(function (enemy) {
-            enemy.postUpdate(dt);
-        });
-
-        meteorArray.forEach(function (meteor) {
-            meteor.postUpdate(dt);
-        });
+        playerShotArray.forEach(postUpdateElement);
+        enemyShotArray.forEach(postUpdateElement);
+        enemyArray.forEach(postUpdateElement);
+        meteorArray.forEach(postUpdateElement);
     };
 
     loop.render = function (dt) {
         player.render(dt);
 
-        playerShotArray.forEach(function (shot) {
-            shot.render(dt);
-        });
+        var renderElement = function renderElement (element) {
+            element.render(dt);
+        };
 
-        enemyShotArray.forEach(function (shot) {
-            shot.render(dt);
-        });
-
-        enemyArray.forEach(function (enemy) {
-            enemy.render(dt);
-        });
-
-        meteorArray.forEach(function (meteor) {
-            meteor.render(dt);
-        });
+        playerShotArray.forEach(renderElement);
+        enemyShotArray.forEach(renderElement);
+        enemyArray.forEach(renderElement);
+        meteorArray.forEach(renderElement);
 
         renderer.render(dt);
     };
