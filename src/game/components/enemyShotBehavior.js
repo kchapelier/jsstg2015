@@ -1,5 +1,5 @@
 "use strict";
 
 module.exports = {
-    hitboxRadius: 20
+    hitboxRadius: 3
 };

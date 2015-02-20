@@ -65,6 +65,58 @@ var init = function init () {
         enemyShotArray.forEach(postUpdateElement);
         enemyArray.forEach(postUpdateElement);
         meteorArray.forEach(postUpdateElement);
+
+        //check collision enemyShot > player, using circle collision because it's better
+        var enemyShotCollisions = function enemyShotCollisions () {
+            var shot,
+                playerHitboxX = player.x,
+                playerHitboxY = player.y,
+                playerHitboxRadius = 4,
+                shotHitboxRadius = 0,
+                i = 0,
+                euclideanDistance = 0;
+
+            for (; i < enemyShotArray.length; i++) {
+                shot = enemyShotArray[i];
+                shotHitboxRadius = shot.hitboxRadius;
+                euclideanDistance = Math.sqrt(
+                    Math.pow(playerHitboxX - shot.x, 2) +
+                    Math.pow(playerHitboxY - shot.y, 2)
+                );
+
+                if (euclideanDistance < (shotHitboxRadius + playerHitboxRadius)) {
+                    objectCollection.remove('enemyShot', shot);
+                }
+            }
+        };
+
+        //check collision playerShot > enemy, using square collision because it's faster
+        var playerShotCollisions = function playerShotCollisions () {
+            var shot,
+                enemy,
+                enemyHitboxRadius = 0,
+                i,
+                k;
+
+
+            for (k = 0; k < enemyArray.length; k++) {
+                enemy = enemyArray[k];
+                enemyHitboxRadius = enemy.hitboxRadius;
+                for (i = 0; i < playerShotArray.length; i++) {
+                    shot = playerShotArray[i];
+
+                    if (
+                        Math.abs(enemy.x - shot.x) < enemyHitboxRadius &&
+                        Math.abs(enemy.y - shot.y) < enemyHitboxRadius
+                    ) {
+                        objectCollection.remove('playerShot', shot);
+                    }
+                }
+            }
+        };
+
+        playerShotCollisions();
+        enemyShotCollisions();
     };
 
     loop.render = function (dt) {
