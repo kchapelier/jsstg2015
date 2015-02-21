@@ -35,11 +35,11 @@ Level.prototype.initializeFields = function () {
     for (var i = 0; i < this.layout.length; i++) {
         var type = this.layout[i];
 
-        if (type === 'm') {
+        if (type === 'm' || type === 'M') {
             this.fields.push(new MeteorField(this));
-        } else if (type === 'E') {
+        } else if (type === 'e' || type === 'E') {
             this.fields.push(new BigEnemiesField(this));
-        } else if (type === 'B') {
+        } else if (type === 'X' || type === 'B') {
             this.fields.push(new BossField(this));
         } else {
             throw new Error('Field type not implemented yet : "' + type + '"');

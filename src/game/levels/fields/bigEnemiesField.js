@@ -2,10 +2,11 @@
 
 // TODO move out (+ enemy constraint)
 
-var sequenceGenerator = require('./../sequences/generator');
-
-var bigMonsterPool = require('./../../pools/bigEnemyPool'),
+var sequenceGenerator = require('./../sequences/generator'),
+    bigMonsterPool = require('./../../pools/bigEnemyPool'),
     objectCollection = require('./../../objectCollection');
+
+var monsterArray = objectCollection.getArray('enemy');
 
 var screenWidth = 800,
     screenHeight = 600,
@@ -165,6 +166,7 @@ BigEnemiesField.prototype.update = function (dt) {
             var pos = this.enemies[i];
 
             pos.explosionColors = this.level.colors;
+            pos.life = 10;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));
         }
@@ -174,7 +176,7 @@ BigEnemiesField.prototype.update = function (dt) {
 
     this.internalTimer += dt;
 
-    return true;
+    return !(this.spawned && monsterArray.length === 0);
 };
 
 module.exports = BigEnemiesField;
