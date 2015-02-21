@@ -47,10 +47,9 @@ var init = function init () {
     renderer.infectDom('game');
 
     var playerFactory = require('./game/entities/player'),
-        player = playerFactory({
-            x: 400,
-            y: 500
-        });
+        player = playerFactory();
+
+    player.reset();
 
     objectCollection.add('player', player);
 
@@ -115,6 +114,7 @@ var init = function init () {
 
                 if (euclideanDistance < (shotHitboxRadius + playerHitboxRadius)) {
                     objectCollection.remove('enemyShot', shot);
+                    player.takeDamage(1);
                 }
             }
         };
@@ -137,7 +137,7 @@ var init = function init () {
                 );
 
                 if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
-                    objectCollection.remove('meteor', meteor);
+                    player.takeDamage(1);
                 }
             }
         };

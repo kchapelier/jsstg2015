@@ -74,6 +74,9 @@ module.exports = {
         element.emitter = createEmitter(element.sprite);
     },
     render: function (element, dt) {
+        var alpha = (element.invicibilityTimer > 0 ? 0.5 : 1.0);
+        element.sprite.alpha = alpha;
+
         element.sprite.x = Math.round(element.x);
         element.sprite.y = Math.round(element.y);
         element.hitbox.x = Math.round(element.x);
@@ -82,7 +85,7 @@ module.exports = {
         element.emitter.update(dt / 1000);
 
         if (element.focused) {
-            element.hitbox.alpha = 1;
+            element.hitbox.alpha = alpha;
         } else {
             element.hitbox.alpha = 0;
         }

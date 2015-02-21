@@ -13,7 +13,7 @@ module.exports = {
 
             this.life -= damage;
 
-            if (this.life <= 0) {
+            if (this.life < 0) {
                 this.explode();
 
                 objectCollection.remove('enemy', this);

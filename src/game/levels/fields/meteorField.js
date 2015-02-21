@@ -7,9 +7,16 @@ var MeteorField = function (level) {
     this.level = level;
     this.generosity = this.level.rng.randomBounded(0.5, 1.5);
     this.speed = this.level.rng.randomBounded(0.5, 1.75);
-    this.duration = this.level.rng.randomBounded(0.5, 1.5);
+    this.duration = this.level.rng.randomBounded(10000, 20000);
     this.deviation = this.level.rng.randomBounded(-0.5, 0.5);
 };
+
+MeteorField.prototype.level = null;
+MeteorField.prototype.generosity = null;
+MeteorField.prototype.speed = null;
+MeteorField.prototype.duration = null;
+MeteorField.prototype.deviation = null;
+MeteorField.prototype.internalTimer = null;
 
 MeteorField.prototype.reset = function () {
     this.internalTimer = 0;
@@ -35,7 +42,7 @@ MeteorField.prototype.update = function (dt) {
     this.internalTimer += dt;
 
 
-    return (this.internalTimer < 50000);
+    return (this.internalTimer < this.duration);
 };
 
 module.exports = MeteorField;

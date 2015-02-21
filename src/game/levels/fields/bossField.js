@@ -42,11 +42,12 @@ BossField.prototype.initializeBossOnTop = function () {
 };
 
 BossField.prototype.reset = function () {
+    this.internalTimer = 0;
     this.spawned = false;
 };
 
 BossField.prototype.update = function (dt) {
-    if (!this.spawned) {
+    if (!this.spawned && this.internalTimer > 2000) {
         for (var i = 0; i < this.enemies.length; i += 1) {
             var pos = this.enemies[i];
 
@@ -57,6 +58,8 @@ BossField.prototype.update = function (dt) {
 
         this.spawned = true;
     }
+
+    this.internalTimer += dt;
 
     return true;
 };
