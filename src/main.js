@@ -17,6 +17,30 @@ var loadTextures = function loadTextures () {
 
 loadTextures();
 
+var setupPoolFreeing = function () {
+    var enemyShotPool = require('./game/pools/enemyShotPool'),
+        playerShotPool = require('./game/pools/playerShotPool'),
+        meteorPool = require('./game/pools/meteorPool'),
+        explosionPool = require('./game/pools/explosionPool'),
+        bigEnemyPool = require('./game/pools/bigEnemyPool');
+
+    objectCollection.on('remove.enemyShot', function (element) {
+        enemyShotPool.free(element);
+    });
+    objectCollection.on('remove.playerShot', function (element) {
+        playerShotPool.free(element);
+    });
+    objectCollection.on('remove.meteor', function (element) {
+        meteorPool.free(element);
+    });
+    objectCollection.on('remove.explosion', function (element) {
+        explosionPool.free(element);
+    });
+    objectCollection.on('remove.enemy', function (element) {
+        bigEnemyPool.free(element);
+    });
+};
+
 var init = function init () {
     var loop = new GameLoop();
 
@@ -36,9 +60,11 @@ var init = function init () {
         enemyArray = objectCollection.getArray('enemy'),
         explosionArray = objectCollection.getArray('explosion');
 
+    setupPoolFreeing();
+
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[2];
+    var field = l.fields[0];
 
     loop.update = function (dt) {
         input.update(dt);

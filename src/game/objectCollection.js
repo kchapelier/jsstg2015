@@ -1,9 +1,7 @@
 "use strict";
 
-var collection = require('../lib/objectCollection'),
+var collection = require('./../lib/objectCollection'),
     renderer = require('./renderer');
-
-//TODO should free the pools here
 
 collection.on('add.player', function (element) {
     renderer.addElement(element.sprite);

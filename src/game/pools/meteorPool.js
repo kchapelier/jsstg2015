@@ -12,13 +12,13 @@ module.exports = pool({
         element.speed = options.speed;
         element.hitboxRadius = 6 * (options.size || 1);
         element.sprite.scale.y = element.sprite.scale.x = options.size || 1;
+        element.emitter.cleanup();
         element.emitter.minimumScaleMultiplier = options.size || 1;
         element.directionIntent = options.directionIntent;
 
         if (options.colors) {
             element.setColors(options.colors);
         }
-        //element.initialize();
     },
-    initialNumber: 20
+    initialNumber: 40
 });

@@ -60,7 +60,6 @@ var createEmitter = function createEmitter (source) {
         emitterDescription
     );
 
-    // Start emitting
     emitter.emit = true;
 
     return emitter;

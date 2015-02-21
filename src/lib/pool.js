@@ -4,6 +4,7 @@ var Pool = function (name, factory, initialize, initialNumber) {
     this.name = name;
     this.factoryFunction = factory;
     this.initializeFunction = initialize;
+    this.totalInstances = 0;
 
     this.availableInstances = [];
 
@@ -12,13 +13,16 @@ var Pool = function (name, factory, initialize, initialNumber) {
 
 Pool.prototype.name = null;
 Pool.prototype.availableInstances = null;
+Pool.prototype.totalInstances = null;
 Pool.prototype.factoryFunction = null;
 Pool.prototype.initializeFunction = null;
 
 Pool.prototype.allocate = function (number) {
     var i;
 
-    //console.log(this.name, number);
+    this.totalInstances += number;
+
+    console.log(this.name, this.totalInstances, number);
 
     for (i = 0; i < number; i++) {
         this.availableInstances.push(this.factoryFunction());

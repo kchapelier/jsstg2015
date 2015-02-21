@@ -13,5 +13,5 @@ module.exports = pool({
         element.directionIntent = options.directionIntent;
         element.setTexture(options.texture);
     },
-    initialNumber: 1000
+    initialNumber: 2000
 });
