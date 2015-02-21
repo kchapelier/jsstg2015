@@ -1,6 +1,7 @@
 "use strict";
 
 var GameLoop = require('migl-gameloop'),
+    toRoman = require('roman-numerals').toRoman,
     input = require('./game/input'),
     renderer = require('./game/renderer'),
     objectCollection = require('./game/objectCollection'),
@@ -193,15 +194,30 @@ var init = function init () {
 
     var PIXI = require('pixi.js');
 
-    var textSample = new PIXI.Text("Pixi.js can has\nmultiline text!", { font: "35px Roboto Condensed", fill: "white" });
-    textSample.position.x = 20;
-    textSample.position.y = 20;
+    var textSample = new PIXI.Text("Score: 10,000,000", { font: "400 14px Economica", fill: "white" });
+    textSample.position.x = 15;
+    textSample.position.y = 15;
+
+    var textSample3 = new PIXI.Text("Lives: |||", { font: "400 14px Economica", fill: "white" });
+    textSample3.position.x = 15;
+    textSample3.position.y = 30;
+
+    var textSample2 = new PIXI.Text(toRoman(32) + ": " + l.name.toUpperCase(), { font: "400 14px Economica", fill: "white" });
+    textSample2.position.x = 800 - 15 - textSample2.width;
+    textSample2.position.y = 15;
 
     renderer.addElementToForeground(textSample);
+    renderer.addElementToForeground(textSample2);
+    renderer.addElementToForeground(textSample3);
+
+    //TODO enemy indicator
+    //TODO boss energy bar
+    //TODO level succession
+    //TODO scoring
 
     loop.start();
 };
 
 module.exports = function () {
-    fontLoader(['Roboto Condensed:300,400'], init);
+    fontLoader(['Economica:700,400'], init);
 };
