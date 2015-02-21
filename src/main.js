@@ -4,7 +4,8 @@ var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
     renderer = require('./game/renderer'),
     objectCollection = require('./game/objectCollection'),
-    textureCollection = require('./game/textureCollection');
+    textureCollection = require('./game/textureCollection'),
+    fontLoader = require('./lib/fontLoader');
 
 var loadTextures = function loadTextures () {
     textureCollection.load('particle', 'particles/particle.png');
@@ -190,9 +191,17 @@ var init = function init () {
         renderer.render(dt);
     };
 
+    var PIXI = require('pixi.js');
+
+    var textSample = new PIXI.Text("Pixi.js can has\nmultiline text!", { font: "35px Roboto Condensed", fill: "white" });
+    textSample.position.x = 20;
+    textSample.position.y = 20;
+
+    renderer.addElementToForeground(textSample);
+
     loop.start();
 };
 
 module.exports = function () {
-    init();
+    fontLoader(['Roboto Condensed:300,400'], init);
 };
