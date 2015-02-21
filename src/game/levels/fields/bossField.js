@@ -57,6 +57,8 @@ BossField.prototype.update = function (dt) {
 
         this.spawned = true;
     }
+
+    return true;
 };
 
 module.exports = BossField;

@@ -22,8 +22,6 @@ Pool.prototype.allocate = function (number) {
 
     this.totalInstances += number;
 
-    console.log(this.name, this.totalInstances, number);
-
     for (i = 0; i < number; i++) {
         this.availableInstances.push(this.factoryFunction());
     }

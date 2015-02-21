@@ -62,14 +62,14 @@ var init = function init () {
 
     setupPoolFreeing();
 
-    var level = require('./game/levels/level');
-    var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[0];
+    var Level = require('./game/levels/level');
+    var l = Level.createFromString('test' + (Math.random() * 200000));
+    l.reset();
 
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
-        field.update(dt);
+        l.update(dt);
 
         var updateElement = function updateElement (element) {
             element.update(dt);

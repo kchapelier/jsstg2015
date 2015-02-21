@@ -12,6 +12,7 @@ var MeteorField = function (level) {
 };
 
 MeteorField.prototype.reset = function () {
+    this.internalTimer = 0;
 };
 
 MeteorField.prototype.update = function (dt) {
@@ -30,6 +31,11 @@ MeteorField.prototype.update = function (dt) {
             }
         }));
     }
+
+    this.internalTimer += dt;
+
+
+    return (this.internalTimer < 50000);
 };
 
 module.exports = MeteorField;

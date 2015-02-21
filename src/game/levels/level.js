@@ -51,6 +51,30 @@ Level.prototype.generatePatternMetaData = function (difficulty) {
     return patternMetaData.get(this.rng, this.tendencies, difficulty);
 };
 
+Level.prototype.currentField = null;
+
+Level.prototype.update = function (dt) {
+    if (this.currentField === null) {
+        this.currentField = 0;
+        console.log('go to field ' + this.currentField);
+    }
+
+    var field = this.fields[this.currentField];
+
+    if (!field.update(dt)) {
+        this.currentField++;
+        console.log('go to field ' + this.currentField);
+    }
+};
+
+Level.prototype.reset = function () {
+    this.currentField = null;
+
+    this.fields.forEach(function (fields) {
+        fields.reset();
+    });
+};
+
 module.exports = {
     createFromString: function (string) {
         var levelRng = rng.createFromString(string);

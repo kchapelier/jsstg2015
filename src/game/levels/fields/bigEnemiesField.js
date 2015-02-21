@@ -170,6 +170,8 @@ BigEnemiesField.prototype.update = function (dt) {
 
         this.spawned = true;
     }
+
+    return true;
 };
 
 module.exports = BigEnemiesField;
