@@ -37,7 +37,7 @@ var init = function init () {
 
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[2];
+    var field = l.fields[0];
 
     loop.update = function (dt) {
         input.update(dt);
@@ -90,6 +90,29 @@ var init = function init () {
             }
         };
 
+        var meteorCollisions = function meteorCollisions () {
+            var meteor,
+                playerHitboxX = player.x,
+                playerHitboxY = player.y,
+                playerHitboxRadius = 4,
+                meteorHitboxRadius = 0,
+                i = 0,
+                euclideanDistance = 0;
+
+            for (; i < meteorArray.length; i++) {
+                meteor = meteorArray[i];
+                meteorHitboxRadius = meteor.hitboxRadius;
+                euclideanDistance = Math.sqrt(
+                    Math.pow(playerHitboxX - meteor.x, 2) +
+                    Math.pow(playerHitboxY - meteor.y, 2)
+                );
+
+                if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
+                    objectCollection.remove('meteor', meteor);
+                }
+            }
+        };
+
         //check collision playerShot > enemy, using square collision because it's faster
         var playerShotCollisions = function playerShotCollisions () {
             var shot,
@@ -117,6 +140,7 @@ var init = function init () {
 
         playerShotCollisions();
         enemyShotCollisions();
+        meteorCollisions();
     };
 
     loop.render = function (dt) {

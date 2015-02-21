@@ -10,6 +10,7 @@ module.exports = pool({
         element.x = options.x;
         element.y = options.y;
         element.speed = options.speed;
+        element.hitboxRadius = 6 * (options.size || 1);
         element.sprite.scale.y = element.sprite.scale.x = options.size || 1;
         element.emitter.minimumScaleMultiplier = options.size || 1;
         element.directionIntent = options.directionIntent;
