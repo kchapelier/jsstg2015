@@ -21,7 +21,7 @@ MeteorField.prototype.update = function (dt) {
         objectCollection.add('meteor', meteorPool.get({
             x: -100 + Math.random() * 1000,
             y: -200 + Math.random() * 100,
-            speed: (200 + Math.random() * 150) * this.speed / Math.pow(size, 0.75),
+            speed: (450 + Math.random() * 200) * this.speed / Math.pow(size, 0.85),
             size: size,
             colors: this.level.colors,
             directionIntent: {
