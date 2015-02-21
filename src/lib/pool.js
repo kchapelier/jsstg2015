@@ -18,6 +18,8 @@ Pool.prototype.initializeFunction = null;
 Pool.prototype.allocate = function (number) {
     var i;
 
+    //console.log(this.name, number);
+
     for (i = 0; i < number; i++) {
         this.availableInstances.push(this.factoryFunction());
     }

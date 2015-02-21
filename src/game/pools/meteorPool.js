@@ -1,11 +1,11 @@
 "use strict";
 
 var pool = require('../../lib/pool'),
-    playerShot = require('../entities/meteor');
+    meteor = require('../entities/meteor');
 
 module.exports = pool({
     name: 'meteor',
-    factory: playerShot,
+    factory: meteor,
     initialize: function (element, options) {
         element.x = options.x;
         element.y = options.y;

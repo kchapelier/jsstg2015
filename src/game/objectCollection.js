@@ -3,6 +3,8 @@
 var collection = require('../lib/objectCollection'),
     renderer = require('./renderer');
 
+//TODO should free the pools here
+
 collection.on('add.player', function (element) {
     renderer.addElement(element.sprite);
     renderer.addElement(element.hitbox);
@@ -24,6 +26,14 @@ collection.on('add.meteor', function (element) {
 collection.on('remove.meteor', function (element) {
     renderer.removeElementFromForeground(element.emitterContainer);
     renderer.removeElementFromForeground(element.sprite);
+});
+
+collection.on('add.explosion', function (element) {
+    renderer.addElementToForeground(element.emitterContainer);
+});
+
+collection.on('remove.explosion', function (element) {
+    renderer.removeElementFromForeground(element.emitterContainer);
 });
 
 collection.on('add.enemy', function (element) {

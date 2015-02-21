@@ -33,11 +33,14 @@ var init = function init () {
     var playerShotArray = objectCollection.getArray('playerShot'),
         enemyShotArray = objectCollection.getArray('enemyShot'),
         meteorArray = objectCollection.getArray('meteor'),
-        enemyArray = objectCollection.getArray('enemy');
+        enemyArray = objectCollection.getArray('enemy'),
+        explosionArray = objectCollection.getArray('explosion');
+
+    var explosionPool = require('./game/pools/explosionPool');
 
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
-    var field = l.fields[0];
+    var field = l.fields[2];
 
     loop.update = function (dt) {
         input.update(dt);
@@ -52,6 +55,7 @@ var init = function init () {
         enemyShotArray.forEach(updateElement);
         enemyArray.forEach(updateElement);
         meteorArray.forEach(updateElement);
+        explosionArray.forEach(updateElement);
     };
 
     loop.postUpdate = function (dt) {
@@ -65,6 +69,7 @@ var init = function init () {
         enemyShotArray.forEach(postUpdateElement);
         enemyArray.forEach(postUpdateElement);
         meteorArray.forEach(postUpdateElement);
+        explosionArray.forEach(postUpdateElement);
 
         //check collision enemyShot > player, using circle collision because it's better
         var enemyShotCollisions = function enemyShotCollisions () {
@@ -133,6 +138,12 @@ var init = function init () {
                         Math.abs(enemy.y - shot.y) < enemyHitboxRadius
                     ) {
                         objectCollection.remove('playerShot', shot);
+
+                        objectCollection.add('explosion', explosionPool.get({
+                            x: shot.x,
+                            y: shot.y,
+                            size: 1
+                        }));
                     }
                 }
             }
@@ -154,6 +165,7 @@ var init = function init () {
         enemyShotArray.forEach(renderElement);
         enemyArray.forEach(renderElement);
         meteorArray.forEach(renderElement);
+        explosionArray.forEach(renderElement);
 
         renderer.render(dt);
     };
