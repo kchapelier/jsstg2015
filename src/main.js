@@ -137,7 +137,7 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        enemy.explode();
+                        enemy.takeDamage(1);
                     }
                 }
             }

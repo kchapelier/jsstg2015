@@ -40,6 +40,10 @@ collection.on('add.enemy', function (element) {
     renderer.addElement(element.sprite);
 });
 
+collection.on('remove.enemy', function (element) {
+    renderer.removeElement(element.sprite);
+});
+
 collection.on('add.enemyShot', function (element) {
     renderer.addElement(element.sprite);
 });
