@@ -9,8 +9,8 @@ module.exports = pool({
     initialize: function (element, options) {
         element.x = options.x;
         element.y = options.y;
-        element.speed = 0; //options.speed;
-        element.emitter.minimumScaleMultiplier = 1; //options.size || 1;
+        element.speed = 0;
+        element.emitter.minimumScaleMultiplier = options.size + Math.random() * 0.3;
         element.directionIntent = {
             x: 0,
             y: 0

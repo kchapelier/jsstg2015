@@ -12,6 +12,8 @@ module.exports = pool({
         element.speed = options.speed || 0;
         element.directionIntent = options.directionIntent || { x: 0, y: 0 };
         element.sequence = options.sequence || null;
+        element.explosionSize = options.explosionSize || 1;
+        element.explosionColors = options.explosionColors || null;
     },
     initialNumber: 5
 });

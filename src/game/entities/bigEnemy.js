@@ -6,5 +6,6 @@ module.exports = GameObject.createFactory(
     require('../components/bigEnemyBehavior'),
     require('../components/position'),
     require('../components/bigEnemyRender'),
-    require('../components/sequence')
+    require('../components/sequence'),
+    require('../components/explosive')
 );

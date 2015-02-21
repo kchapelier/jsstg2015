@@ -36,8 +36,6 @@ var init = function init () {
         enemyArray = objectCollection.getArray('enemy'),
         explosionArray = objectCollection.getArray('explosion');
 
-    var explosionPool = require('./game/pools/explosionPool');
-
     var level = require('./game/levels/level');
     var l = level.createFromString('test' + (Math.random() * 200000));
     var field = l.fields[2];
@@ -139,11 +137,7 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        objectCollection.add('explosion', explosionPool.get({
-                            x: shot.x,
-                            y: shot.y,
-                            size: 1
-                        }));
+                        enemy.explode();
                     }
                 }
             }
