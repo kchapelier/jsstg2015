@@ -61,9 +61,15 @@ Level.prototype.update = function (dt) {
 
     var field = this.fields[this.currentField];
 
-    if (!field.update(dt)) {
-        this.currentField++;
-        console.log('go to field ' + this.currentField);
+    if (field) {
+        if (!field.update(dt)) {
+            this.currentField++;
+            console.log('go to field ' + this.currentField);
+        }
+
+        return true;
+    } else {
+        return false;
     }
 };
 

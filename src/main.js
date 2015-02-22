@@ -17,6 +17,17 @@ var loadTextures = function loadTextures () {
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
 
+var loadNewLevel = function () {
+    var Level = require('./game/levels/level'),
+        levelInstance = Level.createFromString('some level' + (Math.random() * 2000000));
+
+    levelInstance.reset();
+
+    console.log('generate level', levelInstance.rng.seed, levelInstance.rng.seedSource);
+
+    return levelInstance;
+};
+
 loadTextures();
 
 var setupPoolFreeing = function () {
@@ -66,20 +77,22 @@ var init = function init () {
 
     setupPoolFreeing();
 
-    var Level = require('./game/levels/level');
-    var l = Level.createFromString('test' + (Math.random() * 200000));
-    l.reset();
+    var level = loadNewLevel();
 
     var score = 0;
 
-    gui.changeLevel(l);
+    gui.changeLevel(level);
     gui.changeScore(score);
     gui.changeLives(player.life);
 
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
-        l.update(dt);
+
+        if (!level.update(dt)) {
+            level = loadNewLevel();
+            gui.changeLevel(level);
+        }
 
         var updateElement = function updateElement (element) {
             element.update(dt);
@@ -180,7 +193,7 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        score += enemy.takeDamage(1);
+                        score += enemy.takeDamage(100);
                         gui.changeScore(score);
                     }
                 }

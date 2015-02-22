@@ -1,25 +1,20 @@
 "use strict";
 
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
+    speed = 0.15 + speed * 0.8;
+
     var homing = rng.random() > 0.6,
         rotation = rng.random() * 10,
         number = Math.ceil(10 + 20 * generosity) * 2 + 1,
         bulletSpeed = 180 * speed,
         waitTime = Math.min(1600, 800 * (1 + generosity / 10) / Math.sqrt(speed));
 
-    /*
-
-        rotation = rng() * 10,
-        number = Math.ceil((homing ? 1.5 * difficulty : 1) * 10 + generosity * 5) * 2 + 1,
-        repeatition = Math.ceil(20 + generosity * difficulty),
-        bulletSpeed = 120 * Math.pow(speed, 0.5),
-        waitTime = 200 * 100 / bulletSpeed / Math.sqrt(difficulty);
-    */
-
     var def = [];
 
-    def.push(['setBulletSpeed', bulletSpeed, 0]);
-    def.push(['setBulletSprite', 'player-bullet']);
+    def.push(
+        ['setBulletSpeed', bulletSpeed, 0],
+        ['setBulletSprite', 'player-bullet']
+    );
 
     for (var i = 0; i < 5; i++) {
         def.push(['wait', waitTime]);

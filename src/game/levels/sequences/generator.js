@@ -4,6 +4,7 @@ var Sequence = require('../../patterns/sequence');
 
 var collection = {
     seal: require('./sealSequence'),
+    littleSeal: require('./littleSealSequence'),
     pulse: require('./pulseSequence'),
     test: require('./testSequence'),
     perlin: require('./perlinSequence'),

@@ -13,6 +13,15 @@ var screenWidth = 800,
     widthDiv10 = screenWidth / 10,
     heightDiv10 = screenHeight / 10;
 
+var patterns = {
+    square: 1,
+    pulse: 1,
+    littleSeal: 1,
+    perlin: 1,
+    test: 1,
+    sprayer: 1
+};
+
 var BigEnemiesField = function (level) {
     this.level = level;
     this.enemies = [];
@@ -45,9 +54,7 @@ BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
 
     var x = this.level.rng.randomBounded(widthDiv10, widthDiv10 * 4) | 0,
         y = this.level.rng.randomBounded(heightDiv10, heightDiv10 * 4) | 0,
-        sequence = this.generateSequence({
-            square: 1
-        }, difficulty);
+        sequence = this.generateSequence(patterns, difficulty);
 
     this.enemies.push({
         x: x,
@@ -70,12 +77,8 @@ BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
     var x = this.level.rng.randomBounded(widthDiv10 * 2, widthDiv10 * 4) | 0,
         y = this.level.rng.randomBounded(heightDiv10 * 2, heightDiv10 * 3) | 0,
         y3 = y + (this.level.rng.randomBounded(heightDiv10, heightDiv10 * 1.5) | 0) * (this.level.rng.random() > 0.5 ? -1 : 1),
-        sequence = this.generateSequence({
-            square: 1
-        }, edgeDifficuly),
-        sequence3 = this.generateSequence({
-            square: 1
-        }, difficulty);
+        sequence = this.generateSequence(patterns, edgeDifficuly),
+        sequence3 = this.generateSequence(patterns, difficulty);
 
     this.enemies.push({
         x: screenWidth / 2,
@@ -104,9 +107,7 @@ BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
     var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 2) | 0,
         y = (x * screenHeight / screenWidth) | 0,
         sequenceDifficulty = difficulty * (0.90 - x / screenWidth),
-        sequence = this.generateSequence({
-            square: 1
-        }, sequenceDifficulty);
+        sequence = this.generateSequence(patterns, sequenceDifficulty);
 
     this.enemies.push({
         x: x,
@@ -138,9 +139,7 @@ BigEnemiesField.prototype.initializeTwoMonstersAtEdges = function () {
 
     var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 1.5) | 0,
         y = this.level.rng.randomBounded(heightDiv10 * 4, heightDiv10 * 5) | 0,
-        sequence = this.generateSequence({
-            square: 1
-        }, difficulty);
+        sequence = this.generateSequence(patterns, difficulty);
 
     this.enemies.push({
         x: x,
@@ -166,7 +165,7 @@ BigEnemiesField.prototype.update = function (dt) {
             var pos = this.enemies[i];
 
             pos.explosionColors = this.level.colors;
-            pos.totalLife = 10;
+            pos.totalLife = 20;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));
         }

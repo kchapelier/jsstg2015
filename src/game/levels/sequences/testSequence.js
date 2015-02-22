@@ -1,26 +1,27 @@
 "use strict";
 
 module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty) {
-    var homing = rng.random() > 0.75,
-        rotation = rng.random() * 10,
-        number = Math.ceil((homing ? 1.5 * difficulty : 1) * 10 + generosity * 5) * 2 + 1,
-        repeatition = Math.ceil(20 + generosity * difficulty),
-        bulletSpeed = 120 * Math.pow(speed, 0.5),
-        waitTime = 200 * 100 / bulletSpeed / Math.sqrt(difficulty);
+    var rotation = 0.5, //rng.random() * 10,
+        number = Math.ceil(9 + generosity * 5) * 2,
+        repeatition = Math.ceil(10 + generosity * difficulty),
+        bulletSpeed = 90 * Math.pow(speed, 0.25),
+        waitTime = 280 * 100 / bulletSpeed / Math.sqrt(difficulty);
 
     var def = [];
 
-    def.push(['wait', waitTime]);
-    def.push(['setBulletSprite', 'player-bullet']);
-    def.push(['setBulletSpeed', bulletSpeed]);
 
-    if (homing) {
-        def.push(['setAngle', 0, true]);
-    } else {
-        def.push(['rotate', rotation]);
+    def.push(
+        ['setBulletSprite', 'player-bullet'],
+        ['setBulletSpeed', bulletSpeed]
+    );
+
+    for (var i = 0; i < repeatition; i++) {
+        def.push(
+            ['wait', waitTime],
+            ['rotate', rotation],
+            ['burst', number, Math.PI * 2, 0, false]
+        );
     }
-
-    def.push(['burst', number, Math.PI * 2, 0, false]);
 
     return def;
 

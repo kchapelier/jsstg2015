@@ -1,9 +1,10 @@
 "use strict";
 
-var sequenceGenerator = require('./../sequences/generator');
-
-var bigMonsterPool = require('./../../pools/bigEnemyPool'),
+var sequenceGenerator = require('./../sequences/generator'),
+    bigMonsterPool = require('./../../pools/bigEnemyPool'),
     objectCollection = require('./../../objectCollection');
+
+var monsterArray = objectCollection.getArray('enemy');
 
 var screenWidth = 800,
     screenHeight = 600;
@@ -47,7 +48,7 @@ BossField.prototype.reset = function () {
 };
 
 BossField.prototype.update = function (dt) {
-    if (!this.spawned && this.internalTimer > 2000) {
+    if (!this.spawned && this.internalTimer > 2750) {
         for (var i = 0; i < this.enemies.length; i += 1) {
             var pos = this.enemies[i];
 
@@ -63,7 +64,7 @@ BossField.prototype.update = function (dt) {
 
     this.internalTimer += dt;
 
-    return true;
+    return !(this.spawned && monsterArray.length === 0);
 };
 
 module.exports = BossField;
