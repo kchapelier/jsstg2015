@@ -13,6 +13,7 @@ var loadTextures = function loadTextures () {
     textureCollection.load('particle2', 'particles/particle2.png');
     textureCollection.load('player-sprite', 'entities/placeholder.png');
     textureCollection.load('enemy-sprite', 'entities/placeholder.png');
+    textureCollection.load('indicator', 'entities/placeholder.png');
     textureCollection.load('hitbox', 'entities/hitbox.png');
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
 };
