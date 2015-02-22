@@ -9,7 +9,9 @@ module.exports = pool({
     initialize: function (element, options) {
         element.x = options.x;
         element.y = options.y;
-        element.life = options.life || 100;
+        element.totalLife = options.totalLife || 100;
+        element.life = options.totalLife || 100;
+        element.displayLifeBar = !!options.displayLifeBar;
         element.invincible = !!options.invincible;
         element.speed = options.speed || 0;
         element.directionIntent = options.directionIntent || { x: 0, y: 0 };

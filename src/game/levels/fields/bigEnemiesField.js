@@ -166,7 +166,7 @@ BigEnemiesField.prototype.update = function (dt) {
             var pos = this.enemies[i];
 
             pos.explosionColors = this.level.colors;
-            pos.life = 10;
+            pos.totalLife = 10;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));
         }

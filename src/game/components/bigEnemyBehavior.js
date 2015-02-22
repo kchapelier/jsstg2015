@@ -5,6 +5,7 @@ var objectCollection = require('./../objectCollection');
 module.exports = {
     hitboxRadius: 20,
     life: null,
+    totalLife: null,
     invincible: false,
     takeDamage: function (damage) {
         if (!this.invincible) {
