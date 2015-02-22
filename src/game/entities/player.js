@@ -33,13 +33,11 @@ module.exports = GameObject.createFactory(
                     this.life -= damage;
                     this.invicibilityTimer = this.invicibilityDuration;
 
-                    console.log('life', this.life);
-
-                    if (this.life < 0) {
-                        console.log('dead');
-                    }
+                    return true;
                 }
             }
+
+            return false;
         }
     }
 );

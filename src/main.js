@@ -1,7 +1,6 @@
 "use strict";
 
 var GameLoop = require('migl-gameloop'),
-    toRoman = require('roman-numerals').toRoman,
     input = require('./game/input'),
     renderer = require('./game/renderer'),
     objectCollection = require('./game/objectCollection'),
@@ -45,14 +44,17 @@ var setupPoolFreeing = function () {
 };
 
 var init = function init () {
+    var playerFactory = require('./game/entities/player'),
+        guiFactory = require('./game/entities/gui'),
+        player = playerFactory(),
+        gui = guiFactory();
+
+    player.reset();
+
     var loop = new GameLoop();
 
     renderer.infectDom('game');
-
-    var playerFactory = require('./game/entities/player'),
-        player = playerFactory();
-
-    player.reset();
+    gui.bindToRenderer(renderer);
 
     objectCollection.add('player', player);
 
@@ -68,6 +70,12 @@ var init = function init () {
     var l = Level.createFromString('test' + (Math.random() * 200000));
     l.reset();
 
+    var score = 0;
+
+    gui.changeLevel(l);
+    gui.changeScore(score);
+    gui.changeLives(player.life);
+
     loop.update = function (dt) {
         input.update(dt);
         player.update(dt);
@@ -82,6 +90,8 @@ var init = function init () {
         enemyArray.forEach(updateElement);
         meteorArray.forEach(updateElement);
         explosionArray.forEach(updateElement);
+
+        gui.update(dt);
     };
 
     loop.postUpdate = function (dt) {
@@ -117,7 +127,9 @@ var init = function init () {
 
                 if (euclideanDistance < (shotHitboxRadius + playerHitboxRadius)) {
                     objectCollection.remove('enemyShot', shot);
-                    player.takeDamage(1);
+                    if (player.takeDamage(1)) {
+                        gui.changeLives(player.life);
+                    }
                 }
             }
         };
@@ -140,7 +152,9 @@ var init = function init () {
                 );
 
                 if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
-                    player.takeDamage(1);
+                    if (player.takeDamage(1)) {
+                        gui.changeLives(player.life);
+                    }
                 }
             }
         };
@@ -166,7 +180,8 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        enemy.takeDamage(1);
+                        score += enemy.takeDamage(1);
+                        gui.changeScore(score);
                     }
                 }
             }
@@ -190,31 +205,12 @@ var init = function init () {
         meteorArray.forEach(renderElement);
         explosionArray.forEach(renderElement);
 
+        gui.render(dt);
+
         renderer.render(dt);
     };
 
-    var PIXI = require('pixi.js');
-
-    var textSample = new PIXI.Text("Score: 10,000,000", { font: "400 14px Economica", fill: "white" });
-    textSample.position.x = 15;
-    textSample.position.y = 15;
-
-    var textSample3 = new PIXI.Text("Lives: |||", { font: "400 14px Economica", fill: "white" });
-    textSample3.position.x = 15;
-    textSample3.position.y = 30;
-
-    var textSample2 = new PIXI.Text(toRoman(32) + ": " + l.name.toUpperCase(), { font: "400 14px Economica", fill: "white" });
-    textSample2.position.x = 800 - 15 - textSample2.width;
-    textSample2.position.y = 15;
-
-    renderer.addElementToForeground(textSample);
-    renderer.addElementToForeground(textSample2);
-    renderer.addElementToForeground(textSample3);
-
-    //TODO enemy indicator
-    //TODO boss energy bar
     //TODO level succession
-    //TODO scoring
 
     loop.start();
 };
