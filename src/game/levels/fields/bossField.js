@@ -52,6 +52,7 @@ BossField.prototype.update = function (dt) {
         for (var i = 0; i < this.enemies.length; i += 1) {
             var pos = this.enemies[i];
 
+            pos.explosionSize = 4.5;
             pos.explosionColors = this.level.colors;
             pos.totalLife = 500;
             pos.displayLifeBar = true;
