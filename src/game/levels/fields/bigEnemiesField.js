@@ -19,7 +19,9 @@ var patterns = {
     littleSeal: 1,
     perlin: 1,
     test: 1,
-    sprayer: 1
+    sprayer: 1,
+    easyConstant: 1,
+    layeredSpiral: 1
 };
 
 var BigEnemiesField = function (level) {

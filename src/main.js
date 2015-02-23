@@ -65,6 +65,7 @@ var init = function init () {
     var loop = new GameLoop();
 
     renderer.infectDom('game');
+
     gui.bindToRenderer(renderer);
 
     objectCollection.add('player', player);

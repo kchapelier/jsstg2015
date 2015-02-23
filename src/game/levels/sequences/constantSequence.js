@@ -1,9 +1,13 @@
 "use strict";
 
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
-    var pgenerosity = 50 + 0.5 * 60;
-    var pspeed = 10 + 0.5 * 80;
-    var unstability = 0;
+    var pgenerosity = 50 + 0.5 * 60,
+        pspeed = 10 + 0.5 * 80,
+        unstability = 0;
+
+    if (difficulty > 1.2) {
+        unstability = 5;
+    }
 
     var def = [];
 

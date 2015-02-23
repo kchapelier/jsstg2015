@@ -15,6 +15,7 @@ var collection = {
     sprayer: require('./sprayerSequence'),
     flower: require('./flowerSequence'),
     constant: require('./constantSequence'),
+    easyConstant: require('./easyConstantSequence'),
     layeredSpiral: require('./layeredSpiralSequence'),
     spiral: require('./spiralSequence')
 };
