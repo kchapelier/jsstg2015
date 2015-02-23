@@ -80,10 +80,12 @@ var init = function init () {
 
     var level = loadNewLevel();
 
-    var score = 0;
+    var score = 0,
+        graze = 0;
 
     gui.changeLevel(level);
     gui.changeScore(score);
+    gui.changeGraze(graze);
     gui.changeLives(player.life);
 
     loop.update = function (dt) {
@@ -126,6 +128,7 @@ var init = function init () {
             var shot,
                 playerHitboxX = player.x,
                 playerHitboxY = player.y,
+                playerGrazeBoxWidth = player.grazeBoxWidth,
                 playerHitboxRadius = 4,
                 shotHitboxRadius = 0,
                 i = 0,
@@ -137,13 +140,19 @@ var init = function init () {
                 euclideanDistance = Math.sqrt(
                     Math.pow(playerHitboxX - shot.x, 2) +
                     Math.pow(playerHitboxY - shot.y, 2)
-                );
+                ) - shotHitboxRadius;
 
-                if (euclideanDistance < (shotHitboxRadius + playerHitboxRadius)) {
+                if (euclideanDistance < playerHitboxRadius) {
                     objectCollection.remove('enemyShot', shot);
                     if (player.takeDamage(1)) {
                         gui.changeLives(player.life);
                     }
+                } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
+                    shot.grazed = true;
+                    graze += 1;
+                    score += 5;
+                    gui.changeGraze(graze);
+                    gui.changeScore(score);
                 }
             }
         };
@@ -194,7 +203,7 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        score += enemy.takeDamage(100);
+                        score += enemy.takeDamage(1);
                         gui.changeScore(score);
                     }
                 }
@@ -230,5 +239,6 @@ var init = function init () {
 };
 
 module.exports = function () {
-    fontLoader(['Economica:700,400'], init);
+    init();
+    //fontLoader(['Economica:700,400'], init);
 };

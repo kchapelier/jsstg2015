@@ -7,6 +7,7 @@ module.exports = pool({
     name: 'enemyShot',
     factory: enemyShot,
     initialize: function (element, options) {
+        element.grazed = false;
         element.x = options.x;
         element.y = options.y;
         element.speed = options.speed;

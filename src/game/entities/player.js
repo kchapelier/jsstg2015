@@ -13,6 +13,7 @@ module.exports = GameObject.createFactory(
         invincible: false,
         invicibilityDuration: 1250,
         invicibilityTimer: 0,
+        grazeBoxWidth: 14,
         reset: function () {
             this.life = 3;
             this.invincible = false;

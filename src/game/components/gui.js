@@ -10,6 +10,7 @@ var textLives = 'Lives: ',
     textLastLife = 'Last life',
     textDead = 'Dead',
     textScore = 'Score: ',
+    textGraze = 'Graze: ',
     textStyle = {
         font: '400 14px Economica',
         fill: 'white'
@@ -27,9 +28,14 @@ module.exports = {
         element.scoreText.position.x = 15;
         element.scoreText.position.y = 15;
 
+        element.numeralGraze = numeral(0);
+        element.grazeText = new PIXI.Text('', textStyle);
+        element.grazeText.position.x = 15;
+        element.grazeText.position.y = 30;
+
         element.livesText = new PIXI.Text('', textStyle);
         element.livesText.position.x = 15;
-        element.livesText.position.y = 30;
+        element.livesText.position.y = 45;
 
         element.levelText = new PIXI.Text('', textStyle);
         element.levelText.position.x = 800 - 15 - element.levelText.width;
@@ -75,6 +81,7 @@ module.exports = {
         this.renderer.addElementToForeground(this.levelText);
         this.renderer.addElementToForeground(this.livesText);
         this.renderer.addElementToForeground(this.scoreText);
+        this.renderer.addElementToForeground(this.grazeText);
         this.renderer.addElementToForeground(this.lifeBar);
     },
     changeLevel: function (level) {
@@ -99,5 +106,9 @@ module.exports = {
     changeScore: function (score) {
         this.numeralScore.set(score);
         this.scoreText.setText(textScore + this.numeralScore.format());
+    },
+    changeGraze: function (graze) {
+        this.numeralGraze.set(graze);
+        this.grazeText.setText(textGraze + this.numeralGraze.format());
     }
 };
