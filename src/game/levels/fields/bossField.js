@@ -9,6 +9,10 @@ var monsterArray = objectCollection.getArray('enemy');
 var screenWidth = 800,
     screenHeight = 600;
 
+var patterns = {
+    constant: 1
+};
+
 var BossField = function (level) {
     this.level = level;
     this.enemies = [];
@@ -30,10 +34,7 @@ BossField.prototype.initializeBossOnTop = function () {
 
     var x = (screenWidth / 2) | 0,
         y = (screenHeight / 8) | 0,
-        sequence = this.generateSequence({
-            layeredSpiral: 1,
-            spiral: 1
-        }, difficulty);
+        sequence = this.generateSequence(patterns, difficulty);
 
     this.enemies.push({
         x: x,
@@ -54,7 +55,7 @@ BossField.prototype.update = function (dt) {
 
             pos.explosionSize = 4.5;
             pos.explosionColors = this.level.colors;
-            pos.totalLife = 500;
+            pos.totalLife = 50;
             pos.displayLifeBar = true;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));

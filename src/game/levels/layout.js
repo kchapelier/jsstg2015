@@ -14,13 +14,13 @@ X : extra boss
 
 
 var validLayouts = [
-    /*
+    /* */
     {
-        schema: ['m', 'm', 'E', 'B'],
+        schema: ['B'],
         probability: 1,
         innerProbabilities: {}
     }
-    */
+    /*/
     {
         schema: ['e', '?', '?', '?', '?', 'E', 'B'],
         probability: 20,
@@ -54,6 +54,7 @@ var validLayouts = [
         probability: 1,
         innerProbabilities: {}
     }
+    /* */
 ];
 
 var sumProbability = 0;

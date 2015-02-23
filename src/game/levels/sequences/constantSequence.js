@@ -1,17 +1,16 @@
 "use strict";
 
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
-    var pgenerosity = 50 + 0.5 * 60,
-        pspeed = 10 + 0.5 * 80,
+    var pgenerosity = 50 + generosity * 60,
+        pspeed = 50 + speed * 20,
         unstability = 0;
 
-    if (difficulty > 1.2) {
-        unstability = 5;
-    }
+    var def = [
+        ['wait', 300]
+    ];
 
-    var def = [];
-
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 40; i++) {
+        unstability += 0.125;
         def.push(
             ['wait', 600 * 40 / pspeed],
             ['setBulletSpeed', pspeed, unstability],
