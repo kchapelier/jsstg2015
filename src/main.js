@@ -14,7 +14,7 @@ var loadTextures = function loadTextures () {
     textureCollection.load('enemy-sprite', 'entities/placeholder.png');
     textureCollection.load('indicator', 'entities/placeholder.png');
     textureCollection.load('hitbox', 'entities/hitbox.png');
-    textureCollection.load('player-bullet', 'entities/player-bullet.png');
+    textureCollection.load('player-bullet', 'entities/enemy-bullet-black.png');
 };
 
 var loadNewLevel = function () {
@@ -78,12 +78,12 @@ var init = function init () {
 
     setupPoolFreeing();
 
-    var level = loadNewLevel();
-
-    var score = 0,
+    var levelNumber = 1,
+        level = loadNewLevel(levelNumber),
+        score = 0,
         graze = 0;
 
-    gui.changeLevel(level);
+    gui.changeLevel(level, levelNumber);
     gui.changeScore(score);
     gui.changeGraze(graze);
     gui.changeLives(player.life);
@@ -93,8 +93,9 @@ var init = function init () {
         player.update(dt);
 
         if (!level.update(dt)) {
-            level = loadNewLevel();
-            gui.changeLevel(level);
+            levelNumber++;
+            level = loadNewLevel(levelNumber);
+            gui.changeLevel(level, levelNumber);
         }
 
         var updateElement = function updateElement (element) {

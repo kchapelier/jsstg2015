@@ -14,7 +14,7 @@ X : extra boss
 
 
 var validLayouts = [
-    /* */
+    /* /
     {
         schema: ['B'],
         probability: 1,

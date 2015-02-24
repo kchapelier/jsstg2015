@@ -84,8 +84,8 @@ module.exports = {
         this.renderer.addElementToForeground(this.grazeText);
         this.renderer.addElementToForeground(this.lifeBar);
     },
-    changeLevel: function (level) {
-        this.levelText.setText(toRoman(32) + ": " + level.name.toUpperCase());
+    changeLevel: function (level, levelNumber) {
+        this.levelText.setText(toRoman(levelNumber) + ": " + level.name.toUpperCase());
         this.levelText.position.x = 800 - 15 - this.levelText.width;
     },
     changeLives: function (lives) {
