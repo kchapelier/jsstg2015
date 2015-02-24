@@ -12,9 +12,9 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         ['setBulletSpeed', bulletSpeed + 10, 0],
         ['wait', waitTime * 5],
         ['setAngle', 0, true],
-        ['setBulletSprite', 'particle2'],
+        ['setBulletSprite', 'enemy-bullet-white'],
         ['burst', 60, Math.PI * 2, 0, false],
-        ['setBulletSprite', 'player-bullet'],
+        ['setBulletSprite', 'enemy-bullet-black'],
         ['wait', waitTime * 2]
     );
 
