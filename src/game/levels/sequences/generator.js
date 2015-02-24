@@ -90,6 +90,6 @@ module.exports = {
             wholeDefinition = wholeDefinition.concat(definition);
         }
 
-        return new Sequence(wholeDefinition, 1);
+        return new Sequence(wholeDefinition, 0);
     }
 };
