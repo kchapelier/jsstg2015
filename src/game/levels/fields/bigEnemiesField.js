@@ -24,6 +24,12 @@ var patterns = {
     layeredSpiral: 1
 };
 
+var patternsForFour = {
+    perlin: 1,
+    layeredSpiral: 1
+};
+
+
 var BigEnemiesField = function (level) {
     this.level = level;
     this.enemies = [];
@@ -34,7 +40,7 @@ var BigEnemiesField = function (level) {
         this.initializeTwoMonstersOnTop();
     } else if (choice > 0.25) {
         this.initializeThreeMonstersOnTop();
-    } else if (choice > 0.10) {
+    } else if (choice > 0.06) {
         this.initializeTwoMonstersAtEdges();
     } else {
         this.initializeFourMonstersInCorners();
@@ -74,7 +80,7 @@ BigEnemiesField.prototype.initializeTwoMonstersOnTop = function () {
 BigEnemiesField.prototype.initializeThreeMonstersOnTop = function () {
     var difficulty = 1;
 
-    var edgeDifficuly = difficulty * 0.90;
+    var edgeDifficuly = difficulty * 0.8;
 
     var x = this.level.rng.randomBounded(widthDiv10 * 2, widthDiv10 * 4) | 0,
         y = this.level.rng.randomBounded(heightDiv10 * 2, heightDiv10 * 3) | 0,
@@ -108,8 +114,8 @@ BigEnemiesField.prototype.initializeFourMonstersInCorners = function () {
 
     var x = this.level.rng.randomBounded(widthDiv10 * 0.5, widthDiv10 * 2) | 0,
         y = (x * screenHeight / screenWidth) | 0,
-        sequenceDifficulty = difficulty * (0.90 - x / screenWidth),
-        sequence = this.generateSequence(patterns, sequenceDifficulty);
+        sequenceDifficulty = (difficulty * (0.9 - x / screenWidth)) / 3,
+        sequence = this.generateSequence(patternsForFour, sequenceDifficulty);
 
     this.enemies.push({
         x: x,
