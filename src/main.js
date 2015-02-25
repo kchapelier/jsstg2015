@@ -1,5 +1,10 @@
 "use strict";
 
+//TODO background
+//TODO enemy indicator
+//TODO better player shot
+//TODO in-between level animation
+
 var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
     renderer = require('./game/renderer'),
@@ -67,6 +72,19 @@ var init = function init () {
     player.reset();
 
     var loop = new GameLoop();
+
+    //TODO should be ported directly to gameloop
+    var visibilityChangeHandler = function () {
+        if (!!document.hidden) {
+            console.log('stop');
+            loop.stop();
+        } else {
+            console.log('start');
+            loop.start();
+        }
+    };
+
+    document.addEventListener('visibilitychange', visibilityChangeHandler);
 
     renderer.infectDom('game');
 
@@ -237,8 +255,6 @@ var init = function init () {
 
         renderer.render(dt);
     };
-
-    //TODO level succession
 
     loop.start();
 };
