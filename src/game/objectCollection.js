@@ -36,12 +36,12 @@ collection.on('remove.explosion', function (element) {
 
 collection.on('add.enemy', function (element) {
     renderer.addElement(element.sprite);
-    renderer.addElementToBackground(element.indicator);
+    renderer.addElementToForeground(element.indicator);
 });
 
 collection.on('remove.enemy', function (element) {
     renderer.removeElement(element.sprite);
-    renderer.removeElementFromBackground(element.indicator);
+    renderer.removeElementFromForeground(element.indicator);
 });
 
 collection.on('add.enemyShot', function (element) {

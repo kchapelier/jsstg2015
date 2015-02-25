@@ -1,8 +1,6 @@
 "use strict";
 
 //TODO background
-//TODO enemy indicator
-//TODO better player shot
 //TODO in-between level animation
 
 var GameLoop = require('migl-gameloop'),
@@ -19,6 +17,7 @@ var loadTextures = function loadTextures () {
     textureCollection.load('enemy-sprite', 'entities/placeholder.png');
     textureCollection.load('indicator', 'entities/placeholder.png');
     textureCollection.load('hitbox', 'entities/hitbox.png');
+    textureCollection.load('indicator', 'entities/indicator.png');
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
     textureCollection.load('player-bullet2', 'entities/player-bullet2.png');
     textureCollection.load('enemy-bullet-black', 'entities/enemy-bullet-black.png');
