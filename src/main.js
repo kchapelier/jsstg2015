@@ -1,6 +1,5 @@
 "use strict";
 
-//TODO background
 //TODO in-between level animation
 
 var GameLoop = require('migl-gameloop'),
@@ -65,7 +64,9 @@ var setupPoolFreeing = function () {
 
 var init = function init () {
     var playerFactory = require('./game/entities/player'),
+        backgroundFactory = require('./game/entities/background'),
         guiFactory = require('./game/entities/gui'),
+        background = backgroundFactory(),
         player = playerFactory(),
         gui = guiFactory();
 
@@ -88,6 +89,7 @@ var init = function init () {
 
     renderer.infectDom('game');
 
+    background.bindToRenderer(renderer);
     gui.bindToRenderer(renderer);
 
     objectCollection.add('player', player);
@@ -131,6 +133,7 @@ var init = function init () {
         explosionArray.forEach(updateElement);
 
         gui.update(dt);
+        background.update(dt);
     };
 
     loop.postUpdate = function (dt) {
@@ -252,6 +255,7 @@ var init = function init () {
         explosionArray.forEach(renderElement);
 
         gui.render(dt);
+        background.render(dt);
 
         renderer.render(dt);
     };
