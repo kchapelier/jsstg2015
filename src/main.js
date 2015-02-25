@@ -20,6 +20,7 @@ var loadTextures = function loadTextures () {
     textureCollection.load('indicator', 'entities/placeholder.png');
     textureCollection.load('hitbox', 'entities/hitbox.png');
     textureCollection.load('player-bullet', 'entities/player-bullet.png');
+    textureCollection.load('player-bullet2', 'entities/player-bullet2.png');
     textureCollection.load('enemy-bullet-black', 'entities/enemy-bullet-black.png');
     textureCollection.load('enemy-bullet-white', 'entities/enemy-bullet-white.png');
     textureCollection.load('enemy-bullet-combo', 'entities/enemy-bullet-combo.png');

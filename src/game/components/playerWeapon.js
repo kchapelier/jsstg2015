@@ -5,7 +5,7 @@ var collection = require('../objectCollection'),
 
 module.exports = {
     lastShot: 0,
-    shotFrequency: 66,
+    shotFrequency: 44,
     shooting: false,
     update: function (element, dt) {
         var shootNow = false;
@@ -19,21 +19,41 @@ module.exports = {
 
         if (shootNow) {
             collection.add('playerShot', shotPool.get({
-                x: element.x + 10,
-                y: element.y - 20,
-                speed: 650,
+                x: element.x + 5,
+                y: element.y - 17,
+                speed: 550,
                 directionIntent: {
-                    x: 0,
+                    x: 0.05,
                     y: -1
                 }
             }));
 
             collection.add('playerShot', shotPool.get({
-                x: element.x - 10,
+                x: element.x - 2,
                 y: element.y - 20,
-                speed: 650,
+                speed: 560,
                 directionIntent: {
-                    x: 0,
+                    x: -0.01,
+                    y: -1
+                }
+            }));
+
+            collection.add('playerShot', shotPool.get({
+                x: element.x + 2,
+                y: element.y - 20,
+                speed: 560,
+                directionIntent: {
+                    x: 0.01,
+                    y: -1
+                }
+            }));
+
+            collection.add('playerShot', shotPool.get({
+                x: element.x - 5,
+                y: element.y - 17,
+                speed: 550,
+                directionIntent: {
+                    x: -0.05,
                     y: -1
                 }
             }));

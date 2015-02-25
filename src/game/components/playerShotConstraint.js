@@ -2,7 +2,7 @@
 
 var renderer = require('../renderer'),
     objectCollection = require('../objectCollection'),
-    margin = 50;
+    margin = 20;
 
 module.exports = {
     postUpdate: function (element) {
