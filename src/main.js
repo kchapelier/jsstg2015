@@ -1,6 +1,12 @@
 "use strict";
 
+//TODO "main menu"
+//TODO balance the boss sequences
+//TODO save the high score locally
+//TODO enemy and player sprite (?)
 //TODO in-between level animation
+//TODO sounds
+//TODO death
 
 var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
