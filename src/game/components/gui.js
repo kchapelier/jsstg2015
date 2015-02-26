@@ -10,6 +10,7 @@ var textLives = 'Lives: ',
     textLastLife = 'Last life',
     textDead = 'Dead',
     textScore = 'Score: ',
+    textHighScore = 'HighScore: ',
     textGraze = 'Graze: ',
     textStyle = {
         font: '400 14px Economica',
@@ -27,6 +28,11 @@ module.exports = {
         element.scoreText = new PIXI.Text('', textStyle);
         element.scoreText.position.x = 15;
         element.scoreText.position.y = 15;
+
+        element.numeralHighScore = numeral(0);
+        element.highScoreText = new PIXI.Text('', textStyle);
+        element.highScoreText.position.x = 15;
+        element.highScoreText.position.y = 60;
 
         element.numeralGraze = numeral(0);
         element.grazeText = new PIXI.Text('', textStyle);
@@ -81,6 +87,7 @@ module.exports = {
         this.renderer.addElementToForeground(this.levelText);
         this.renderer.addElementToForeground(this.livesText);
         this.renderer.addElementToForeground(this.scoreText);
+        this.renderer.addElementToForeground(this.highScoreText);
         this.renderer.addElementToForeground(this.grazeText);
         this.renderer.addElementToForeground(this.lifeBar);
     },
@@ -106,6 +113,10 @@ module.exports = {
     changeScore: function (score) {
         this.numeralScore.set(score);
         this.scoreText.setText(textScore + this.numeralScore.format());
+    },
+    changeHighScore: function (score) {
+        this.numeralHighScore.set(score);
+        this.highScoreText.setText(textHighScore + this.numeralHighScore.format());
     },
     changeGraze: function (graze) {
         this.numeralGraze.set(graze);

@@ -2,7 +2,6 @@
 
 //TODO "main menu"
 //TODO balance the boss sequences
-//TODO save the high score locally
 //TODO enemy and player sprite (?)
 //TODO in-between level animation
 //TODO sounds
@@ -11,6 +10,7 @@
 var GameLoop = require('migl-gameloop'),
     input = require('./game/input'),
     renderer = require('./game/renderer'),
+    highScores = require('./game/highscores'),
     objectCollection = require('./game/objectCollection'),
     textureCollection = require('./game/textureCollection'),
     fontLoader = require('./lib/fontLoader');
@@ -111,12 +111,19 @@ var init = function init () {
     var levelNumber = 1,
         level = loadNewLevel(levelNumber),
         score = 0,
+        highScore = 0,
         graze = 0;
 
     gui.changeLevel(level, levelNumber);
     gui.changeScore(score);
+    gui.changeHighScore(highScore);
     gui.changeGraze(graze);
     gui.changeLives(player.life);
+
+    highScores.get(function (scores) {
+        highScore = scores.normal;
+        gui.changeHighScore(highScore);
+    });
 
     loop.update = function (dt) {
         input.update(dt);
@@ -185,6 +192,12 @@ var init = function init () {
                     score += 5;
                     gui.changeGraze(graze);
                     gui.changeScore(score);
+
+                    if (highScore < score) {
+                        highScore = score;
+                        gui.changeHighScore(highScore);
+                        highScores.set('normal', highScore);
+                    }
                 }
             }
         };
@@ -237,6 +250,12 @@ var init = function init () {
 
                         score += enemy.takeDamage(1);
                         gui.changeScore(score);
+
+                        if (highScore < score) {
+                            highScore = score;
+                            gui.changeHighScore(highScore);
+                            highScores.set('normal', highScore);
+                        }
                     }
                 }
             }
