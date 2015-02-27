@@ -14,6 +14,7 @@ X : extra boss
 
 
 var validLayouts = [
+    /* /
     {
         schema: ['B'],
         probability: 20,
@@ -24,7 +25,7 @@ var validLayouts = [
             M: 1
         }
     }
-    /*
+    /*/
     {
         schema: ['e', '?', '?', '?', '?', 'E', 'B'],
         probability: 20,
@@ -62,7 +63,8 @@ var validLayouts = [
             e: 10,
             E: 9
         }
-    }*/
+    }
+    /* */
 ];
 
 var sumProbability = 0;
