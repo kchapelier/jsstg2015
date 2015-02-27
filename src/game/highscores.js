@@ -11,14 +11,19 @@ var highScores = {
                 scores.normal = 0;
             }
 
-            callback(scores);
+            if (callback) {
+                callback(scores);
+            }
         });
     },
     set: function (gameType, score, callback) {
         highScores.get(function (scores) {
             scores[gameType] = Math.max(score, scores[gameType]);
             localForage.setItem('scores', scores);
-            callback(scores);
+
+            if (callback) {
+                callback(scores);
+            }
         });
     }
 };

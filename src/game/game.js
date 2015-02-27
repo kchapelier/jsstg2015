@@ -4,7 +4,6 @@
 //TODO enemy and player sprite (?)
 //TODO in-between level animation
 //TODO sounds
-//TODO death
 
 var GameLoop = require('migl-gameloop'),
     input = require('./input'),
@@ -35,12 +34,10 @@ var loadNewLevel = function () {
 
     levelInstance.reset();
 
-    console.log('generate level', levelInstance.rng.seed, levelInstance.rng.seedSource);
+    //console.log('generate level', levelInstance.rng.seed, levelInstance.rng.seedSource);
 
     return levelInstance;
 };
-
-loadTextures();
 
 var setupPoolFreeing = function () {
     var enemyShotPool = require('./pools/enemyShotPool'),
@@ -74,8 +71,6 @@ var init = function init () {
         player = playerFactory(),
         gui = guiFactory();
 
-    player.reset();
-
     var loop = new GameLoop();
 
     //TODO should be ported directly to gameloop
@@ -106,13 +101,13 @@ var init = function init () {
 
     setupPoolFreeing();
 
-    var levelNumber = 1,
-        level = loadNewLevel(levelNumber),
+    var levelNumber = 0,
+        level = null,
         score = 0,
         highScore = 0,
         graze = 0;
 
-    var incrementScore = function (increment) {
+    var incrementScore = function incrementScore (increment) {
         score += increment;
 
         gui.changeScore(score);
@@ -120,15 +115,35 @@ var init = function init () {
         if (highScore < score) {
             highScore = score;
             gui.changeHighScore(highScore);
-            highScores.set('normal', highScore);
         }
     };
 
-    gui.changeLevel(level, levelNumber);
-    gui.changeScore(score);
-    gui.changeHighScore(highScore);
-    gui.changeGraze(graze);
-    gui.changeLives(player.life);
+    var resetGame = function resetGame () {
+        //TODO add a method on migl-input to clear the inputs
+        input.currentInput = {};
+        input.activeCommands = [];
+
+        highScores.set('normal', highScore);
+        score = 0;
+        graze = 0;
+        levelNumber = 1;
+        level = loadNewLevel(levelNumber);
+        player.reset();
+
+        objectCollection.removeAll('playerShot');
+        objectCollection.removeAll('enemyShot');
+        objectCollection.removeAll('enemy');
+        objectCollection.removeAll('meteor');
+        //objectCollection.removeAll('explosion'); they bug out for some reason, TODO at a later date
+
+        gui.changeLevel(level, levelNumber);
+        gui.changeScore(score);
+        gui.changeHighScore(highScore);
+        gui.changeGraze(graze);
+        gui.changeLives(player.life);
+    };
+
+    resetGame();
 
     highScores.get(function (scores) {
         highScore = scores.normal;
@@ -195,6 +210,10 @@ var init = function init () {
                     objectCollection.remove('enemyShot', shot);
                     if (player.takeDamage(1)) {
                         gui.changeLives(player.life);
+
+                        if (player.life < 0) {
+                            setTimeout(resetGame, 1000);
+                        }
                     }
                 } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                     shot.grazed = true;
@@ -226,6 +245,10 @@ var init = function init () {
                 if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
                     if (player.takeDamage(1)) {
                         gui.changeLives(player.life);
+
+                        if (player.life < 0) {
+                            setTimeout(resetGame, 1000);
+                        }
                     }
                 }
             }
@@ -286,4 +309,11 @@ var init = function init () {
     loop.start();
 };
 
-module.exports = init;
+var game = {
+    initialize: function () {
+        loadTextures();
+        init();
+    }
+};
+
+module.exports = game;
