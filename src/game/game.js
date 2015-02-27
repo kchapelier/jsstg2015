@@ -76,10 +76,8 @@ var init = function init () {
     //TODO should be ported directly to gameloop
     var visibilityChangeHandler = function () {
         if (!!document.hidden) {
-            console.log('stop');
             loop.stop();
         } else {
-            console.log('start');
             loop.start();
         }
     };

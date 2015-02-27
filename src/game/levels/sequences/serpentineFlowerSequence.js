@@ -10,8 +10,6 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         bulletSpeed = 60 + 40 * speed,
         waitTime = 0.9 * bulletSpeed;
 
-    console.log('tightness', generalTightness);
-
     def.push(['setAngle', Math.random() * 10]);
 
     for (var i = 3; i < 108; i++) {

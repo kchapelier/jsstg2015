@@ -8,8 +8,6 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         div = Math.round(rng.randomBounded(4, 7)),
         repeatitions = Math.round(generosity * 3.5) * div;
 
-    console.log(bulletSpeed, waitTime, repeatitions);
-
     var def = [
         ['wait', 100]
     ];

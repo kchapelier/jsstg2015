@@ -21,7 +21,7 @@ var createRandomNumberGenerator = function createRandomNumberGenerator (string) 
         rng = seedRandom(seed, {
             entropy: false
         }),
-        noise = new Noise(0.9 || seed);
+        noise = new Noise(seed);
 
     return {
         seedSource: string,

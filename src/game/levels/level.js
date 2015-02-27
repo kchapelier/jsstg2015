@@ -56,7 +56,6 @@ Level.prototype.currentField = null;
 Level.prototype.update = function (dt) {
     if (this.currentField === null) {
         this.currentField = 0;
-        console.log('go to field ' + this.currentField);
     }
 
     var field = this.fields[this.currentField];
@@ -64,7 +63,6 @@ Level.prototype.update = function (dt) {
     if (field) {
         if (!field.update(dt)) {
             this.currentField++;
-            console.log('go to field ' + this.currentField);
         }
 
         return true;
