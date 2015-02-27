@@ -129,7 +129,7 @@ module.exports = {
         for (var i = 0; i < 3; i++) {
             var life = new PIXI.Graphics();
             life.beginFill(0xFFFFFF);
-            life.drawRect(i * 17, 2, 11, 11);
+            life.drawRect(i * 17, 4, 12, 7);
             life.endFill();
             this.lives.addChild(life);
             this.lifeSquares.push(life);

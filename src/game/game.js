@@ -1,6 +1,5 @@
 "use strict";
 
-//TODO "main menu"
 //TODO enemy and player sprite (?)
 //TODO in-between level animation
 
@@ -13,12 +12,10 @@ var GameLoop = require('migl-gameloop'),
     textureCollection = require('./textureCollection');
 
 var loadSounds = function loadSounds () {
-    sound.load('hit1', 'sfx/ld31-hit1', 1);
-    sound.load('hit2', 'sfx/ld31-hit2', 1);
-    sound.load('dissonant1', 'sfx/ld31-dissonant1');
-    sound.load('dissonant2', 'sfx/ld31-dissonant2');
-    sound.load('dissonant3', 'sfx/ld31-dissonant3');
-    sound.load('dissonant4', 'sfx/ld31-dissonant4');
+    sound.load('hit1', 'sfx/jsstg-hit6', 0.4, false, false);
+    sound.load('hit2', 'sfx/jsstg-hit5', 0.5, false, false);
+    sound.load('music', 'music/jsstg-music', 1, true, true);
+    sound.load('dissonant', 'sfx/ld31-dissonant2', 0.5, false, false);
 };
 
 var loadTextures = function loadTextures () {
@@ -165,6 +162,8 @@ var init = function init () {
 
     showMenu();
 
+    var musicPlaying = sound.play('music');
+
     highScores.get(function (scores) {
         highScore = scores.normal;
         gui.changeHighScore(highScore);
@@ -236,6 +235,7 @@ var init = function init () {
                     objectCollection.remove('enemyShot', shot);
                     if (player.takeDamage(1)) {
                         gui.changeLives(player.life);
+                        sound.play('dissonant');
 
                         if (player.life < 0) {
                             setTimeout(showMenu, 1000);

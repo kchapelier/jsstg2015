@@ -5,11 +5,12 @@ var howler = require('howler');
 var dictionary = {};
 
 module.exports = {
-    load: function (id, filename, volume) {
+    load: function (id, filename, volume, buffered, looping) {
         dictionary[id] = new howler.Howl({
             urls: ['./assets/sounds/' + filename + '.ogg', './assets/sounds/' + filename + '.wav'],
             autoplay: false,
-            loop: false,
+            loop: !!looping,
+            buffer: !!buffered,
             volume: volume || 0.75
         });
     },
@@ -18,11 +19,9 @@ module.exports = {
             return dictionary[id];
         }
     },
-    play: function (id, options) {
+    play: function (id) {
         if (!!dictionary[id]) {
-            dictionary[id].loop(options && !!options.loop);
-            dictionary[id].play();
-            return true;
+            return dictionary[id].play();
         }
 
         return false;
