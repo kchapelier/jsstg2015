@@ -1,33 +1,58 @@
 "use strict";
 
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
-    /*
-    var homing = rng() > 0.75,
-        rotation = rng() * 10,
-        number = Math.ceil((homing ? 1.5 * difficulty : 1) * 10 + generosity * 5) * 2 + 1,
-        repeatition = Math.ceil(20 + generosity * difficulty),
-        bulletSpeed = 120 * Math.pow(speed, 0.5),
-        waitTime = 200 * 100 / bulletSpeed / Math.sqrt(difficulty);
-    */
+    var bulletSpeed = 50 + speed * 20,
+        bulletNumber = Math.max(4, Math.min(5, Math.floor(3 + Math.sqrt(generosity) * 2))),
+        waitTime = 130 / 70 * bulletSpeed + (bulletNumber - 4) * 18,
+        spread = bulletNumber > 4 ? 1.33 : 1.5;
 
     var def = [];
 
-    def.push(['setBulletSpeed', 50, 0]);
+    def.push(
+        ['wait', 500],
+        ['setAngle', Math.random() * 10, true]
+    );
 
-    def.push(['wait', 500]);
-    def.push(['setAngle', 0, true]);
-    def.push(['setBulletSprite', 'enemy-bullet-white']);
-    def.push(['burst', 100, Math.PI * 2, 0, false]);
-    def.push(['setBulletSprite', 'enemy-bullet-combo']);
-    def.push(['wait', 200]);
+    var waitBetweenLayers = 2;
 
     for (var i = 0; i < 50; i++) {
-        def.push(['wait', 140]);
-        def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * 2, false]);
-        def.push(['burst', 3, Math.PI / 2, (i / 100) * Math.PI * -2, false]);
-        def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * 2, false]);
-        def.push(['burst', 3, Math.PI / 2, Math.PI + (i / 100) * Math.PI * -2, false]);
+        def.push(
+            ['setBulletSpeed', bulletSpeed - i * 0.15, 0],
+            ['wait', waitTime],
+            ['setBulletSprite', 'enemy-bullet-combo'],
+            ['burst', bulletNumber, Math.PI / spread, (i / 100) * Math.PI * 2, false],
+            ['burst', bulletNumber, Math.PI / spread, (i / 100) * Math.PI * -2, false],
+            ['burst', bulletNumber, Math.PI / spread, Math.PI + (i / 100) * Math.PI * 2, false],
+            ['burst', bulletNumber, Math.PI / spread, Math.PI + (i / 100) * Math.PI * -2, false]
+        );
+
+
+        if (i >= waitBetweenLayers) {
+            def.push(
+                ['setBulletSprite', 'enemy-bullet-white'],
+                ['burst', bulletNumber, Math.PI / spread, (i - waitBetweenLayers) / 100 * Math.PI * 2, false],
+                ['burst', bulletNumber, Math.PI / spread, (i - waitBetweenLayers) / 100 * Math.PI * -2, false],
+                ['burst', bulletNumber, Math.PI / spread, Math.PI + (i - waitBetweenLayers) / 100 * Math.PI * 2, false],
+                ['burst', bulletNumber, Math.PI / spread, Math.PI + (i - waitBetweenLayers) / 100 * Math.PI * -2, false]
+            );
+        }
     }
+
+    def.push(
+        ['setBulletSprite', 'enemy-bullet-white'],
+        ['wait', waitTime * 2.5],
+        ['burst', 91, Math.PI * 2, 0, false],
+        ['wait', waitTime * 1.1],
+        ['burst', 91, Math.PI * 2, 0.01, false],
+        ['wait', waitTime * 1.1],
+        ['burst', 91, Math.PI * 2, 0.02, false],
+        ['wait', waitTime * 1.1],
+        ['burst', 91, Math.PI * 2, 0.03, false],
+        ['wait', waitTime * 1.1],
+        ['burst', 91, Math.PI * 2, 0.04, false],
+        ['wait', waitTime * 1.1],
+        ['burst', 91, Math.PI * 2, 0.05, false]
+    );
 
     def.push(['wait', 1500]);
 

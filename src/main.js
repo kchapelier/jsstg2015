@@ -114,6 +114,18 @@ var init = function init () {
         highScore = 0,
         graze = 0;
 
+    var incrementScore = function (increment) {
+        score += increment;
+
+        gui.changeScore(score);
+
+        if (highScore < score) {
+            highScore = score;
+            gui.changeHighScore(highScore);
+            highScores.set('normal', highScore);
+        }
+    };
+
     gui.changeLevel(level, levelNumber);
     gui.changeScore(score);
     gui.changeHighScore(highScore);
@@ -189,15 +201,9 @@ var init = function init () {
                 } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                     shot.grazed = true;
                     graze += 1;
-                    score += 5;
                     gui.changeGraze(graze);
-                    gui.changeScore(score);
 
-                    if (highScore < score) {
-                        highScore = score;
-                        gui.changeHighScore(highScore);
-                        highScores.set('normal', highScore);
-                    }
+                    incrementScore(5);
                 }
             }
         };
@@ -248,14 +254,8 @@ var init = function init () {
                     ) {
                         objectCollection.remove('playerShot', shot);
 
-                        score += enemy.takeDamage(1);
-                        gui.changeScore(score);
-
-                        if (highScore < score) {
-                            highScore = score;
-                            gui.changeHighScore(highScore);
-                            highScores.set('normal', highScore);
-                        }
+                        var bonusScore = enemy.takeDamage(1);
+                        incrementScore(bonusScore);
                     }
                 }
             }

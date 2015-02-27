@@ -9,8 +9,14 @@ var monsterArray = objectCollection.getArray('enemy');
 var screenWidth = 800,
     screenHeight = 600;
 
+//crown2 is bad
+
 var patterns = {
-    constant: 1
+    constant: 0.8,
+    serpentineFlower: 1,
+    seal: 1,
+    flower: 1,
+    crown: 0.8
 };
 
 var BossField = function (level) {

@@ -16,7 +16,7 @@ var screenWidth = 800,
 var patterns = {
     square: 1,
     pulse: 1,
-    littleSeal: 100,
+    littleSeal: 2,
     perlin: 1,
     test: 1,
     sprayer: 1,

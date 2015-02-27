@@ -1,17 +1,33 @@
 "use strict";
 
+var scale = require('mathp/functions/scale');
+
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
     var def = [];
 
-    for (var i = 0; i < 100; i++) {
-        var tightness = 8 - Math.cos(2 + i * 0.5);
-        def.push(['wait', 80]);
-        //def.push(['randomBulletSprite', 'small-enemy-bullet-blue', 'small-enemy-bullet-yellow', 'small-enemy-bullet-red']);
-        def.push(['rotate', 0.03]);
-        def.push(['setBulletSpeed', 100 + 20 * Math.sin(0.3 * i)]);
-        def.push(['burst', 10, Math.PI * 2, Math.sin(0.3 * i) / tightness, false]);
-        def.push(['burst', 10, Math.PI * 2, Math.cos(0.3 * i) / tightness, false]);
+    var bulletNumber = Math.floor(7 + generosity * 6),
+        generalTightness = scale(generosity, 0.8, 1.5, 8, 50),
+        bulletSpeed = 60 + 40 * speed,
+        waitTime = 0.9 * bulletSpeed;
+
+    console.log('tightness', generalTightness);
+
+    def.push(['setAngle', Math.random() * 10]);
+
+    for (var i = 3; i < 108; i++) {
+        var tightness = generalTightness - Math.cos(2 + i * 0.5);
+        def.push(
+            ['wait', waitTime],
+            ['rotate', 0.03],
+            ['setBulletSpeed', bulletSpeed + bulletSpeed / 5 * Math.sin(0.3 * i)],
+            ['setBulletSprite', 'enemy-bullet-combo'],
+            ['burst', bulletNumber, Math.PI * 2, Math.sin(0.3 * i) / tightness, false],
+            ['setBulletSprite', 'enemy-bullet-white'],
+            ['burst', bulletNumber, Math.PI * 2, Math.cos(0.3 * i) / tightness, false]
+        );
     }
+
+    def.push(['wait', 1000]);
 
     return def;
 };
