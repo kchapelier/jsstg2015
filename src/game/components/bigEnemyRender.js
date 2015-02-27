@@ -3,7 +3,7 @@
 var PIXI = require('pixi.js'),
     textureCollection = require('./../textureCollection');
 
-var texture = textureCollection.get('player-sprite'),
+var texture = textureCollection.get('enemy-sprite'),
     textureIndicator = textureCollection.get('indicator');
 
 module.exports = {

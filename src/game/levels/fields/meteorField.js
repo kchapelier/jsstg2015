@@ -7,7 +7,7 @@ var MeteorField = function (level) {
     this.level = level;
     this.generosity = this.level.rng.randomBounded(0.5, 1.5);
     this.speed = this.level.rng.randomBounded(0.5, 1.75);
-    this.duration = this.level.rng.randomBounded(1000, 2000);
+    this.duration = this.level.rng.randomBounded(2000, 3500);
     this.deviation = this.level.rng.randomBounded(-0.5, 0.5);
 };
 

@@ -11,7 +11,7 @@ module.exports = function tesSequenceFactory (rng, speed, generosity, difficulty
 
 
     def.push(
-        ['setBulletSprite', 'player-bullet'],
+        ['setBulletSprite', 'enemy-bullet-black'],
         ['setBulletSpeed', bulletSpeed]
     );
 

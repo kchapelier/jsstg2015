@@ -9,7 +9,8 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         repeatitions = Math.round(generosity * 3.5) * div;
 
     var def = [
-        ['wait', 100]
+        ['wait', 100],
+        ['setBulletSprite', 'enemy-bullet-black']
     ];
 
     for (var i = 0; i < repeatitions; i++) {

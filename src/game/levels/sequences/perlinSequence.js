@@ -10,7 +10,7 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
     var def = [];
 
     def.push(['setBulletSpeed', bulletSpeed, 0]);
-    def.push(['setBulletSprite', 'player-bullet']);
+    def.push(['setBulletSprite', 'enemy-bullet-black']);
 
     for (var i = 0; i < 30; i++) {
         def.push(

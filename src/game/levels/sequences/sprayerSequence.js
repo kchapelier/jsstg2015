@@ -8,7 +8,8 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         bulletNumber = 6 + Math.ceil(generosity * 2);
 
     var def = [
-        ['setBulletSpeed', bulletSpeed]
+        ['setBulletSpeed', bulletSpeed],
+        ['setBulletSprite', 'enemy-bullet-combo']
     ];
 
     var d = 1;
