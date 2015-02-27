@@ -40,8 +40,6 @@ var loadNewLevel = function () {
 
     levelInstance.reset();
 
-    //console.log('generate level', levelInstance.rng.seed, levelInstance.rng.seedSource);
-
     return levelInstance;
 };
 
@@ -79,17 +77,6 @@ var init = function init () {
 
     var loop = new GameLoop();
 
-    //TODO should be ported directly to gameloop
-    var visibilityChangeHandler = function () {
-        if (!!document.hidden) {
-            loop.stop();
-        } else {
-            loop.start();
-        }
-    };
-
-    document.addEventListener('visibilitychange', visibilityChangeHandler);
-
     renderer.infectDom('game');
 
     background.bindToRenderer(renderer);
@@ -124,9 +111,7 @@ var init = function init () {
     };
 
     var showMenu = function () {
-        //TODO add a method on migl-input to clear the inputs
-        input.currentInput = {};
-        input.activeCommands = [];
+        input.clearCurrentState();
 
         objectCollection.removeAll('playerShot');
         objectCollection.removeAll('enemyShot');
@@ -141,6 +126,8 @@ var init = function init () {
     };
 
     var resetGame = function resetGame () {
+        input.clearCurrentState();
+
         highScores.set('normal', highScore);
         score = 0;
         graze = 0;
