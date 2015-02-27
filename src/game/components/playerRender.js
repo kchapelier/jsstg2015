@@ -89,5 +89,13 @@ module.exports = {
         } else {
             element.hitbox.alpha = 0;
         }
+    },
+    show: function () {
+        this.hitbox.visible = true;
+        this.sprite.visible = true;
+    },
+    hide: function () {
+        this.hitbox.visible = false;
+        this.sprite.visible = false;
     }
 };

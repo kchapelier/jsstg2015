@@ -3,14 +3,23 @@
 //TODO "main menu"
 //TODO enemy and player sprite (?)
 //TODO in-between level animation
-//TODO sounds
 
 var GameLoop = require('migl-gameloop'),
     input = require('./input'),
     renderer = require('./renderer'),
+    sound = require('./sound'),
     highScores = require('./highscores'),
     objectCollection = require('./objectCollection'),
     textureCollection = require('./textureCollection');
+
+var loadSounds = function loadSounds () {
+    sound.load('hit1', 'sfx/ld31-hit1', 1);
+    sound.load('hit2', 'sfx/ld31-hit2', 1);
+    sound.load('dissonant1', 'sfx/ld31-dissonant1');
+    sound.load('dissonant2', 'sfx/ld31-dissonant2');
+    sound.load('dissonant3', 'sfx/ld31-dissonant3');
+    sound.load('dissonant4', 'sfx/ld31-dissonant4');
+};
 
 var loadTextures = function loadTextures () {
     textureCollection.load('particle', 'particles/particle.png');
@@ -99,7 +108,8 @@ var init = function init () {
 
     setupPoolFreeing();
 
-    var levelNumber = 0,
+    var inGame = false,
+        levelNumber = 0,
         level = null,
         score = 0,
         highScore = 0,
@@ -116,17 +126,10 @@ var init = function init () {
         }
     };
 
-    var resetGame = function resetGame () {
+    var showMenu = function () {
         //TODO add a method on migl-input to clear the inputs
         input.currentInput = {};
         input.activeCommands = [];
-
-        highScores.set('normal', highScore);
-        score = 0;
-        graze = 0;
-        levelNumber = 1;
-        level = loadNewLevel(levelNumber);
-        player.reset();
 
         objectCollection.removeAll('playerShot');
         objectCollection.removeAll('enemyShot');
@@ -134,14 +137,33 @@ var init = function init () {
         objectCollection.removeAll('meteor');
         //objectCollection.removeAll('explosion'); they bug out for some reason, TODO at a later date
 
+        gui.showMenuGui();
+        player.hide();
+
+        inGame = false;
+    };
+
+    var resetGame = function resetGame () {
+        highScores.set('normal', highScore);
+        score = 0;
+        graze = 0;
+        levelNumber = 1;
+        level = loadNewLevel(levelNumber);
+        player.reset();
+        player.show();
+
+        gui.showGameGui();
+
         gui.changeLevel(level, levelNumber);
         gui.changeScore(score);
         gui.changeHighScore(highScore);
         gui.changeGraze(graze);
         gui.changeLives(player.life);
+
+        inGame = true;
     };
 
-    resetGame();
+    showMenu();
 
     highScores.get(function (scores) {
         highScore = scores.normal;
@@ -150,12 +172,18 @@ var init = function init () {
 
     loop.update = function (dt) {
         input.update(dt);
-        player.update(dt);
 
-        if (!level.update(dt)) {
-            levelNumber++;
-            level = loadNewLevel(levelNumber);
-            gui.changeLevel(level, levelNumber);
+        if (inGame) {
+            player.update(dt);
+            if (!level.update(dt)) {
+                levelNumber++;
+                level = loadNewLevel(levelNumber);
+                gui.changeLevel(level, levelNumber);
+            }
+        } else {
+            if (input.currentInput.SHOOT) {
+                resetGame();
+            }
         }
 
         var updateElement = function updateElement (element) {
@@ -210,7 +238,7 @@ var init = function init () {
                         gui.changeLives(player.life);
 
                         if (player.life < 0) {
-                            setTimeout(resetGame, 1000);
+                            setTimeout(showMenu, 1000);
                         }
                     }
                 } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
@@ -219,6 +247,8 @@ var init = function init () {
                     gui.changeGraze(graze);
 
                     incrementScore(5);
+
+                    sound.play('hit1');
                 }
             }
         };
@@ -275,6 +305,8 @@ var init = function init () {
 
                         var bonusScore = enemy.takeDamage(1);
                         incrementScore(bonusScore);
+
+                        sound.play('hit2');
                     }
                 }
             }
@@ -309,6 +341,7 @@ var init = function init () {
 
 var game = {
     initialize: function () {
+        loadSounds();
         loadTextures();
         init();
     }

@@ -61,7 +61,7 @@ BossField.prototype.update = function (dt) {
 
             pos.explosionSize = 4.5;
             pos.explosionColors = this.level.colors;
-            pos.totalLife = 50;
+            pos.totalLife = 800;
             pos.displayLifeBar = true;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));
