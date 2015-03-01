@@ -1,7 +1,5 @@
 "use strict";
 
-var PI_2 = Math.PI / 2;
-
 module.exports = function doubleRotatorFactory (rng, speed, generosity, difficulty) {
     var bulletSpeed = 45 + 10 * speed,
         waitTime = 250 / 50 * bulletSpeed,
@@ -14,10 +12,12 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
     ];
 
     for (var i = 0; i < repeatitions; i++) {
-        def.push(['wait', waitTime]);
-        def.push(['setBulletSpeed', bulletSpeed + (i % div) * 3]);
-        def.push(['burst', 13, Math.PI * 2, i / 8 + Math.PI * 3 * Math.sin((i % div) / 20), false]);
-        def.push(['burst', 13, Math.PI * 2, i / 8 + Math.PI * 3 * Math.sin((i % div) / 20), false]);
+        def.push(
+            ['wait', waitTime],
+            ['setBulletSpeed', bulletSpeed + (i % div) * 3],
+            ['burst', 13, Math.PI * 2, i / 8 + Math.PI * 3 * Math.sin((i % div) / 20), false],
+            ['burst', 13, Math.PI * 2, i / 8 + Math.PI * 3 * Math.sin((i % div) / 20), false]
+        );
     }
 
     return def;

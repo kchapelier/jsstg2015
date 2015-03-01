@@ -7,54 +7,53 @@ var PIXI = require('pixi.js'),
 var particleTexture = textureCollection.get('particle');
 
 var emitterDescription = {
-    "alpha": {
-        "start": 0.66,
-        "end": 0.52
+    alpha: {
+        start: 0.66,
+        end: 0.52
     },
-    "scale": {
-        "start": 4,
-        "end": 0.001,
-        "minimumScaleMultiplier": 1
+    scale: {
+        start: 4,
+        end: 0.001,
+        minimumScaleMultiplier: 1
     },
-    "color": {
-        "start": "#474a15",
-        "end": "#ff1212"
+    color: {
+        start: '#474a15',
+        end: '#ff1212'
     },
-    "speed": {
-        "start": 50,
-        "end": 80
+    speed: {
+        start: 50,
+        end: 80
     },
-    "acceleration": {
-        "x": 0,
-        "y": 0
+    acceleration: {
+        x: 0,
+        y: 0
     },
-    "startRotation": {
-        "min": 0,
-        "max": 0
+    startRotation: {
+        min: 0,
+        max: 0
     },
-    "rotationSpeed": {
-        "min": 0,
-        "max": 0
+    rotationSpeed: {
+        min: 0,
+        max: 0
     },
-    "lifetime": {
-        "min": 2.5,
-        "max": 3
+    lifetime: {
+        min: 2.5,
+        max: 3
     },
-    "blendMode": "screen",
-    "frequency": 0.05,
-    "emitterLifetime": 0.4,
-    "maxParticles": 80,
-    "pos": {
-        "x": 50,
-        "y": 0
+    blendMode: 'screen',
+    frequency: 0.05,
+    emitterLifetime: 0.4,
+    maxParticles: 80,
+    pos: {
+        x: 50,
+        y: 0
     },
-    "addAtBack": false,
-    "spawnType": "burst",
-    "particlesPerWave": 10,
-    "particleSpacing": 0,
-    "angleStart": 0
+    addAtBack: false,
+    spawnType: 'burst',
+    particlesPerWave: 10,
+    particleSpacing: 0,
+    angleStart: 0
 };
-
 
 var createEmitter = function createEmitter (source) {
     var emitter = new PixiParticle.Emitter(
@@ -68,7 +67,6 @@ var createEmitter = function createEmitter (source) {
 
     return emitter;
 };
-
 
 module.exports = {
     size: 1,

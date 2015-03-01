@@ -7,54 +7,54 @@ var PIXI = require('pixi.js'),
 var particleTexture = textureCollection.get('particle');
 
 var emitterDescription = {
-    "alpha": {
-        "start": 1,
-        "end": 0
+    alpha: {
+        start: 1,
+        end: 0
     },
-    "scale": {
-        "start": 0.07,
-        "end": 0.02,
-        "minimumScaleMultiplier": 3
+    scale: {
+        start: 0.07,
+        end: 0.02,
+        minimumScaleMultiplier: 3
     },
-    "color": {
-        "start": "#e0e7ff",
-        "end": "#dedeff"
+    color: {
+        start: '#e0e7ff',
+        end: '#dedeff'
     },
-    "speed": {
-        "start": 800,
-        "end": 700
+    speed: {
+        start: 800,
+        end: 700
     },
-    "acceleration": {
-        "x": 0,
-        "y": 0
+    acceleration: {
+        x: 0,
+        y: 0
     },
-    "startRotation": {
-        "min": 90,
-        "max": 90
+    startRotation: {
+        min: 90,
+        max: 90
     },
-    "rotationSpeed": {
-        "min": 0,
-        "max": 0
+    rotationSpeed: {
+        min: 0,
+        max: 0
     },
-    "lifetime": {
-        "min": 1,
-        "max": 3
+    lifetime: {
+        min: 1,
+        max: 3
     },
-    "blendMode": "normal",
-    "frequency": 0.04,
-    "emitterLifetime": -1,
-    "maxParticles": 60,
-    "pos": {
-        "x": 50,
-        "y": 0
+    blendMode: 'normal',
+    frequency: 0.04,
+    emitterLifetime: -1,
+    maxParticles: 60,
+    pos: {
+        x: 50,
+        y: 0
     },
-    "addAtBack": true,
-    "spawnType": "rect",
-    "spawnRect": {
-        "x": 0,
-        "y": 0,
-        "w": 800,
-        "h": 70
+    addAtBack: true,
+    spawnType: 'rect',
+    spawnRect: {
+        x: 0,
+        y: 0,
+        w: 800,
+        h: 70
     }
 };
 
@@ -86,5 +86,5 @@ module.exports = {
         this.renderer = renderer;
 
         this.renderer.addElementToBackground(this.emitterContainer);
-    },
+    }
 };

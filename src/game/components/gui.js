@@ -63,7 +63,7 @@ module.exports = {
             element.lifeBar.visible = false;
         }
     },
-    initializeMenuGui: function() {
+    initializeMenuGui: function () {
         var titleText = new PIXI.Text(textTitle, titleStyle);
         titleText.position.x = 9;
         titleText.position.y = 10;
@@ -88,7 +88,7 @@ module.exports = {
         this.commandsText.position.x = 15;
         this.commandsText.position.y = 485;
     },
-    initializeGameGui: function() {
+    initializeGameGui: function () {
         this.numeralScore = numeral(0);
         this.scoreText = new PIXI.Text('', textStyle);
         this.scoreText.position.x = 15;

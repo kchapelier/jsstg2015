@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     stylish = require('jshint-stylish');
 
-var files = ['./src/**/*.js', './gulpfile.js'];
+var files = ['./src/**/*.js', '!./src/lib/pixiParticle.js', '!./src/lib/weightedMarkovChain.js', './gulpfile.js'];
 
 gulp.task('lint', function () {
     return gulp

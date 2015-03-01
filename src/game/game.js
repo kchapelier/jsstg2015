@@ -68,17 +68,15 @@ var setupPoolFreeing = function () {
 };
 
 var init = function init () {
-    var playerFactory = require('./entities/player'),
+    var loop = new GameLoop(),
+        playerFactory = require('./entities/player'),
         backgroundFactory = require('./entities/background'),
         guiFactory = require('./entities/gui'),
         background = backgroundFactory(),
         player = playerFactory(),
         gui = guiFactory();
 
-    var loop = new GameLoop();
-
     renderer.infectDom('game');
-
     background.bindToRenderer(renderer);
     gui.bindToRenderer(renderer);
 

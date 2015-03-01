@@ -17,5 +17,8 @@
   "maxparams": 5,
   "maxdepth": 5,
   "maxcomplexity": 8,
-  "maxstatements": 50
+  "maxstatements": 50,
+  "globals": {
+    "WebFont": false
+  }
 }
