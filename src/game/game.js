@@ -97,6 +97,23 @@ var init = function init () {
         highScore = 0,
         graze = 0;
 
+    var takeDamages = function takeDamages (damage) {
+        if (player.takeDamage(1)) {
+            gui.changeLives(player.life);
+            sound.play('dissonant');
+
+            if (player.life < 0) {
+                setTimeout(showMenu, 1000);
+            }
+        }
+    };
+
+    var incrementGraze = function incrementGraze (increment) {
+        graze += increment;
+        gui.changeGraze(graze);
+        sound.play('hit1');
+    };
+
     var incrementScore = function incrementScore (increment) {
         score += increment;
 
@@ -218,22 +235,11 @@ var init = function init () {
 
                 if (euclideanDistance < playerHitboxRadius) {
                     objectCollection.remove('enemyShot', shot);
-                    if (player.takeDamage(1)) {
-                        gui.changeLives(player.life);
-                        sound.play('dissonant');
-
-                        if (player.life < 0) {
-                            setTimeout(showMenu, 1000);
-                        }
-                    }
+                    takeDamages(1);
                 } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                     shot.grazed = true;
-                    graze += 1;
-                    gui.changeGraze(graze);
-
+                    incrementGraze(1);
                     incrementScore(5);
-
-                    sound.play('hit1');
                 }
             }
         };
@@ -256,13 +262,7 @@ var init = function init () {
                 );
 
                 if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
-                    if (player.takeDamage(1)) {
-                        gui.changeLives(player.life);
-
-                        if (player.life < 0) {
-                            setTimeout(resetGame, 1000);
-                        }
-                    }
+                    takeDamages(1);
                 }
             }
         };
