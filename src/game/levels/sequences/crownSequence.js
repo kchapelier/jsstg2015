@@ -11,7 +11,7 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
 
     var def = [
         ['setBulletSpeed', bulletSpeed],
-        ['setAngle', PI_2 / 2 * ((Math.random() * 8) | 0)]
+        ['setAngle', PI_2 * ((Math.random() * 4) | 0)]
     ];
 
     for (var i = 0; i <= dev * 2; i++) {

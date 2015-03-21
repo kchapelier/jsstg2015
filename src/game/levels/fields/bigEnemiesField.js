@@ -175,7 +175,7 @@ BigEnemiesField.prototype.update = function (dt) {
             pos.cancellationRadius = 90;
             pos.explosionSize = 1;
             pos.explosionColors = this.level.colors;
-            pos.totalLife = 40;
+            pos.totalLife = 50;
 
             objectCollection.add('enemy', bigMonsterPool.get(pos));
         }

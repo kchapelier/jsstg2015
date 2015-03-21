@@ -9,8 +9,8 @@ module.exports = function doubleRotatorFactory (rng, speed, generosity, difficul
         ['wait', 300]
     ];
 
-    for (var i = 0; i < 30; i++) {
-        unstability += 0.15;
+    for (var i = 0; i < 28; i++) {
+        unstability += 0.14;
         def.push(
             ['wait', 600 * 40 / pspeed],
             ['setBulletSprite', 'enemy-bullet-black'],
