@@ -172,7 +172,7 @@ BigEnemiesField.prototype.update = function (dt) {
         for (var i = 0; i < this.enemies.length; i += 1) {
             var pos = this.enemies[i];
 
-            pos.cancellationRadius = 90;
+            pos.cancellationRadius = 80;
             pos.explosionSize = 1;
             pos.explosionColors = this.level.colors;
             pos.totalLife = 50;
