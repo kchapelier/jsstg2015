@@ -164,7 +164,7 @@ var init = function init () {
 
     showMenu();
 
-    //var musicPlaying = sound.play('music');
+    var musicPlaying = sound.play('music');
 
     highScores.get(function (scores) {
         highScore = scores.normal;
@@ -235,7 +235,7 @@ var init = function init () {
 
                 if (euclideanDistance < playerHitboxRadius) {
                     objectCollection.remove('enemyShot', shot);
-                    //takeDamages(1);
+                    takeDamages(1);
                 } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                     shot.grazed = true;
                     incrementGraze(1);
