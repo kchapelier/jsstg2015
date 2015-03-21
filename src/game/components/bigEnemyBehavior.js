@@ -21,6 +21,7 @@ module.exports = {
 
             if (this.life < 0) {
                 this.explode();
+                this.cancelBullets();
 
                 objectCollection.remove('enemy', this);
                 bonus += this.totalLife * bonusKill;
