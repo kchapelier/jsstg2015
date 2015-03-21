@@ -6,10 +6,10 @@ var PIXI = require('pixi.js'),
 
 var particleTexture = textureCollection.get('particle');
 
-var emitterDescription = {
+var explosionDescription = {
     alpha: {
         start: 0.66,
-        end: 0.52
+        end: 0.32
     },
     scale: {
         start: 4,
@@ -21,8 +21,8 @@ var emitterDescription = {
         end: '#ff1212'
     },
     speed: {
-        start: 50,
-        end: 80
+        start: 40,
+        end: 45
     },
     acceleration: {
         x: 0,
@@ -55,11 +55,60 @@ var emitterDescription = {
     angleStart: 0
 };
 
+var cancellationDescription = {
+    alpha: {
+        start: 1,
+        end: 0.2
+    },
+    scale: {
+        start: 1.5,
+        end: 1,
+        minimumScaleMultiplier: 1
+    },
+    color: {
+        start: '#474a15',
+        end: '#ff1212'
+    },
+    speed: {
+        start: 1,
+        end: 3
+    },
+    acceleration: {
+        x: 0,
+        y: 0
+    },
+    startRotation: {
+        min: 0,
+        max: 0
+    },
+    rotationSpeed: {
+        min: 0,
+        max: 0
+    },
+    lifetime: {
+        min: 1.5,
+        max: 2
+    },
+    blendMode: 'screen',
+    frequency: 0.02,
+    emitterLifetime: 0.5,
+    maxParticles: 2,
+    pos: {
+        x: 50,
+        y: 0
+    },
+    addAtBack: false,
+    spawnType: 'burst',
+    particlesPerWave: 2,
+    particleSpacing: 0,
+    angleStart: 0
+};
+
 var createEmitter = function createEmitter (source) {
     var emitter = new PixiParticle.Emitter(
         source,
         [particleTexture],
-        emitterDescription
+        explosionDescription
     );
 
     // Start emitting
@@ -83,5 +132,10 @@ module.exports = {
     setColors: function (colors) {
         this.emitter.startColor = PixiParticle.ParticleUtils.hexToRGB(colors.secondary);
         this.emitter.endColor = PixiParticle.ParticleUtils.hexToRGB(colors.primary);
+    },
+    setType: function (type) {
+        var config = type === 'cancellation' ? cancellationDescription : explosionDescription;
+
+        this.emitter.init([particleTexture], config);
     }
 };

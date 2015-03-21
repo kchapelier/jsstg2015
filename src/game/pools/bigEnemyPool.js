@@ -19,6 +19,7 @@ module.exports = pool({
             y: 0
         };
         element.sequence = options.sequence || null;
+        element.cancellationRadius = options.cancellationRadius || 100;
         element.explosionSize = options.explosionSize || 1;
         element.explosionColors = options.explosionColors || null;
     },

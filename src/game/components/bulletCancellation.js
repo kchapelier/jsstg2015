@@ -5,7 +5,7 @@ var objectCollection = require('./../objectCollection'),
     enemyShotArray = objectCollection.getArray('enemyShot');
 
 module.exports = {
-    cancellationRadius: 240,
+    cancellationRadius: 100,
     cancellationColors: null,
     cancelBullets: function () {
         var shot,
@@ -33,7 +33,8 @@ module.exports = {
                 x: toRemove[i].x,
                 y: toRemove[i].y,
                 colors: this.explosionColors,
-                size: 0.001
+                size: 0.001,
+                type: 'cancellation'
             }));
 
             objectCollection.remove('enemyShot', toRemove[i]);
