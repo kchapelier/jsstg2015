@@ -1,9 +1,9 @@
 "use strict";
 
-var pool = require('../../lib/pool'),
+var pool = require('migl-pool'),
     playerShot = require('../entities/playerShot');
 
-module.exports = pool({
+module.exports = pool.create({
     name: 'playerShot',
     factory: playerShot,
     initialize: function (element, options) {
@@ -13,5 +13,6 @@ module.exports = pool({
         element.directionIntent = options.directionIntent;
         //element.initialize();
     },
-    initialNumber: 40
+    firstAllocationNumber: 40,
+    allocationNumber: 5
 });

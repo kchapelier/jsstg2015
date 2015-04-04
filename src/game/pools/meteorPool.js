@@ -1,9 +1,9 @@
 "use strict";
 
-var pool = require('../../lib/pool'),
+var pool = require('migl-pool'),
     meteor = require('../entities/meteor');
 
-module.exports = pool({
+module.exports = pool.create({
     name: 'meteor',
     factory: meteor,
     initialize: function (element, options) {
@@ -20,5 +20,6 @@ module.exports = pool({
             element.setColors(options.colors);
         }
     },
-    initialNumber: 40
+    firstAllocationNumber: 40,
+    allocationNumber: 5
 });

@@ -1,6 +1,6 @@
 "use strict";
 
-var rng = require('./../../lib/rng'),
+var rng = require('migl-rng'),
     layout = require('./layout'),
     name = require('./name'),
     color = require('./color'),
@@ -81,7 +81,7 @@ Level.prototype.reset = function () {
 
 module.exports = {
     createFromString: function (string) {
-        var levelRng = rng.createFromString(string);
+        var levelRng = rng.create(string);
 
         return new Level(levelRng);
     }

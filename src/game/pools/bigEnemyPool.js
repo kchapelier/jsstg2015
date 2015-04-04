@@ -1,9 +1,9 @@
 "use strict";
 
-var pool = require('../../lib/pool'),
+var pool = require('migl-pool'),
     bigEnemy = require('../entities/bigEnemy');
 
-module.exports = pool({
+module.exports = pool.create({
     name: 'bigEnemy',
     factory: bigEnemy,
     initialize: function (element, options) {
@@ -23,5 +23,6 @@ module.exports = pool({
         element.explosionSize = options.explosionSize || 1;
         element.explosionColors = options.explosionColors || null;
     },
-    initialNumber: 5
+    firstAllocationNumber: 5,
+    allocationNumber: 2
 });
