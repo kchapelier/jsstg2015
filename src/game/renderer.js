@@ -5,10 +5,10 @@ var PIXI = require('pixi.js'),
     baseHeight = 600; //window.innerHeight;
 
 var renderer = new PIXI.WebGLRenderer(baseWidth, baseHeight),
-    stage = new PIXI.Stage(0x000000),
-    backgroundLayer = new PIXI.DisplayObjectContainer(),
-    middleLayer = new PIXI.DisplayObjectContainer(),
-    foregroundLayer = new PIXI.DisplayObjectContainer();
+    stage = new PIXI.Container(0x000000),
+    backgroundLayer = new PIXI.Container(),
+    middleLayer = new PIXI.Container(),
+    foregroundLayer = new PIXI.Container();
 
 stage.addChild(backgroundLayer);
 stage.addChild(middleLayer);

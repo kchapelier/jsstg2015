@@ -22,6 +22,6 @@ module.exports = {
         element.sprite.y = element.y;
     },
     setTexture: function (texture) {
-        this.sprite.setTexture(textureCollection.get(texture));
+        this.sprite.texture = textureCollection.get(texture);
     }
 };

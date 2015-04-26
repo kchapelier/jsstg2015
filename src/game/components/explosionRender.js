@@ -120,7 +120,7 @@ var createEmitter = function createEmitter (source) {
 module.exports = {
     size: 1,
     initialize: function (element) {
-        element.emitterContainer = new PIXI.DisplayObjectContainer();
+        element.emitterContainer = new PIXI.Container();
         element.emitter = createEmitter(element.emitterContainer);
     },
     render: function (element, dt) {

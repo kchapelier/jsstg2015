@@ -70,8 +70,8 @@ module.exports = {
         element.sprite = new PIXI.Sprite(particleTexture);
         element.sprite.alpha = 0.90;
         element.sprite.anchor = new PIXI.Point(0.5, 0.5);
-        element.sprite.blendMode = PIXI.blendModes.ADD;
-        element.emitterContainer = new PIXI.DisplayObjectContainer();
+        element.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+        element.emitterContainer = new PIXI.Container();
         element.emitter = createEmitter(element.emitterContainer);
     },
     render: function (element, dt) {

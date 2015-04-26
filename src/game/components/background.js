@@ -74,7 +74,7 @@ var createEmitter = function createEmitter (source) {
 module.exports = {
     size: 1,
     initialize: function (element) {
-        element.emitterContainer = new PIXI.DisplayObjectContainer();
+        element.emitterContainer = new PIXI.Container();
         element.emitter = createEmitter(element.emitterContainer);
         element.emitter.spawnPos.x = 0;
         element.emitter.spawnPos.y = -80;

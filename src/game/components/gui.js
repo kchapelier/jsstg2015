@@ -77,7 +77,7 @@ module.exports = {
         titleSquare.drawRect(0, 0, 119, 69);
         titleSquare.endFill();
 
-        this.title = new PIXI.DisplayObjectContainer();
+        this.title = new PIXI.Container();
         this.title.position.x = 15;
         this.title.position.y = 15;
         this.title.addChild(titleSquare);
@@ -112,7 +112,7 @@ module.exports = {
         this.levelText.position.x = 800 - 15 - this.levelText.width;
         this.levelText.position.y = 15;
 
-        this.lifeBar = new PIXI.DisplayObjectContainer();
+        this.lifeBar = new PIXI.Container();
         this.lifeBar.x = 5;
         this.lifeBar.y = 5;
         this.lifeBarInner = new PIXI.Graphics();
@@ -121,7 +121,7 @@ module.exports = {
         this.lifeBarInner.endFill();
         this.lifeBar.addChild(this.lifeBarInner);
 
-        this.lives = new PIXI.DisplayObjectContainer();
+        this.lives = new PIXI.Container();
         this.lives.position.x = this.livesText.width + this.livesText.position.x;
         this.lives.position.y = this.livesText.position.y;
         this.lifeSquares = [];
@@ -174,7 +174,7 @@ module.exports = {
         this.renderer.addElementToForeground(this.lifeBar);
     },
     changeLevel: function (level, levelNumber) {
-        this.levelText.setText(toRoman(levelNumber) + ": " + level.name.toUpperCase());
+        this.levelText.text = toRoman(levelNumber) + ": " + level.name.toUpperCase();
         this.levelText.position.x = 800 - 15 - this.levelText.width;
     },
     changeLives: function (lives) {
@@ -183,24 +183,24 @@ module.exports = {
         }
 
         if (lives === 0) {
-            this.livesText.setText(textLives + textLastLife);
+            this.livesText.text = textLives + textLastLife;
         } else if (lives < 0) {
-            this.livesText.setText(textDead);
+            this.livesText.text = textDead;
         } else {
-            this.livesText.setText(textLives);
+            this.livesText.text = textLives;
         }
     },
     changeScore: function (score) {
         this.numeralScore.set(score);
-        this.scoreText.setText(textScore + this.numeralScore.format());
+        this.scoreText.text = textScore + this.numeralScore.format();
     },
     changeHighScore: function (score) {
         this.numeralHighScore.set(score);
-        this.highScoreText.setText(textHighScore + this.numeralHighScore.format());
+        this.highScoreText.text = textHighScore + this.numeralHighScore.format();
         this.highScoreText.position.x = 800 - 15 - this.highScoreText.width;
     },
     changeGraze: function (graze) {
         this.numeralGraze.set(graze);
-        this.grazeText.setText(textGraze + this.numeralGraze.format());
+        this.grazeText.text = textGraze + this.numeralGraze.format();
     }
 };
