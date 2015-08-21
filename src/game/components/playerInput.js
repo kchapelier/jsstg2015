@@ -1,6 +1,13 @@
 "use strict";
 
-var input = require('../input');
+var input = require('../input'),
+    upCommand = input.commands.UP,
+    downCommand = input.commands.DOWN,
+    leftCommand = input.commands.LEFT,
+    rightCommand = input.commands.RIGHT,
+    focusCommand = input.commands.FOCUS,
+    shootCommand = input.commands.SHOOT;
+
 
 module.exports = {
     focused: false,
@@ -9,18 +16,18 @@ module.exports = {
     update: function (element, dt) {
         var directionIntent = element.directionIntent;
 
-        if (input.currentInput.UP) {
-            directionIntent.y = -input.currentInput.UP;
-        } else if (input.currentInput.DOWN) {
-            directionIntent.y = input.currentInput.DOWN;
+        if (upCommand.active) {
+            directionIntent.y = -upCommand.value;
+        } else if (downCommand.active) {
+            directionIntent.y = downCommand.value;
         } else {
             directionIntent.y = 0;
         }
 
-        if (input.currentInput.LEFT) {
-            directionIntent.x = -input.currentInput.LEFT;
-        } else if (input.currentInput.RIGHT) {
-            directionIntent.x = input.currentInput.RIGHT;
+        if (leftCommand.active) {
+            directionIntent.x = -leftCommand.value;
+        } else if (rightCommand.active) {
+            directionIntent.x = rightCommand.value;
         } else {
             directionIntent.x = 0;
         }
@@ -29,9 +36,9 @@ module.exports = {
             directionIntent.normalize();
         }
 
-        element.focused = input.currentInput.FOCUS;
+        element.focused = focusCommand.active;
         element.speed = element.focused ? element.focusedSpeed : element.normalSpeed;
 
-        element.shooting = input.currentInput.SHOOT;
+        element.shooting = shootCommand.active;
     }
 };

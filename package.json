@@ -26,7 +26,7 @@
     "localforage": "^1.2.1",
     "mathp": "^1.3.1",
     "migl-gameloop": "^1.1.0",
-    "migl-input": "^1.1.1",
+    "migl-input": "^2.0.0",
     "migl-pool": "^1.0.0",
     "migl-rng": "^1.0.0",
     "numeral": "^1.5.3",

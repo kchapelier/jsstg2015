@@ -182,7 +182,7 @@ var init = function init () {
                 gui.changeLevel(level, levelNumber);
             }
         } else {
-            if (input.currentInput.SHOOT) {
+            if (input.commands.SHOOT.active) {
                 resetGame();
             }
         }
