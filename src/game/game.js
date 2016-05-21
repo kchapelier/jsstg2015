@@ -68,8 +68,7 @@ var setupPoolFreeing = function () {
 };
 
 var init = function init () {
-    var loop = new GameLoop(),
-        playerFactory = require('./entities/player'),
+    var playerFactory = require('./entities/player'),
         backgroundFactory = require('./entities/background'),
         guiFactory = require('./entities/gui'),
         background = backgroundFactory(),
@@ -171,155 +170,154 @@ var init = function init () {
         gui.changeHighScore(highScore);
     });
 
-    loop.update = function (dt) {
-        input.update(dt);
+    var loop = new GameLoop({
+        update: function (dt) {
+            input.update(dt);
 
-        if (inGame) {
-            player.update(dt);
-            if (!level.update(dt)) {
-                levelNumber++;
-                level = loadNewLevel(levelNumber);
-                gui.changeLevel(level, levelNumber);
-            }
-        } else {
-            if (input.commands.SHOOT.active) {
-                resetGame();
-            }
-        }
-
-        var updateElement = function updateElement (element) {
-            element.update(dt);
-        };
-
-        playerShotArray.forEach(updateElement);
-        enemyShotArray.forEach(updateElement);
-        enemyArray.forEach(updateElement);
-        meteorArray.forEach(updateElement);
-        explosionArray.forEach(updateElement);
-
-        gui.update(dt);
-        background.update(dt);
-    };
-
-    loop.postUpdate = function (dt) {
-        player.postUpdate(dt);
-
-        var postUpdateElement = function postUpdateElement (element) {
-            element.postUpdate(dt);
-        };
-
-        playerShotArray.forEach(postUpdateElement);
-        enemyShotArray.forEach(postUpdateElement);
-        enemyArray.forEach(postUpdateElement);
-        meteorArray.forEach(postUpdateElement);
-        explosionArray.forEach(postUpdateElement);
-
-        //check collision enemyShot > player, using circle collision because it's better
-        var enemyShotCollisions = function enemyShotCollisions () {
-            var shot,
-                playerHitboxX = player.x,
-                playerHitboxY = player.y,
-                playerGrazeBoxWidth = player.grazeBoxWidth,
-                playerHitboxRadius = 4,
-                shotHitboxRadius = 0,
-                i = 0,
-                euclideanDistance = 0;
-
-            for (; i < enemyShotArray.length; i++) {
-                shot = enemyShotArray[i];
-                shotHitboxRadius = shot.hitboxRadius;
-                euclideanDistance = Math.sqrt(
-                    Math.pow(playerHitboxX - shot.x, 2) +
-                    Math.pow(playerHitboxY - shot.y, 2)
-                ) - shotHitboxRadius;
-
-                if (euclideanDistance < playerHitboxRadius) {
-                    objectCollection.remove('enemyShot', shot);
-                    takeDamages(1);
-                } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
-                    shot.grazed = true;
-                    incrementGraze(1);
-                    incrementScore(5);
+            if (inGame) {
+                player.update(dt);
+                if (!level.update(dt)) {
+                    levelNumber++;
+                    level = loadNewLevel(levelNumber);
+                    gui.changeLevel(level, levelNumber);
+                }
+            } else {
+                if (input.commands.SHOOT.active) {
+                    resetGame();
                 }
             }
-        };
 
-        var meteorCollisions = function meteorCollisions () {
-            var meteor,
-                playerHitboxX = player.x,
-                playerHitboxY = player.y,
-                playerHitboxRadius = 4,
-                meteorHitboxRadius = 0,
-                i = 0,
-                euclideanDistance = 0;
+            var updateElement = function updateElement (element) {
+                element.update(dt);
+            };
 
-            for (; i < meteorArray.length; i++) {
-                meteor = meteorArray[i];
-                meteorHitboxRadius = meteor.hitboxRadius;
-                euclideanDistance = Math.sqrt(
-                    Math.pow(playerHitboxX - meteor.x, 2) +
-                    Math.pow(playerHitboxY - meteor.y, 2)
-                );
+            playerShotArray.forEach(updateElement);
+            enemyShotArray.forEach(updateElement);
+            enemyArray.forEach(updateElement);
+            meteorArray.forEach(updateElement);
+            explosionArray.forEach(updateElement);
 
-                if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
-                    takeDamages(1);
-                }
-            }
-        };
+            gui.update(dt);
+            background.update(dt);
+        },
+        postUpdate: function (dt) {
+            player.postUpdate(dt);
 
-        //check collision playerShot > enemy, using square collision because it's faster
-        var playerShotCollisions = function playerShotCollisions () {
-            var shot,
-                enemy,
-                enemyHitboxRadius = 0,
-                i,
-                k;
+            var postUpdateElement = function postUpdateElement (element) {
+                element.postUpdate(dt);
+            };
 
+            playerShotArray.forEach(postUpdateElement);
+            enemyShotArray.forEach(postUpdateElement);
+            enemyArray.forEach(postUpdateElement);
+            meteorArray.forEach(postUpdateElement);
+            explosionArray.forEach(postUpdateElement);
 
-            for (k = 0; k < enemyArray.length; k++) {
-                enemy = enemyArray[k];
-                enemyHitboxRadius = enemy.hitboxRadius;
-                for (i = 0; i < playerShotArray.length; i++) {
-                    shot = playerShotArray[i];
+            //check collision enemyShot > player, using circle collision because it's better
+            var enemyShotCollisions = function enemyShotCollisions () {
+                var shot,
+                    playerHitboxX = player.x,
+                    playerHitboxY = player.y,
+                    playerGrazeBoxWidth = player.grazeBoxWidth,
+                    playerHitboxRadius = 4,
+                    shotHitboxRadius = 0,
+                    i = 0,
+                    euclideanDistance = 0;
 
-                    if (
-                        Math.abs(enemy.x - shot.x) < enemyHitboxRadius &&
-                        Math.abs(enemy.y - shot.y) < enemyHitboxRadius
-                    ) {
-                        objectCollection.remove('playerShot', shot);
+                for (; i < enemyShotArray.length; i++) {
+                    shot = enemyShotArray[i];
+                    shotHitboxRadius = shot.hitboxRadius;
+                    euclideanDistance = Math.sqrt(
+                        Math.pow(playerHitboxX - shot.x, 2) +
+                        Math.pow(playerHitboxY - shot.y, 2)
+                    ) - shotHitboxRadius;
 
-                        var bonusScore = enemy.takeDamage(1);
-                        incrementScore(bonusScore);
-
-                        sound.play('hit2');
+                    if (euclideanDistance < playerHitboxRadius) {
+                        objectCollection.remove('enemyShot', shot);
+                        takeDamages(1);
+                    } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
+                        shot.grazed = true;
+                        incrementGraze(1);
+                        incrementScore(5);
                     }
                 }
-            }
-        };
+            };
 
-        playerShotCollisions();
-        enemyShotCollisions();
-        meteorCollisions();
-    };
+            var meteorCollisions = function meteorCollisions () {
+                var meteor,
+                    playerHitboxX = player.x,
+                    playerHitboxY = player.y,
+                    playerHitboxRadius = 4,
+                    meteorHitboxRadius = 0,
+                    i = 0,
+                    euclideanDistance = 0;
 
-    loop.render = function (dt) {
-        player.render(dt);
+                for (; i < meteorArray.length; i++) {
+                    meteor = meteorArray[i];
+                    meteorHitboxRadius = meteor.hitboxRadius;
+                    euclideanDistance = Math.sqrt(
+                        Math.pow(playerHitboxX - meteor.x, 2) +
+                        Math.pow(playerHitboxY - meteor.y, 2)
+                    );
 
-        var renderElement = function renderElement (element) {
-            element.render(dt);
-        };
+                    if (euclideanDistance < (meteorHitboxRadius + playerHitboxRadius)) {
+                        takeDamages(1);
+                    }
+                }
+            };
 
-        playerShotArray.forEach(renderElement);
-        enemyShotArray.forEach(renderElement);
-        enemyArray.forEach(renderElement);
-        meteorArray.forEach(renderElement);
-        explosionArray.forEach(renderElement);
+            //check collision playerShot > enemy, using square collision because it's faster
+            var playerShotCollisions = function playerShotCollisions () {
+                var shot,
+                    enemy,
+                    enemyHitboxRadius = 0,
+                    i,
+                    k;
 
-        gui.render(dt);
-        background.render(dt);
+                for (k = 0; k < enemyArray.length; k++) {
+                    enemy = enemyArray[k];
+                    enemyHitboxRadius = enemy.hitboxRadius;
+                    for (i = 0; i < playerShotArray.length; i++) {
+                        shot = playerShotArray[i];
 
-        renderer.render(dt);
-    };
+                        if (
+                            Math.abs(enemy.x - shot.x) < enemyHitboxRadius &&
+                            Math.abs(enemy.y - shot.y) < enemyHitboxRadius
+                        ) {
+                            objectCollection.remove('playerShot', shot);
+
+                            var bonusScore = enemy.takeDamage(1);
+                            incrementScore(bonusScore);
+
+                            sound.play('hit2');
+                        }
+                    }
+                }
+            };
+
+            playerShotCollisions();
+            enemyShotCollisions();
+            meteorCollisions();
+        },
+        render: function (dt) {
+            player.render(dt);
+
+            var renderElement = function renderElement (element) {
+                element.render(dt);
+            };
+
+            playerShotArray.forEach(renderElement);
+            enemyShotArray.forEach(renderElement);
+            enemyArray.forEach(renderElement);
+            meteorArray.forEach(renderElement);
+            explosionArray.forEach(renderElement);
+
+            gui.render(dt);
+            background.render(dt);
+
+            renderer.render(dt);
+        }
+    });
 
     loop.start();
 };
