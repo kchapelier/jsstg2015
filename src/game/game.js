@@ -94,15 +94,18 @@ var init = function init () {
         level = null,
         score = 0,
         highScore = 0,
-        graze = 0;
+        graze = 0,
+        pause = 0,
+        speedMultiplier = 1;
 
     var takeDamages = function takeDamages (damage) {
         if (player.takeDamage(1)) {
             gui.changeLives(player.life);
             sound.play('dissonant');
+            pause = 650;
 
             if (player.life < 0) {
-                setTimeout(showMenu, 1000);
+                setTimeout(showMenu, 700);
             }
         }
     };
@@ -172,23 +175,35 @@ var init = function init () {
 
     var loop = new GameLoop({
         update: function (dt) {
+            if (pause > 0) {
+                pause-=dt;
+                return;
+            }
+
             input.update(dt);
 
             if (inGame) {
-                player.update(dt);
-                if (!level.update(dt)) {
+                if (input.commands.FOCUS.active) {
+                    speedMultiplier = Math.max(0.3, speedMultiplier - dt / 500);
+                } else {
+                    speedMultiplier = Math.min(1, speedMultiplier + dt / 700);
+                }
+
+                player.update(dt * speedMultiplier);
+                if (!level.update(dt * speedMultiplier)) {
                     levelNumber++;
                     level = loadNewLevel(levelNumber);
                     gui.changeLevel(level, levelNumber);
                 }
             } else {
+                speedMultiplier = 1;
                 if (input.commands.SHOOT.active) {
                     resetGame();
                 }
             }
 
             var updateElement = function updateElement (element) {
-                element.update(dt);
+                element.update(dt * speedMultiplier);
             };
 
             playerShotArray.forEach(updateElement);
@@ -197,14 +212,19 @@ var init = function init () {
             meteorArray.forEach(updateElement);
             explosionArray.forEach(updateElement);
 
-            gui.update(dt);
-            background.update(dt);
+            gui.update(dt * speedMultiplier);
+            background.update(dt * speedMultiplier);
         },
         postUpdate: function (dt) {
-            player.postUpdate(dt);
+            if (pause > 0) {
+                pause-=dt;
+                return;
+            }
+
+            player.postUpdate(dt * speedMultiplier);
 
             var postUpdateElement = function postUpdateElement (element) {
-                element.postUpdate(dt);
+                element.postUpdate(dt * speedMultiplier);
             };
 
             playerShotArray.forEach(postUpdateElement);
@@ -233,7 +253,6 @@ var init = function init () {
                     ) - shotHitboxRadius;
 
                     if (euclideanDistance < playerHitboxRadius) {
-                        objectCollection.remove('enemyShot', shot);
                         takeDamages(1);
                     } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                         shot.grazed = true;
@@ -300,10 +319,10 @@ var init = function init () {
             meteorCollisions();
         },
         render: function (dt) {
-            player.render(dt);
+            player.render(dt * speedMultiplier);
 
             var renderElement = function renderElement (element) {
-                element.render(dt);
+                element.render(dt * speedMultiplier);
             };
 
             playerShotArray.forEach(renderElement);
@@ -312,10 +331,10 @@ var init = function init () {
             meteorArray.forEach(renderElement);
             explosionArray.forEach(renderElement);
 
-            gui.render(dt);
-            background.render(dt);
+            gui.render(dt * speedMultiplier);
+            background.render(dt * speedMultiplier);
 
-            renderer.render(dt);
+            renderer.render(dt * speedMultiplier);
         }
     });
 
