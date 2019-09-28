@@ -1,29 +1,42 @@
 "use strict";
 
-var GameObject = require('../../lib/quick-and-dirty-gameobject');
+var extend = require('../../lib/extends');
 
-module.exports = GameObject.createFactory(
-    require('../components/playerInput'),
-    require('../components/playerWeapon'),
-    require('../components/playerConstraint'),
-    require('../components/position'),
-    require('../components/playerRender'),
+var MissileWeapon = require('./../components/weapons/rotatingOptions');
+
+var Player = function Player () {
+    this.initializeRender();
+    this.initializePosition();
+
+    this.setWeapon(new MissileWeapon(this));
+};
+
+Player.prototype = extend.copy(Player.prototype, [
     {
         life: null,
         invincible: false,
         invicibilityDuration: 1250,
         invicibilityTimer: 0,
         grazeBoxWidth: 18,
+        hitboxRadius: 4,
         reset: function () {
             this.life = 3;
             this.invincible = false;
             this.x = 400;
             this.y = 500;
         },
-        update: function (element, dt) {
-            if (element.invicibilityTimer > 0) {
-                element.invicibilityTimer -= dt;
+        postUpdate: function (dt) {
+            this.postUpdateWeapon(dt);
+        },
+        update: function (dt) {
+            if (this.invicibilityTimer > 0) {
+                this.invicibilityTimer -= dt;
             }
+
+            this.updateInput(dt);
+            this.updatePosition(dt);
+            this.updateConstraint(dt);
+            this.updateWeapon(dt);
         },
         takeDamage: function (damage) {
             if (!this.invincible) {
@@ -40,5 +53,12 @@ module.exports = GameObject.createFactory(
 
             return false;
         }
-    }
-);
+    },
+    require('../components/playerInput2'),
+    require('../components/position2'),
+    require('../components/playerConstraint2'),
+    require('../components/playerRender2'),
+    require('../components/playerWeapon')
+]);
+
+module.exports = Player;

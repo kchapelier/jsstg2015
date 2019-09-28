@@ -6,6 +6,20 @@ var collection = require('./../lib/objectCollection'),
 collection.on('add.player', function (element) {
     renderer.addElement(element.sprite);
     renderer.addElement(element.hitbox);
+
+    if (element.weapon.options) {
+        for(var i = 0; i < element.weapon.options.length; i++) {
+            renderer.addElement(element.weapon.options[i]);
+        }
+    }
+});
+
+collection.on('add.playerMissile', function (element) {
+    renderer.addElement(element.sprite);
+});
+
+collection.on('remove.playerMissile', function (element) {
+    renderer.removeElement(element.sprite);
 });
 
 collection.on('add.playerShot', function (element) {

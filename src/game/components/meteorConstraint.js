@@ -5,11 +5,11 @@ var renderer = require('../renderer'),
     margin = 600;
 
 module.exports = {
-    postUpdate: function (element) {
+    postUpdateConstraint: function (dt) {
         if (
-            element.y > renderer.screenHeight + margin
+            this.y > renderer.screenHeight + margin
         ) {
-            objectCollection.remove('meteor', element);
+            objectCollection.remove('meteor', this);
         }
     }
 };

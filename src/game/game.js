@@ -46,6 +46,7 @@ var loadNewLevel = function () {
 var setupPoolFreeing = function () {
     var enemyShotPool = require('./pools/enemyShotPool'),
         playerShotPool = require('./pools/playerShotPool'),
+        playerMissilePool = require('./pools/playerMissilePool'),
         meteorPool = require('./pools/meteorPool'),
         explosionPool = require('./pools/explosionPool'),
         bigEnemyPool = require('./pools/bigEnemyPool');
@@ -55,6 +56,9 @@ var setupPoolFreeing = function () {
     });
     objectCollection.on('remove.playerShot', function (element) {
         playerShotPool.free(element);
+    });
+    objectCollection.on('remove.playerMissile', function (element) {
+        playerMissilePool.free(element);
     });
     objectCollection.on('remove.meteor', function (element) {
         meteorPool.free(element);
@@ -68,12 +72,12 @@ var setupPoolFreeing = function () {
 };
 
 var init = function init () {
-    var playerFactory = require('./entities/player'),
-        backgroundFactory = require('./entities/background'),
-        guiFactory = require('./entities/gui'),
-        background = backgroundFactory(),
-        player = playerFactory(),
-        gui = guiFactory();
+    var Player = require('./entities/player'),
+        Background = require('./entities/background'),
+        Gui = require('./entities/gui'),
+        background = new Background(),
+        player = new Player(),
+        gui = new Gui();
 
     renderer.infectDom('game');
     background.bindToRenderer(renderer);
@@ -82,6 +86,7 @@ var init = function init () {
     objectCollection.add('player', player);
 
     var playerShotArray = objectCollection.getArray('playerShot'),
+        playerMissileArray = objectCollection.getArray('playerMissile'),
         enemyShotArray = objectCollection.getArray('enemyShot'),
         meteorArray = objectCollection.getArray('meteor'),
         enemyArray = objectCollection.getArray('enemy'),
@@ -99,6 +104,7 @@ var init = function init () {
         speedMultiplier = 1;
 
     var takeDamages = function takeDamages (damage) {
+        return;
         if (player.takeDamage(1)) {
             gui.changeLives(player.life);
             sound.play('dissonant');
@@ -207,13 +213,14 @@ var init = function init () {
             };
 
             playerShotArray.forEach(updateElement);
+            playerMissileArray.forEach(updateElement);
             enemyShotArray.forEach(updateElement);
             enemyArray.forEach(updateElement);
             meteorArray.forEach(updateElement);
             explosionArray.forEach(updateElement);
 
-            gui.update(dt * speedMultiplier);
-            background.update(dt * speedMultiplier);
+            //gui.update(dt * speedMultiplier);
+            //background.update(dt * speedMultiplier);
         },
         postUpdate: function (dt) {
             if (pause > 0) {
@@ -228,6 +235,7 @@ var init = function init () {
             };
 
             playerShotArray.forEach(postUpdateElement);
+            playerMissileArray.forEach(postUpdateElement);
             enemyShotArray.forEach(postUpdateElement);
             enemyArray.forEach(postUpdateElement);
             meteorArray.forEach(postUpdateElement);
@@ -239,20 +247,18 @@ var init = function init () {
                     playerHitboxX = player.x,
                     playerHitboxY = player.y,
                     playerGrazeBoxWidth = player.grazeBoxWidth,
-                    playerHitboxRadius = 4,
-                    shotHitboxRadius = 0,
+                    playerHitboxRadius = player.hitboxRadius,
                     i = 0,
                     euclideanDistance = 0;
 
                 for (; i < enemyShotArray.length; i++) {
                     shot = enemyShotArray[i];
-                    shotHitboxRadius = shot.hitboxRadius;
                     euclideanDistance = Math.sqrt(
-                        Math.pow(playerHitboxX - shot.x, 2) +
-                        Math.pow(playerHitboxY - shot.y, 2)
-                    ) - shotHitboxRadius;
+                        Math.pow(shot.x - playerHitboxX, 2) +
+                        Math.pow(shot.y - playerHitboxY, 2)
+                    ) - shot.hitboxRadius - playerHitboxRadius;
 
-                    if (euclideanDistance < playerHitboxRadius) {
+                    if (euclideanDistance < 0) {
                         takeDamages(1);
                     } else if (euclideanDistance < playerGrazeBoxWidth && !shot.grazed) {
                         shot.grazed = true;
@@ -305,8 +311,22 @@ var init = function init () {
                         ) {
                             objectCollection.remove('playerShot', shot);
 
-                            var bonusScore = enemy.takeDamage(1);
-                            incrementScore(bonusScore);
+                            incrementScore(enemy.takeDamage(shot.damage));
+
+                            sound.play('hit2');
+                        }
+                    }
+
+                    for (i = 0; i < playerMissileArray.length; i++) {
+                        shot = playerMissileArray[i];
+
+                        if (
+                            Math.abs(enemy.x - shot.x) < enemyHitboxRadius &&
+                            Math.abs(enemy.y - shot.y) < enemyHitboxRadius
+                        ) {
+                            objectCollection.remove('playerMissile', shot);
+
+                            incrementScore(enemy.takeDamage(shot.damage));
 
                             sound.play('hit2');
                         }
@@ -317,6 +337,8 @@ var init = function init () {
             playerShotCollisions();
             enemyShotCollisions();
             meteorCollisions();
+
+            gui.changeScore(playerMissileArray.length);
         },
         render: function (dt) {
             player.render(dt * speedMultiplier);
@@ -326,6 +348,7 @@ var init = function init () {
             };
 
             playerShotArray.forEach(renderElement);
+            playerMissileArray.forEach(renderElement);
             enemyShotArray.forEach(renderElement);
             enemyArray.forEach(renderElement);
             meteorArray.forEach(renderElement);

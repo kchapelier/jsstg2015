@@ -66,22 +66,22 @@ var createEmitter = function createEmitter (source) {
 
 module.exports = {
     size: 1,
-    initialize: function (element) {
-        element.sprite = new PIXI.Sprite(particleTexture);
-        element.sprite.alpha = 0.90;
-        element.sprite.anchor = new PIXI.Point(0.5, 0.5);
-        element.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-        element.emitterContainer = new PIXI.Container();
-        element.emitter = createEmitter(element.emitterContainer);
+    initializeRender: function () {
+        this.sprite = new PIXI.Sprite(particleTexture);
+        this.sprite.alpha = 0.90;
+        this.sprite.anchor = new PIXI.Point(0.5, 0.5);
+        this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+        this.emitterContainer = new PIXI.Container();
+        this.emitter = createEmitter(this.emitterContainer);
     },
-    render: function (element, dt) {
-        element.sprite.x = element.x;
-        element.sprite.y = element.y;
+    render: function (dt) {
+        this.sprite.x = this.x;
+        this.sprite.y = this.y;
 
-        element.emitter.spawnPos.x = element.x;
-        element.emitter.spawnPos.y = element.y;
+        this.emitter.spawnPos.x = this.x;
+        this.emitter.spawnPos.y = this.y;
 
-        element.emitter.update(dt / 1000);
+        this.emitter.update(dt / 1000);
     },
     setColors: function (colors) {
         this.emitter.startColor = PixiParticle.ParticleUtils.hexToRGB(colors.secondary);

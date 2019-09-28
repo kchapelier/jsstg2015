@@ -21,7 +21,7 @@ module.exports = {
     },
     play: function (id) {
         if (!!dictionary[id]) {
-            return dictionary[id].play();
+            //return dictionary[id].play();
         }
 
         return false;

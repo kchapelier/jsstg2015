@@ -27,8 +27,8 @@ var input = new Input({
         triggers: ['<right>', 'D', '<pad1-button16>', '<pad1-axis1-positive>'],
         group: 'axisH'
     },
-    TEST: {
-        triggers: ['T']
+    BOMB: {
+        triggers: ['C', '<pad1-button2>']
     }
 });
 

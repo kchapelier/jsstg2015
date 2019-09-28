@@ -1,7 +1,13 @@
 "use strict";
 
-var GameObject = require('../../lib/quick-and-dirty-gameobject');
+var extend = require('../../lib/extends');
 
-module.exports = GameObject.createFactory(
+var GUI = function GUI () {
+    this.initializeGui();
+};
+
+GUI.prototype = extend.copy(GUI.prototype, [
     require('../components/gui')
-);
+]);
+
+module.exports = GUI;

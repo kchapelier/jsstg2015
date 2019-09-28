@@ -40,6 +40,8 @@ var preparePoints = function preparePoints (points, kneel) {
         }
     }
 
+    console.table(result);
+
     return result;
 };
 

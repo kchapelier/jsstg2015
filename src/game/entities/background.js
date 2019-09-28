@@ -1,7 +1,13 @@
 "use strict";
 
-var GameObject = require('../../lib/quick-and-dirty-gameobject');
+var extend = require('../../lib/extends');
 
-module.exports = GameObject.createFactory(
+var Background = function Background () {
+    this.initializeBackground();
+};
+
+Background.prototype = extend.copy(Background.prototype, [
     require('../components/background')
-);
+]);
+
+module.exports = Background;

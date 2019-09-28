@@ -1,62 +1,19 @@
 "use strict";
 
-var collection = require('../objectCollection'),
-    shotPool = require('../pools/playerShotPool');
-
 module.exports = {
-    lastShot: 0,
-    shotFrequency: 44,
     shooting: false,
-    update: function (element, dt) {
-        var shootNow = false;
-
-        if (element.lastShot > 0) {
-            element.lastShot -= dt;
-        } else if (element.shooting) {
-            shootNow = true;
-            element.lastShot = element.shotFrequency;
+    weapon: null,
+    setWeapon: function (weapon) {
+        this.weapon = weapon;
+    },
+    postUpdateWeapon: function (dt) {
+        if (this.weapon && this.weapon.postUpdate) {
+            this.weapon.postUpdate(this.shooting, dt);
         }
-
-        if (shootNow) {
-            collection.add('playerShot', shotPool.get({
-                x: element.x + 5,
-                y: element.y - 17,
-                speed: 550,
-                directionIntent: {
-                    x: 0.05,
-                    y: -1
-                }
-            }));
-
-            collection.add('playerShot', shotPool.get({
-                x: element.x - 2,
-                y: element.y - 20,
-                speed: 560,
-                directionIntent: {
-                    x: -0.01,
-                    y: -1
-                }
-            }));
-
-            collection.add('playerShot', shotPool.get({
-                x: element.x + 2,
-                y: element.y - 20,
-                speed: 560,
-                directionIntent: {
-                    x: 0.01,
-                    y: -1
-                }
-            }));
-
-            collection.add('playerShot', shotPool.get({
-                x: element.x - 5,
-                y: element.y - 17,
-                speed: 550,
-                directionIntent: {
-                    x: -0.05,
-                    y: -1
-                }
-            }));
+    },
+    updateWeapon: function (dt) {
+        if (this.weapon) {
+            this.weapon.update(this.shooting, dt);
         }
     }
 };

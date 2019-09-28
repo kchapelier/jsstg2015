@@ -1,19 +1,22 @@
 "use strict";
 
 var pool = require('migl-pool'),
-    enemyShot = require('../entities/enemyShot');
+    EnemyShot = require('../entities/enemyShot'),
+    textureCollection = require('./../textureCollection');
 
 module.exports = pool.create({
     name: 'enemyShot',
-    factory: enemyShot,
+    factory: function () {
+        return new EnemyShot();
+    },
     initialize: function (element, options) {
         element.grazed = false;
         element.x = options.x;
         element.y = options.y;
         element.speed = options.speed;
         element.directionIntent = options.directionIntent;
-        element.setTexture(options.texture);
+        element.setTexture(textureCollection.get(options.texture));
     },
-    firstAllocationNumber: 2000,
+    firstAllocationNumber: 1000,
     allocationNumber: 10
 });

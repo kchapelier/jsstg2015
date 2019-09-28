@@ -73,14 +73,14 @@ var createEmitter = function createEmitter (source) {
 
 module.exports = {
     size: 1,
-    initialize: function (element) {
-        element.emitterContainer = new PIXI.Container();
-        element.emitter = createEmitter(element.emitterContainer);
-        element.emitter.spawnPos.x = 0;
-        element.emitter.spawnPos.y = -80;
+    initializeBackground: function () {
+        this.emitterContainer = new PIXI.Container();
+        this.emitter = createEmitter(this.emitterContainer);
+        this.emitter.spawnPos.x = 0;
+        this.emitter.spawnPos.y = -80;
     },
-    render: function (element, dt) {
-        element.emitter.update(dt / 1000);
+    render: function (dt) {
+        this.emitter.update(dt / 1000);
     },
     bindToRenderer: function (renderer) {
         this.renderer = renderer;

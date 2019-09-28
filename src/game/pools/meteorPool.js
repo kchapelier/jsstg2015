@@ -1,11 +1,13 @@
 "use strict";
 
 var pool = require('migl-pool'),
-    meteor = require('../entities/meteor');
+    Meteor = require('../entities/meteor');
 
 module.exports = pool.create({
     name: 'meteor',
-    factory: meteor,
+    factory: function () {
+        return new Meteor();
+    },
     initialize: function (element, options) {
         element.x = options.x;
         element.y = options.y;

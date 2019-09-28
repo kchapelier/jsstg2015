@@ -36,11 +36,11 @@ module.exports = {
     levelText: null,
     lifeBar: null,
     lifeBarInner: null,
-    initialize: function (element) {
-        element.initializeGameGui();
-        element.initializeMenuGui();
+    initializeGui: function () {
+        this.initializeGameGui();
+        this.initializeMenuGui();
     },
-    render: function (element, dt) {
+    render: function (dt) {
         var displayLifeBar = false,
             ratioLifeBar = 0;
 
@@ -54,13 +54,13 @@ module.exports = {
         });
 
         if (displayLifeBar) {
-            element.lifeBar.visible = true;
-            element.lifeBarInner.clear();
-            element.lifeBarInner.beginFill(0xFFFF33);
-            element.lifeBarInner.drawRect(0, 0, 790 * ratioLifeBar, 3);
-            element.lifeBarInner.endFill();
+            this.lifeBar.visible = true;
+            this.lifeBarInner.clear();
+            this.lifeBarInner.beginFill(0xFFFF33);
+            this.lifeBarInner.drawRect(0, 0, 790 * ratioLifeBar, 3);
+            this.lifeBarInner.endFill();
         } else {
-            element.lifeBar.visible = false;
+            this.lifeBar.visible = false;
         }
     },
     initializeMenuGui: function () {

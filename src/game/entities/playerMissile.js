@@ -2,12 +2,12 @@
 
 var extend = require('../../lib/extends');
 
-var PlayerShot = function () {
+var PlayerMissile = function () {
     this.initializeRender();
     this.initializePosition();
 };
 
-PlayerShot.prototype = extend.copy(PlayerShot.prototype, [
+PlayerMissile.prototype = extend.copy(PlayerMissile.prototype, [
     {
         damage: null,
         postUpdate: function (dt) {
@@ -17,9 +17,9 @@ PlayerShot.prototype = extend.copy(PlayerShot.prototype, [
             this.updatePosition(dt);
         }
     },
-    require('../components/position2'),
-    require('../components/playerShotConstraint2'),
+    require('../components/position3'),
+    require('../components/playerMissileConstraint'),
     require('../components/playerShotRender2')
 ]);
 
-module.exports = PlayerShot;
+module.exports = PlayerMissile;
